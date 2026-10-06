@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Admin — Lista Mira</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body class="admin">
+  <section id="login" class="prop-page" hidden>
+    <form class="prop-card" id="login-form">
+      <h1>Area admin</h1>
+      <p class="sub">Accedi per gestire i QR code e leggere le proposte.</p>
+      <label for="pw">Password</label>
+      <input id="pw" type="password" autocomplete="current-password" required>
+      <div id="login-err" class="msg err" role="alert" hidden></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:18px">Entra</button>
+    </form>
+  </section>
+
+  <div id="app" hidden>
+    <header class="admin-bar">
+      <div class="wrap bar-in">
+        <strong class="logo">Mira · Admin</strong>
+        <nav class="tabs" role="tablist" aria-label="Sezioni">
+          <button role="tab" data-tab="qr" aria-selected="true">QR code</button>
+          <button role="tab" data-tab="props" aria-selected="false">Proposte <span class="badge" id="new-count" hidden></span></button>
+          <button role="tab" data-tab="settings" aria-selected="false">Impostazioni</button>
+        </nav>
+        <button class="btn-link" id="logout">Esci</button>
+      </div>
+    </header>
+
+    <main class="wrap admin-main">
+      <!-- QR -->
+      <section id="tab-qr">
+        <div class="panel">
+          <h2>Crea un nuovo QR</h2>
+          <p class="hint">Dai un nome al punto della scuola dove lo appenderai: così vedi da dove arrivano le idee.</p>
+          <form id="qr-form" class="row">
+            <label class="sr-only" for="qr-label">Posizione</label>
+            <input id="qr-label" type="text" maxlength="60" placeholder="Es. Atrio piano terra, Bagni 2° piano, Mensa…" required>
+            <button class="btn btn-primary">Genera QR</button>
+          </form>
+          <div id="qr-err" class="msg err" hidden></div>
+        </div>
+        <div class="toolbar">
+          <h2>I tuoi QR <span id="qr-total" class="muted"></span></h2>
+          <button class="btn btn-violet" id="print-all">🖨️ Stampa tutti</button>
+        </div>
+        <div id="qr-list" class="qr-grid"></div>
+      </section>
+
+      <!-- Proposte -->
+      <section id="tab-props" hidden>
+        <div class="toolbar">
+          <h2>Proposte <span id="p-total" class="muted"></span></h2>
+          <div class="row">
+            <label class="sr-only" for="f-status">Stato</label>
+            <select id="f-status"><option value="">Tutti gli stati</option></select>
+            <label class="sr-only" for="f-cat">Categoria</label>
+            <select id="f-cat"><option value="">Tutte le categorie</option></select>
+            <a class="btn btn-violet" href="/api/admin/proposals/export.csv">⬇ CSV</a>
+          </div>
+        </div>
+        <div id="p-list" class="p-list"></div>
+      </section>
+
+      <!-- Impostazioni -->
+      <section id="tab-settings" hidden>
+        <div class="panel">
+          <h2>Indirizzo del sito</h2>
+          <p class="hint">I QR puntano a questo indirizzo. <b>Prima di stampare</b> inserisci quello definitivo (es. <code>https://listamira.it</code>): se lo cambi dopo, i QR già stampati continueranno a funzionare solo se il vecchio dominio resta attivo.</p>
+          <form id="set-form" class="row">
+            <input id="base" type="url" placeholder="https://tuodominio.it" aria-label="Indirizzo del sito">
+            <button class="btn btn-primary">Salva</button>
+          </form>
+          <p class="hint" id="detected"></p>
+          <div id="set-msg" class="msg" hidden></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- area stampa: riempita da JS -->
+  <div id="print-area" aria-hidden="true"></div>
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

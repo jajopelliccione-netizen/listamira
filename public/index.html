@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lista Mira — Guarda oltre</title>
+  <meta name="description" content="Lista Mira: il programma, i candidati e il canale anonimo per proporre idee per migliorare la scuola.">
+  <meta name="theme-color" content="#1e0a4a">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Vai al contenuto</a>
+  <header class="site-header">
+    <div class="wrap">
+      <nav class="nav" aria-label="Principale">
+        <a class="brand" href="#top" aria-label="Lista Mira, inizio pagina"><svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#f97316"/><path d="M9 28V12l11 12 11-12v16" fill="none" stroke="#1e0a4a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-bind="name">Mira</span></a>
+        <ul class="nav-links">
+          <li><a href="#chi-siamo">Chi siamo</a></li>
+          <li><a href="#programma">Programma</a></li>
+          <li><a href="#proposte">Proposte</a></li>
+          <li><a href="#team">Candidati</a></li>
+          <li><a href="#contatti">Contatti</a></li>
+        </ul>
+        <a class="btn btn-primary" href="#proposte">Dì la tua</a>
+        <button class="menu-btn" aria-label="Apri menu" aria-expanded="false" aria-controls="mm"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </nav>
+      <div class="mobile-menu" id="mm">
+        <a href="#chi-siamo">Chi siamo</a><a href="#programma">Programma</a><a href="#proposte">Proposte</a><a href="#team">Candidati</a><a href="#contatti">Contatti</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow" data-bind="year">Elezioni d’istituto</span>
+          <h1 data-bind-html="claim">Guarda <em>oltre.</em></h1>
+          <p class="lead" data-bind="intro"></p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#programma">Scopri il programma</a>
+            <a class="btn btn-ghost" href="#proposte">Come proporre un’idea</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orb a"></div>
+          <div class="orb b"><svg viewBox="0 0 40 40"><path d="M7 30V10l13 14L33 10v20" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="floaty one">💡 La tua idea conta</span>
+          <span class="floaty two">🗳️ Vota Mira</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap"><div class="stats" id="stats"></div></div>
+
+    <section class="block" id="chi-siamo">
+      <div class="wrap">
+        <div class="section-head reveal"><span class="kicker">Chi siamo</span><h2>Una lista fatta di studenti, per gli studenti.</h2><p>Tre principi guidano tutto quello che facciamo.</p></div>
+        <div class="grid cols-3" id="values"></div>
+      </div>
+    </section>
+
+    <section class="block tinted" id="programma">
+      <div class="wrap">
+        <div class="section-head reveal"><span class="kicker">Il programma</span><h2>Sei aree, tante cose da fare.</h2><p>Ogni punto nasce dalle richieste degli studenti e verrà aggiornato con le vostre proposte.</p></div>
+        <div class="grid cols-3 program" id="program"></div>
+      </div>
+    </section>
+
+    <section class="block" id="proposte">
+      <div class="wrap">
+        <div class="qr-band reveal">
+          <div>
+            <span class="eyebrow">Area riservata agli studenti</span>
+            <h2 style="margin-top:16px">Hai un’idea per la scuola? Cerca il QR.</h2>
+            <p>Abbiamo nascosto dei QR code in giro per la scuola. Inquadrane uno con il telefono e scrivici la tua proposta: è completamente anonima e arriva direttamente alla lista.</p>
+          </div>
+          <ol class="steps">
+            <li><b>1</b><span>Trova un QR code appeso a scuola</span></li>
+            <li><b>2</b><span>Inquadralo con la fotocamera del telefono</span></li>
+            <li><b>3</b><span>Scrivi la tua idea, senza nome né email</span></li>
+          </ol>
+        </div>
+        <div style="margin-top:44px" id="faq" class="reveal"></div>
+      </div>
+    </section>
+
+    <section class="block tinted" id="team">
+      <div class="wrap">
+        <div class="section-head reveal"><span class="kicker">I candidati</span><h2>Le facce di Mira.</h2><p>Studenti come te, di ogni classe e indirizzo.</p></div>
+        <div class="team-grid" id="team-grid"></div>
+      </div>
+    </section>
+
+    <section class="block" id="percorso">
+      <div class="wrap">
+        <div class="section-head reveal"><span class="kicker">Il percorso</span><h2>Dalle idee al voto.</h2></div>
+        <ol class="timeline" id="timeline"></ol>
+      </div>
+    </section>
+
+    <section class="block tinted contact" id="contatti">
+      <div class="wrap reveal">
+        <div class="section-head" style="margin-inline:auto"><span class="kicker">Contatti</span><h2>Parliamone.</h2><p>Scrivici o seguici sui social: rispondiamo a tutti.</p></div>
+        <div class="btns" id="contact-btns"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="wrap">© <span id="yr"></span> Lista <span data-bind="name">Mira</span> · <span data-bind="school"></span></div></footer>
+  <noscript><p style="padding:20px;text-align:center">Per vedere il sito abilita JavaScript.</p></noscript>
+  <script src="/app.js"></script>
+</body>
+</html>
