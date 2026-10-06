@@ -50,6 +50,10 @@ function render(c) {
   const btns = [];
   if (L.contacts.email) btns.push(el('a', { class: 'btn btn-violet', href: `mailto:${L.contacts.email}` }, L.contacts.email));
   if (L.contacts.instagram) btns.push(el('a', { class: 'btn btn-primary', href: L.contacts.instagram, target: '_blank', rel: 'noopener' }, 'Instagram ' + (L.contacts.instagramHandle || '')));
+  const S = L.schoolInfo;
+  if (S) {
+    $('#school-box').replaceChildren(el('strong', {}, L.school), el('span', {}, ` · ${S.address}`), S.website ? el('a', { href: S.website, target: '_blank', rel: 'noopener' }, ' · Sito della scuola') : '');
+  }
   $('#contact-btns').replaceChildren(...btns);
   observe();
 }

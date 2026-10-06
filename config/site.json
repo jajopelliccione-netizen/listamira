@@ -3,49 +3,172 @@
     "name": "Mira",
     "claim": "Guarda oltre. Costruiamo la scuola che vorresti.",
     "intro": "Siamo una lista di studenti che crede che la scuola migliore nasca ascoltando chi la vive ogni giorno. Qui trovi chi siamo, cosa vogliamo fare e come puoi dire la tua, in modo anonimo.",
-    "school": "Il nome della tua scuola",
+    "school": "ITIS Galileo Galilei — Roma",
     "year": "Elezioni d’istituto 2026/27",
     "contacts": {
       "email": "lista.mira@example.com",
       "instagram": "https://instagram.com/listamira",
       "instagramHandle": "@listamira"
+    },
+    "schoolInfo": {
+      "address": "Via Conte Verde 51, 00185 Roma",
+      "website": "https://www.itisgalilei.edu.it",
+      "since": "Dal 1919"
     }
   },
   "stats": [
-    { "value": "6", "label": "aree di intervento" },
-    { "value": "12", "label": "candidati" },
-    { "value": "100%", "label": "proposte anonime" }
+    {
+      "value": "6",
+      "label": "aree di intervento"
+    },
+    {
+      "value": "12",
+      "label": "candidati"
+    },
+    {
+      "value": "100%",
+      "label": "proposte anonime"
+    }
   ],
   "values": [
-    { "icon": "ear", "title": "Ascolto", "text": "Ogni idea conta. Nessuno è troppo piccolo o troppo nuovo per essere ascoltato." },
-    { "icon": "spark", "title": "Concretezza", "text": "Meno slogan, più cose fatte. Ogni promessa ha un piano e una scadenza." },
-    { "icon": "heart", "title": "Inclusione", "text": "Una scuola in cui ogni classe, ogni indirizzo e ogni studente si sente a casa." }
+    {
+      "icon": "ear",
+      "title": "Ascolto",
+      "text": "Ogni idea conta. Nessuno è troppo piccolo o troppo nuovo per essere ascoltato."
+    },
+    {
+      "icon": "spark",
+      "title": "Concretezza",
+      "text": "Meno slogan, più cose fatte. Ogni promessa ha un piano e una scadenza."
+    },
+    {
+      "icon": "heart",
+      "title": "Inclusione",
+      "text": "Una scuola in cui ogni classe, ogni indirizzo e ogni studente si sente a casa."
+    }
   ],
   "program": [
-    { "icon": "building", "title": "Spazi migliori", "text": "Aule più accoglienti, zone relax, armadietti e un cortile da vivere davvero.", "points": ["Zone studio e relax", "Più prese e Wi-Fi stabile", "Cortile attrezzato"] },
-    { "icon": "book", "title": "Studio e didattica", "text": "Strumenti per studiare meglio e più sereni, a partire dalle verifiche.", "points": ["Calendario verifiche condiviso", "Tutoraggio tra pari", "Dispense in archivio comune"] },
-    { "icon": "party", "title": "Eventi e comunità", "text": "Tornei, feste, giornate a tema: la scuola è anche stare insieme.", "points": ["Torneo d’istituto", "Festa di fine anno", "Mercatino dell’usato"] },
-    { "icon": "leaf", "title": "Scuola sostenibile", "text": "Piccole azioni quotidiane per una scuola più verde.", "points": ["Raccolta differenziata chiara", "Borracce e distributori d’acqua", "Orto scolastico"] },
-    { "icon": "chip", "title": "Tecnologia", "text": "Laboratori e strumenti digitali aperti a tutti, non solo a pochi.", "points": ["Laboratorio aperto il pomeriggio", "Corsi di coding e grafica", "Stampa a prezzo studenti"] },
-    { "icon": "chat", "title": "Voce agli studenti", "text": "Un canale diretto e anonimo per proporre, segnalare, migliorare.", "points": ["QR sparsi per la scuola", "Risposte pubbliche mensili", "Assemblee più utili"] }
+    {
+      "icon": "building",
+      "title": "Spazi migliori",
+      "text": "Aule più accoglienti, zone relax, armadietti e un cortile da vivere davvero.",
+      "points": [
+        "Zone studio e relax",
+        "Più prese e Wi-Fi stabile",
+        "Cortile attrezzato"
+      ]
+    },
+    {
+      "icon": "book",
+      "title": "Studio e didattica",
+      "text": "Strumenti per studiare meglio e più sereni, a partire dalle verifiche.",
+      "points": [
+        "Calendario verifiche condiviso",
+        "Tutoraggio tra pari",
+        "Dispense in archivio comune"
+      ]
+    },
+    {
+      "icon": "party",
+      "title": "Eventi e comunità",
+      "text": "Tornei, feste, giornate a tema: la scuola è anche stare insieme.",
+      "points": [
+        "Torneo d’istituto",
+        "Festa di fine anno",
+        "Mercatino dell’usato"
+      ]
+    },
+    {
+      "icon": "leaf",
+      "title": "Scuola sostenibile",
+      "text": "Piccole azioni quotidiane per una scuola più verde.",
+      "points": [
+        "Raccolta differenziata chiara",
+        "Borracce e distributori d’acqua",
+        "Orto scolastico"
+      ]
+    },
+    {
+      "icon": "chip",
+      "title": "Tecnologia",
+      "text": "Laboratori e strumenti digitali aperti a tutti, non solo a pochi.",
+      "points": [
+        "Laboratorio aperto il pomeriggio",
+        "Corsi di coding e grafica",
+        "Stampa a prezzo studenti"
+      ]
+    },
+    {
+      "icon": "chat",
+      "title": "Voce agli studenti",
+      "text": "Un canale diretto e anonimo per proporre, segnalare, migliorare.",
+      "points": [
+        "QR sparsi per la scuola",
+        "Risposte pubbliche mensili",
+        "Assemblee più utili"
+      ]
+    }
   ],
   "team": [
-    { "name": "Nome Cognome", "role": "Candidato/a — Classe 5A" },
-    { "name": "Nome Cognome", "role": "Candidato/a — Classe 4B" },
-    { "name": "Nome Cognome", "role": "Candidato/a — Classe 4C" },
-    { "name": "Nome Cognome", "role": "Candidato/a — Classe 3A" },
-    { "name": "Nome Cognome", "role": "Candidato/a — Classe 3D" },
-    { "name": "Nome Cognome", "role": "Candidato/a — Classe 2B" }
+    {
+      "name": "Nome Cognome",
+      "role": "Candidato/a — Classe 5A"
+    },
+    {
+      "name": "Nome Cognome",
+      "role": "Candidato/a — Classe 4B"
+    },
+    {
+      "name": "Nome Cognome",
+      "role": "Candidato/a — Classe 4C"
+    },
+    {
+      "name": "Nome Cognome",
+      "role": "Candidato/a — Classe 3A"
+    },
+    {
+      "name": "Nome Cognome",
+      "role": "Candidato/a — Classe 3D"
+    },
+    {
+      "name": "Nome Cognome",
+      "role": "Candidato/a — Classe 2B"
+    }
   ],
   "timeline": [
-    { "when": "Settembre", "title": "Presentazione della lista", "text": "Ci presentiamo in tutte le classi." },
-    { "when": "Ottobre", "title": "Raccolta proposte", "text": "Scansiona i QR in giro per la scuola e scrivici le tue idee." },
-    { "when": "Ottobre", "title": "Confronto pubblico", "text": "Incontro aperto con tutti gli studenti." },
-    { "when": "Giorno del voto", "title": "Vota Mira", "text": "Fai sentire la tua voce nell’urna." }
+    {
+      "when": "Settembre",
+      "title": "Presentazione della lista",
+      "text": "Ci presentiamo in tutte le classi."
+    },
+    {
+      "when": "Ottobre",
+      "title": "Raccolta proposte",
+      "text": "Scansiona i QR in giro per la scuola e scrivici le tue idee."
+    },
+    {
+      "when": "Ottobre",
+      "title": "Confronto pubblico",
+      "text": "Incontro aperto con tutti gli studenti."
+    },
+    {
+      "when": "Giorno del voto",
+      "title": "Vota Mira",
+      "text": "Fai sentire la tua voce nell’urna."
+    }
   ],
   "faq": [
-    { "q": "Le proposte sono davvero anonime?", "a": "Sì. Non ti chiediamo nome o email e non salviamo IP, dispositivo o cookie permanenti. Registriamo solo il testo, la categoria e il QR da cui arrivi." },
-    { "q": "Perché devo scansionare un QR?", "a": "Per assicurarci che le proposte arrivino da studenti che sono davvero a scuola e per evitare spam. L’accesso dura 20 minuti dopo la scansione." },
-    { "q": "Cosa succede alla mia proposta?", "a": "La leggiamo, la valutiamo insieme e ti rispondiamo pubblicamente (senza sapere chi sei) sui nostri canali." }
+    {
+      "q": "Le proposte sono davvero anonime?",
+      "a": "Sì. Non ti chiediamo nome o email e non salviamo IP, dispositivo o cookie permanenti. Registriamo solo il testo, la categoria e il QR da cui arrivi."
+    },
+    {
+      "q": "Perché devo scansionare un QR?",
+      "a": "Per assicurarci che le proposte arrivino da studenti che sono davvero a scuola e per evitare spam. L’accesso dura 20 minuti dopo la scansione."
+    },
+    {
+      "q": "Cosa succede alla mia proposta?",
+      "a": "La leggiamo, la valutiamo insieme e ti rispondiamo pubblicamente (senza sapere chi sei) sui nostri canali."
+    }
   ]
 }
