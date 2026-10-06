@@ -1,22 +1,24 @@
 # Lista Mira
 
-Sito di presentazione della lista + area proposte anonime accessibile solo scansionando i QR code della scuola.
+Sito di presentazione della lista (ITIS Galileo Galilei, Roma) + area proposte anonime accessibile **solo scansionando i QR della scuola**.
+È un sito statico (funziona su GitHub Pages); proposte, QR e login admin usano **Supabase** (database gratuito).
 
-## Avvio
-```bash
-npm install
-ADMIN_PASSWORD="scegli-una-password" npm start   # http://localhost:3000
-```
-Senza `ADMIN_PASSWORD` ne viene generata una e salvata in `data/.admin-password` (stampata al primo avvio).
+## Setup (una volta sola, ~10 minuti)
+1. Crea un progetto gratuito su <https://supabase.com> (regione Europa).
+2. **SQL Editor** → apri `supabase/schema.sql`, sostituisci `LA-TUA-EMAIL-ADMIN@esempio.it` con la tua email admin, incolla tutto e premi **Run**.
+3. **Authentication → Users → Add user**: la stessa email + una password robusta (spunta "Auto confirm").
+4. **Authentication → Sign In / Providers**: disattiva **Allow new users to sign up** (e "Confirm email" non serve).
+5. **Project Settings → API**: copia *Project URL* e la chiave *anon public* e incollale in `config/site.json`:
+   ```json
+   "supabase": { "url": "https://xxxx.supabase.co", "anonKey": "eyJ..." }
+   ```
+   (la chiave anon è pubblica per design: la sicurezza è nelle regole del database.)
+6. Fai commit/push: GitHub Pages ripubblica da solo.
 
-## Come funziona
-- **Sito**: `public/` — i testi (nome lista, programma, candidati, FAQ, contatti) si modificano in `config/site.json`.
-- **Admin** (`/admin`): crea QR con il nome del posto, scarica PNG/SVG, stampa i cartelli A4, disattiva/elimina i QR, legge le proposte (stato, filtri, export CSV).
-- **QR → proposta**: il QR apre `/q/<codice>`, che apre una sessione di 20 minuti e porta a `/proponi`. Senza QR valido (o con QR disattivato) il form e l'API sono bloccati.
-- **Anonimato**: si salvano solo testo, categoria, QR di provenienza e orario al minuto. Nessun IP/user-agent su disco (il rate-limit è solo in memoria).
+## Uso
+- **/admin/** → login con l'email/password creata al punto 3. Crea i QR (uno per ogni posto), scarica PNG/SVG o stampa i cartelli A4, disattiva i QR, leggi le proposte e cambia stato, esporta CSV.
+- Il QR apre `proponi.html?c=<codice>`: il codice viene verificato **nel database**; la sessione dura 20 minuti. Senza QR valido non si può inviare nulla (anche chiamando il database a mano).
+- Testi del sito (nome, programma, candidati, FAQ, contatti): `config/site.json`.
 
-## Prima di stampare i QR
-In **Admin → Impostazioni** imposta l'indirizzo definitivo del sito (es. `https://listamira.it`): i QR lo contengono.
-
-## Deploy
-Serve un hosting Node (Render, Railway, Fly, VPS…) con **HTTPS** e un disco persistente per `data/`. Variabili: `PORT`, `ADMIN_PASSWORD`, `SECRET` (opzionale).
+## Anonimato
+Si salvano solo testo, categoria, QR di provenienza e orario al minuto. Nessun IP/dispositivo/cookie di tracciamento viene salvato dal sito (l'infrastruttura Supabase tiene i suoi log tecnici standard).

@@ -70,5 +70,5 @@ const mb = document.querySelector('.menu-btn'), mm = $('#mm');
 mb.addEventListener('click', () => { const o = mm.classList.toggle('open'); mb.setAttribute('aria-expanded', o); });
 mm.addEventListener('click', (e) => { if (e.target.tagName === 'A') { mm.classList.remove('open'); mb.setAttribute('aria-expanded', 'false'); } });
 
-fetch('/api/site').then((r) => r.json()).then(render).catch(() => { $('#main').prepend(el('p', { style: 'padding:40px;text-align:center' }, 'Impossibile caricare i contenuti. Riprova più tardi.')); });
+Core.config().then(render).catch(() => { $('#main').prepend(el('p', { style: 'padding:40px;text-align:center' }, 'Impossibile caricare i contenuti. Riprova più tardi.')); });
 observe();
