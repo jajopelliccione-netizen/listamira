@@ -59,13 +59,12 @@ function form(sess, cfg) {
     if (txt.value.trim().length < 10) { err.textContent = 'Scrivi almeno 10 caratteri.'; err.hidden = false; txt.focus(); return; }
     btn.disabled = true; btn.textContent = 'Invio…';
     try {
-      await Core.rpc(cfg, 'submit_proposal', { p_code: sess.code, p_text: txt.value, p_category: select.value });
+      await Core.fs.create(cfg, 'proposals', { text: txt.value.trim(), category: select.value, place: sess.label, qr: sess.code, status: 'nuova' });
       clearInterval(iv); done(sess, cfg);
     } catch (ex) {
       btn.disabled = false; btn.textContent = 'Invia la proposta';
-      const m = String(ex.message);
-      if (m.includes('qr_invalid')) { clearInterval(iv); store.clear(); return locked(false, true); }
-      err.textContent = m.includes('rate_limited') ? 'Troppe proposte in questo momento, riprova tra un minuto.' : m.includes('text_invalid') ? 'Il testo deve avere tra 10 e 1000 caratteri.' : 'Non sono riuscito a inviare. Controlla la connessione e riprova.';
+      if (ex.status === 403) { clearInterval(iv); store.clear(); return locked(false, true); } // QR disattivato o non valido (regole Firestore)
+      err.textContent = ex.status === 400 ? 'Il testo deve avere tra 10 e 1000 caratteri.' : 'Non sono riuscito a inviare. Controlla la connessione e riprova.';
       err.hidden = false;
     }
   });
@@ -89,9 +88,10 @@ async function init() {
     // ingresso da QR: verifica nel database, poi pulisci l'indirizzo
     history.replaceState(null, '', url.pathname);
     try {
-      const label = await Core.rpc(cfg, 'check_qr', { p_code: code });
-      if (!label) return locked(false, true);
-      const sess = { code, label, exp: Date.now() + SESSION_MIN * 60000 };
+      const qr = await Core.fs.get(cfg, 'qr_codes', code);
+      if (!qr || !qr.active) return locked(false, true);
+      Core.fs.update(cfg, 'qr_codes', code, { scans: (qr.scans || 0) + 1 }).catch(() => {}); // contatore scansioni (non bloccante)
+      const sess = { code, label: qr.label, exp: Date.now() + SESSION_MIN * 60000 };
       store.set(sess);
       return form(sess, cfg);
     } catch { return message({ icon: QR, title: 'Ops', text: 'Non riesco a collegarmi. Riprova tra un attimo.', actions: [backBtn()] }); }

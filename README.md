@@ -1,24 +1,25 @@
 # Lista Mira
 
 Sito di presentazione della lista (ITIS Galileo Galilei, Roma) + area proposte anonime accessibile **solo scansionando i QR della scuola**.
-È un sito statico (funziona su GitHub Pages); proposte, QR e login admin usano **Supabase** (database gratuito).
+È un sito statico (GitHub Pages); proposte, QR e login admin usano **Firebase** (piano gratuito Spark).
 
-## Setup (una volta sola, ~10 minuti)
-1. Crea un progetto gratuito su <https://supabase.com> (regione Europa).
-2. **SQL Editor** → apri `supabase/schema.sql`, sostituisci `LA-TUA-EMAIL-ADMIN@esempio.it` con la tua email admin, incolla tutto e premi **Run**.
-3. **Authentication → Users → Add user**: la stessa email + una password robusta (spunta "Auto confirm").
-4. **Authentication → Sign In / Providers**: disattiva **Allow new users to sign up** (e "Confirm email" non serve).
-5. **Project Settings → API**: copia *Project URL* e la chiave *anon public* e incollale in `config/site.json`:
+## Setup Firebase (una volta sola, ~10 minuti)
+1. <https://console.firebase.google.com> → **Aggiungi progetto** (disattiva Google Analytics, non serve).
+2. **Build → Firestore Database → Crea database** (modalità produzione, regione `europe-west`).
+3. **Build → Authentication → Inizia → Email/password → Abilita**. Poi scheda **Utenti → Aggiungi utente**: l'email e la password dell'admin.
+   *(Impostazioni → Azioni utente: disattiva "Abilita creazione (registrazione)".)*
+4. **Firestore → Regole**: apri `firestore.rules`, sostituisci `LA-TUA-EMAIL-ADMIN@esempio.it` con l'email admin, incolla tutto e **Pubblica**.
+5. **Impostazioni progetto (ingranaggio) → Generali → Le tue app → Web (`</>`)**: registra un'app web e copia `apiKey` e `projectId` in `config/site.json`:
    ```json
-   "supabase": { "url": "https://xxxx.supabase.co", "anonKey": "eyJ..." }
+   "firebase": { "apiKey": "AIza...", "projectId": "il-tuo-progetto" }
    ```
-   (la chiave anon è pubblica per design: la sicurezza è nelle regole del database.)
-6. Fai commit/push: GitHub Pages ripubblica da solo.
+   (La apiKey Firebase è pubblica per design: la sicurezza sta nelle regole. Facoltativo: in Google Cloud → Credenziali limitala al tuo dominio `jajopelliccione-netizen.github.io`.)
+6. Commit/push: GitHub Pages ripubblica da solo.
 
 ## Uso
-- **/admin/** → login con l'email/password creata al punto 3. Crea i QR (uno per ogni posto), scarica PNG/SVG o stampa i cartelli A4, disattiva i QR, leggi le proposte e cambia stato, esporta CSV.
-- Il QR apre `proponi.html?c=<codice>`: il codice viene verificato **nel database**; la sessione dura 20 minuti. Senza QR valido non si può inviare nulla (anche chiamando il database a mano).
-- Testi del sito (nome, programma, candidati, FAQ, contatti): `config/site.json`.
+- **/admin/** → email/password dell'admin. Crea i QR (uno per posto), scarica PNG/SVG o stampa cartelli A4, disattiva i QR, leggi le proposte, cambia stato, esporta CSV.
+- Il QR apre `proponi.html?c=<codice>`. Il codice è l'ID di un documento Firestore che non si può elencare: senza averlo scansionato non si può inviare nulla, e la regola di sicurezza accetta proposte solo per QR attivi. Sessione di 20 minuti.
+- Testi del sito: `config/site.json`.
 
 ## Anonimato
-Si salvano solo testo, categoria, QR di provenienza e orario al minuto. Nessun IP/dispositivo/cookie di tracciamento viene salvato dal sito (l'infrastruttura Supabase tiene i suoi log tecnici standard).
+Si salvano solo testo, categoria, QR di provenienza e data/ora d'invio. Nessun IP, dispositivo o nome. (Google tiene i suoi log tecnici standard sull'infrastruttura.)

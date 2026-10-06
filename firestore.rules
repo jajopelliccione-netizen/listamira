@@ -1,0 +1,47 @@
+// Lista Mira — regole di sicurezza Firestore
+// Incolla in Firebase Console → Firestore Database → Regole → Pubblica.
+// PRIMA sostituisci LA-TUA-EMAIL-ADMIN@esempio.it con l'email dell'utente admin.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Unico amministratore: solo questa email.
+    function isAdmin() {
+      return request.auth != null
+          && request.auth.token.email == 'LA-TUA-EMAIL-ADMIN@esempio.it';
+    }
+
+    // Un QR è un documento il cui ID è il codice segreto stampato nel QR.
+    // Si può leggere solo conoscendo l'ID (nessuno può elencarli), quindi
+    // senza aver scansionato un QR non si ottiene nulla.
+    match /qr_codes/{code} {
+      allow get: if true;
+      allow list, create, delete: if isAdmin();
+      allow update: if isAdmin()
+        // gli studenti possono solo aumentare di 1 il contatore scansioni
+        || (resource.data.active == true
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['scans'])
+            && request.resource.data.scans == resource.data.scans + 1);
+    }
+
+    match /proposals/{id} {
+      // solo l'admin legge, cambia stato o elimina
+      allow read, update, delete: if isAdmin();
+
+      // chiunque può inviare, MA solo con un QR attivo e dati validi
+      allow create: if
+        request.resource.data.keys().hasOnly(['text', 'category', 'place', 'qr', 'status'])
+        && request.resource.data.keys().hasAll(['text', 'category', 'place', 'qr', 'status'])
+        && request.resource.data.text is string
+        && request.resource.data.text.size() >= 10
+        && request.resource.data.text.size() <= 1000
+        && request.resource.data.category is string
+        && request.resource.data.category.size() <= 40
+        && request.resource.data.status == 'nuova'
+        && request.resource.data.qr is string
+        && exists(/databases/$(database)/documents/qr_codes/$(request.resource.data.qr))
+        && get(/databases/$(database)/documents/qr_codes/$(request.resource.data.qr)).data.active == true
+        && request.resource.data.place == get(/databases/$(database)/documents/qr_codes/$(request.resource.data.qr)).data.label;
+    }
+  }
+}

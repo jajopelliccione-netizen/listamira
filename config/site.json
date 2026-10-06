@@ -171,8 +171,8 @@
       "a": "La leggiamo, la valutiamo insieme e ti rispondiamo pubblicamente (senza sapere chi sei) sui nostri canali."
     }
   ],
-  "supabase": {
-    "url": "",
-    "anonKey": ""
+  "firebase": {
+    "apiKey": "",
+    "projectId": ""
   }
 }

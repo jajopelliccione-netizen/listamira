@@ -5,13 +5,17 @@ const STATUSES = ['nuova', 'letta', 'in programma', 'realizzata', 'archiviata'];
 const TOKEN_KEY = 'mira-admin';
 let cfg, token = null, qrs = [], proposals = [];
 
-/* ---- sessione admin (Supabase Auth, solo per questa scheda) ---- */
+/* ---- sessione admin (Firebase Auth, solo per questa scheda) ---- */
 const saved = () => { try { return JSON.parse(sessionStorage.getItem(TOKEN_KEY)); } catch { return null; } };
 const persist = (s) => { try { s ? sessionStorage.setItem(TOKEN_KEY, JSON.stringify(s)) : sessionStorage.removeItem(TOKEN_KEY); } catch { /* ignora */ } };
 
-async function db(path, opts = {}) {
-  try { return await Core.request(cfg, '/rest/v1' + path, { ...opts, token }); }
-  catch (e) { if (e.status === 401 || e.status === 403) { showLogin(); throw new Error('auth'); } throw e; }
+async function db(fn) {
+  try { return await fn(token); }
+  catch (e) {
+    if (e.status === 401) { showLogin(); throw new Error('auth'); }
+    if (e.status === 403) throw new Error('Permesso negato: controlla che l’email in firestore.rules sia quella dell’admin e che le regole siano pubblicate.');
+    throw e;
+  }
 }
 function showLogin() { token = null; persist(null); $('#app').hidden = true; $('#login').hidden = false; $('#em').focus(); }
 
@@ -19,9 +23,9 @@ $('#login-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const err = $('#login-err'); err.hidden = true;
   try {
-    const d = await Core.request(cfg, '/auth/v1/token?grant_type=password', { method: 'POST', body: { email: $('#em').value.trim(), password: $('#pw').value } });
+    const d = await Core.signIn(cfg, $('#em').value.trim(), $('#pw').value);
     $('#pw').value = '';
-    persist({ token: d.access_token, exp: Date.now() + (d.expires_in - 60) * 1000 });
+    persist({ token: d.idToken, exp: Date.now() + (Number(d.expiresIn) - 60) * 1000 });
     start();
   } catch { err.textContent = 'Email o password errata.'; err.hidden = false; }
 });
@@ -39,7 +43,8 @@ const slug = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').rep
 
 /* ---- generazione QR (tutto nel browser) ---- */
 const siteBase = () => new URL('../proponi.html', location.href).href; // indirizzo reale del sito, anche su GitHub Pages
-const qrLink = (q) => `${siteBase()}?c=${q.code}`;
+const qrLink = (q) => `${siteBase()}?c=${q.id}`;
+const newCode = () => [...crypto.getRandomValues(new Uint8Array(16))].map((b) => b.toString(16).padStart(2, '0')).join('');
 function qrMatrix(text) { const q = qrcode(0, 'M'); q.addData(text); q.make(); return q; }
 function qrPng(text, size = 1024) {
   const q = qrMatrix(text), n = q.getModuleCount(), quiet = 4, cell = Math.floor(size / (n + quiet * 2));
@@ -60,14 +65,14 @@ function download(name, href) { const a = el('a', { href, download: name }); doc
 const blobUrl = (text, type) => URL.createObjectURL(new Blob([text], { type }));
 
 /* ---- QR ---- */
-async function loadQrs() { qrs = await db('/qr_codes?select=*,proposals(count)&order=created_at.desc'); renderQrs(); }
+async function loadQrs() { qrs = (await db((t) => Core.fs.list(cfg, 'qr_codes', t))).sort((x, y) => (y.createdAt || '').localeCompare(x.createdAt || '')); renderQrs(); }
 function renderQrs() {
   $('#qr-total').textContent = `(${qrs.length})`;
   $('#qr-base').textContent = `I QR puntano a: ${siteBase()}`;
   const list = $('#qr-list');
   if (!qrs.length) { list.replaceChildren(el('div', { class: 'empty' }, 'Nessun QR ancora. Creane uno qui sopra, poi stampalo e appendilo a scuola.')); return; }
   list.replaceChildren(...qrs.map((q) => {
-    const count = (q.proposals && q.proposals[0] && q.proposals[0].count) || 0;
+    const count = proposals.filter((p) => p.qr === q.id).length;
     return el('article', { class: 'qr-card' + (q.active ? '' : ' revoked') },
       el('img', { src: qrPng(qrLink(q), 512), alt: `QR code: ${q.label}`, width: 220, height: 220 }),
       el('h3', {}, q.label),
@@ -83,13 +88,13 @@ function renderQrs() {
 }
 $('#qr-form').addEventListener('submit', async (e) => {
   e.preventDefault();
-  try { await db('/qr_codes', { method: 'POST', body: { label: $('#qr-label').value.trim() }, headers: { Prefer: 'return=minimal' } }); $('#qr-label').value = ''; await loadQrs(); }
+  try { await db((t) => Core.fs.create(cfg, 'qr_codes', { label: $('#qr-label').value.trim().slice(0, 60), active: true, scans: 0, createdAt: new Date() }, { id: newCode(), token: t })); $('#qr-label').value = ''; await loadQrs(); }
   catch (ex) { if (ex.message !== 'auth') flash($('#qr-err'), 'Non sono riuscito a creare il QR: ' + ex.message, false); }
 });
-async function toggleQr(q) { await db('/qr_codes?id=eq.' + q.id, { method: 'PATCH', body: { active: !q.active }, headers: { Prefer: 'return=minimal' } }); loadQrs(); }
+async function toggleQr(q) { await db((t) => Core.fs.update(cfg, 'qr_codes', q.id, { active: !q.active }, t)); loadQrs(); }
 async function delQr(q) {
   if (!confirm(`Eliminare il QR “${q.label}”? Se è già stampato smetterà di funzionare.`)) return;
-  await db('/qr_codes?id=eq.' + q.id, { method: 'DELETE' }); loadQrs();
+  await db((t) => Core.fs.remove(cfg, 'qr_codes', q.id, t)); loadQrs();
 }
 function printQrs(list) {
   const area = $('#print-area');
@@ -105,7 +110,7 @@ function printQrs(list) {
 $('#print-all').addEventListener('click', () => printQrs(qrs));
 
 /* ---- proposte ---- */
-async function loadProps() { proposals = await db('/proposals?select=*&order=created_at.desc'); fillFilters(); renderProps(); }
+async function loadProps() { proposals = (await db((t) => Core.fs.list(cfg, 'proposals', t))).sort((x, y) => y.createTime.localeCompare(x.createTime)); fillFilters(); renderProps(); }
 function fillFilters() {
   const cats = [...new Set(proposals.map((p) => p.category))].sort();
   const fs = $('#f-status'), fc = $('#f-cat'), sv = fs.value, cv = fc.value;
@@ -122,19 +127,19 @@ function renderProps() {
   const list = $('#p-list');
   if (!shown.length) { list.replaceChildren(el('div', { class: 'empty' }, proposals.length ? 'Nessuna proposta con questi filtri.' : 'Ancora nessuna proposta. Appena qualcuno scansionerà un QR e scriverà, la vedrai qui.')); return; }
   list.replaceChildren(...shown.map((p) => {
-    const sel = el('select', { 'aria-label': 'Stato della proposta', onchange: async (e) => { await db('/proposals?id=eq.' + p.id, { method: 'PATCH', body: { status: e.target.value }, headers: { Prefer: 'return=minimal' } }); loadProps(); } },
+    const sel = el('select', { 'aria-label': 'Stato della proposta', onchange: async (e) => { await db((t) => Core.fs.update(cfg, 'proposals', p.id, { status: e.target.value }, t)); loadProps(); } },
       ...STATUSES.map((s) => { const o = el('option', { value: s }, s); if (s === p.status) o.selected = true; return o; }));
     return el('article', { class: 'p-item s-' + p.status },
-      el('div', { class: 'p-top' }, el('span', { class: 'tag' }, p.category), el('span', { class: 'tag place' }, '📍 ' + p.place), el('span', {}, fmt(p.created_at))),
+      el('div', { class: 'p-top' }, el('span', { class: 'tag' }, p.category), el('span', { class: 'tag place' }, '📍 ' + p.place), el('span', {}, fmt(p.createTime))),
       el('p', {}, p.text),
-      el('div', { class: 'p-actions' }, sel, el('button', { class: 'mini danger', onclick: async () => { if (confirm('Eliminare questa proposta?')) { await db('/proposals?id=eq.' + p.id, { method: 'DELETE' }); loadProps(); } } }, 'Elimina')));
+      el('div', { class: 'p-actions' }, sel, el('button', { class: 'mini danger', onclick: async () => { if (confirm('Eliminare questa proposta?')) { await db((t) => Core.fs.remove(cfg, 'proposals', p.id, t)); loadProps(); } } }, 'Elimina')));
   }));
 }
 $('#f-status').addEventListener('change', renderProps);
 $('#f-cat').addEventListener('change', renderProps);
 $('#csv').addEventListener('click', () => {
   const esc = (v) => `"${String(v).replace(/"/g, '""')}"`;
-  const rows = [['data', 'categoria', 'luogo', 'stato', 'proposta'].join(',')].concat(proposals.map((p) => [p.created_at, p.category, p.place, p.status, p.text].map(esc).join(',')));
+  const rows = [['data', 'categoria', 'luogo', 'stato', 'proposta'].join(',')].concat(proposals.map((p) => [p.createTime, p.category, p.place, p.status, p.text].map(esc).join(',')));
   download('proposte-mira.csv', blobUrl('﻿' + rows.join('\n'), 'text/csv;charset=utf-8'));
 });
 
@@ -143,7 +148,7 @@ async function start() {
   if (!s || s.exp < Date.now()) return showLogin();
   token = s.token;
   $('#login').hidden = true; $('#app').hidden = false;
-  try { await Promise.all([loadQrs(), loadProps()]); } catch (e) { if (e.message !== 'auth') flash($('#qr-err'), 'Errore nel caricamento: ' + e.message, false); }
+  try { await loadProps(); await loadQrs(); } catch (e) { if (e.message !== 'auth') flash($('#qr-err'), 'Errore nel caricamento: ' + e.message, false); }
 }
 
 (async () => {
@@ -151,7 +156,7 @@ async function start() {
   if (!Core.configured(cfg)) {
     $('#login').hidden = false; $('#login-form button').disabled = true;
     const s = $('#setup'); s.hidden = false;
-    s.textContent = 'Il database non è ancora collegato: inserisci url e anonKey di Supabase in config/site.json (vedi README).';
+    s.textContent = 'Il database non è ancora collegato: inserisci apiKey e projectId di Firebase in config/site.json (vedi README).';
     return;
   }
   start();
