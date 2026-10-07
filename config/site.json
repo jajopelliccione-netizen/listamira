@@ -7,8 +7,8 @@
     "year": "Elezioni d’istituto 2026/27",
     "contacts": {
       "email": "lista.mira@example.com",
-      "instagram": "https://instagram.com/listamira",
-      "instagramHandle": "@listamira"
+      "instagram": "https://www.instagram.com/lista.mirai",
+      "instagramHandle": "@lista.mirai"
     },
     "schoolInfo": {
       "address": "Via Conte Verde 51, 00185 Roma",
@@ -54,15 +54,15 @@
       "items": [
         {
           "title": "Segnalazioni degli studenti",
-          "text": "Un sistema semplice e diretto per raccogliere segnalazioni, problemi e proposte."
+          "text": "Creare un sistema semplice e diretto per raccogliere segnalazioni, problemi e proposte degli studenti."
         },
         {
           "title": "Community WhatsApp",
-          "text": "Valorizzare la community già esistente per comunicare in modo rapido eventi, iniziative e informazioni importanti."
+          "text": "Utilizzare e valorizzare la Community WhatsApp già esistente per comunicare in modo rapido eventi, iniziative e informazioni importanti."
         },
         {
           "title": "Period Box",
-          "text": "Assorbenti e prodotti igienici essenziali a disposizione gratuitamente per le studentesse."
+          "text": "Mettere a disposizione gratuitamente assorbenti e prodotti igienici essenziali per le studentesse."
         }
       ]
     },
@@ -72,31 +72,31 @@
       "items": [
         {
           "title": "Tornei tra classi",
-          "text": "Tornei sportivi tra le classi e, se possibile, sfide anche con altri istituti."
+          "text": "Organizzare tornei sportivi tra le classi. Valutare la possibilità di organizzare sfide e tornei anche con altri istituti."
         },
         {
           "title": "Settimana dello Studente",
-          "text": "Tornei sportivi, e-sport, cineforum, corsi e workshop: attività proposte direttamente dagli studenti."
+          "text": "Una settimana dedicata agli studenti con: tornei sportivi, e-sport, cineforum, corsi e workshop, attività proposte direttamente dagli studenti."
         },
         {
           "title": "Snow Galilei",
-          "text": "Lo Snow Galilei come evento separato, dedicato agli studenti."
+          "text": "Tutta la scuola un giorno sulla neve, con attrezzatura e DJ set."
         },
         {
           "title": "Fashion Week",
-          "text": "Giornate ed eventi a tema moda, stile e creatività."
+          "text": "Una settimana all’insegna della moda, che classe vincerà?"
         },
         {
           "title": "Galile’s Got Talent",
-          "text": "Un vero palco per mostrare talenti, passioni e capacità."
+          "text": "Un vero palco per permettere agli studenti di mostrare talenti, passioni e capacità."
         },
         {
           "title": "Eventi serali",
-          "text": "Serate a tema in discoteca e aperitivi per i maggiorenni, nel rispetto delle regole della scuola e dei locali."
+          "text": "Organizzare serate a tema in discoteca. Creare eventi e aperitivi dedicati a tutti gli studenti."
         },
         {
           "title": "Box di San Valentino",
-          "text": "Un’iniziativa per lasciare dediche, messaggi e pensieri."
+          "text": "Un’iniziativa per permettere agli studenti di lasciare dediche, messaggi e pensieri, recapitati direttamente ai diretti interessati."
         }
       ]
     },
@@ -106,19 +106,19 @@
       "items": [
         {
           "title": "I temi li scegliamo noi",
-          "text": "Raccogliere i suggerimenti degli studenti e farli proporre gli argomenti delle assemblee."
+          "text": "Raccogliere i suggerimenti degli studenti e permettere loro di proporre gli argomenti delle assemblee."
         },
         {
           "title": "Più ospiti",
-          "text": "Esperti, professionisti e persone con esperienze interessanti da portare a scuola."
+          "text": "Invitare più esperti, professionisti e persone con esperienze interessanti da portare a scuola."
         },
         {
           "title": "Dibattiti e confronti",
-          "text": "Assemblee davvero partecipative, con domande, dibattiti e confronto tra studenti e ospiti."
+          "text": "Trasformare le assemblee in momenti realmente partecipativi, con domande, dibattiti e confronto tra studenti e ospiti."
         },
         {
           "title": "Orientamento",
-          "text": "Momenti di orientamento universitario e professionale, con informazioni concrete sul dopo liceo."
+          "text": "Dedicare momenti all’orientamento universitario e professionale, con informazioni concrete sul dopo il liceo."
         }
       ]
     },
@@ -128,11 +128,11 @@
       "items": [
         {
           "title": "Gadget d’istituto",
-          "text": "Gadget della scuola e della lista: felpe, magliette, adesivi e altri prodotti."
+          "text": "Creare gadget della scuola: felpe, magliette, accendini e altri prodotti."
         },
         {
           "title": "Comunicazione social",
-          "text": "I social per informare sulle iniziative, raccontare gli eventi e aggiornare tutti sui progetti portati avanti dalla lista."
+          "text": "Utilizzare i social per informare gli studenti sulle iniziative, raccontare gli eventi e aggiornare tutti sui progetti portati avanti dalla lista."
         }
       ]
     }

@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@500;700;800&display=swap");
+:root{--bg:#12062b;--v:#4c1d95;--v2:#6d28d9;--lil:#c4b5fd;--gold:#ffc42e;--ink:#12062b}
+*{box-sizing:border-box;margin:0}
+html,body{background:#12062b}
+body{font-family:"DM Sans",sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{position:relative;overflow:hidden;color:#fff;background:var(--bg)}
+.blob{position:absolute;border-radius:50%;filter:blur(70px)}
+.A{font-family:"Anton",Impact,sans-serif;text-transform:uppercase;line-height:.92}
+.gold{color:var(--gold)}
+.outw{color:transparent;-webkit-text-stroke:3px #fff}
+.outg{color:transparent;-webkit-text-stroke:3px var(--gold)}
+.sticker{position:absolute;z-index:20;font:800 22px "DM Sans";letter-spacing:.06em;text-transform:uppercase;padding:11px 24px;border-radius:99px;box-shadow:0 12px 26px -10px rgba(0,0,0,.6)}
+.sticker.w{background:#fff;color:var(--ink)}.sticker.g{background:var(--gold);color:var(--ink)}
+.qr svg{display:block;width:100%;height:100%}

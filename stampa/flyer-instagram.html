@@ -1,0 +1,41 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><link rel="stylesheet" href="base.css">
+<style>
+@page{size:210mm 297mm;margin:0}
+.page{width:794px;height:1123px}
+.blob.a{width:700px;height:700px;background:#7c3aed;right:-300px;top:260px;opacity:.9}
+.blob.b{width:620px;height:620px;background:#ffb020;left:-300px;bottom:-240px;opacity:.55}
+.stripes{position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 250px,rgba(124,58,237,.16) 250px 300px)}
+.top{position:absolute;left:48px;right:48px;top:40px;display:flex;justify-content:space-between;align-items:center;font:800 15px "DM Sans";letter-spacing:.18em;text-transform:uppercase;z-index:5}
+.top .b{display:flex;align-items:center;gap:10px}.top img{height:40px}.top .n{color:var(--gold)}
+.h{position:absolute;left:44px;top:100px;z-index:6}
+.h .l{font-size:128px}
+.h .m{font-size:262px;margin-top:-4px}
+.school{position:absolute;left:52px;top:496px;font:800 21px "DM Sans";letter-spacing:.34em;text-transform:uppercase;z-index:6}
+.claim{position:absolute;left:52px;top:536px;font:400 58px/1 "Anton";text-transform:uppercase;z-index:6}
+.fox{position:absolute;right:38px;top:84px;width:215px;transform:rotate(7deg);z-index:3;filter:drop-shadow(0 30px 40px rgba(0,0,0,.5))}
+.card{position:absolute;right:52px;bottom:70px;width:352px;height:352px;background:#fff;border-radius:46px;transform:rotate(4deg);z-index:8;padding:30px;box-shadow:0 36px 60px -22px rgba(0,0,0,.7)}
+.card .qr{width:100%;height:100%}
+.card .sticker{top:-26px;left:50%;transform:translateX(-50%) rotate(-3deg);white-space:nowrap;font-size:20px}
+.follow{position:absolute;left:52px;bottom:78px;z-index:8;width:340px}
+.follow .p{display:inline-block;background:var(--gold);color:var(--ink);font:800 24px "DM Sans";letter-spacing:.04em;text-transform:uppercase;padding:14px 28px;border-radius:99px}
+.follow .hd{font:400 54px/.98 "Anton";text-transform:uppercase;margin:0 0 24px}
+.follow .at{margin-top:18px;font:800 30px "DM Sans"}
+.follow small{display:block;margin-top:6px;font:500 15px "DM Sans";opacity:.8}
+</style></head><body>
+<div class="page" id="p">
+ <div class="blob a"></div><div class="blob b"></div><div class="stripes"></div>
+ <div class="top"><span class="b"><img src="../assets/fox-96.png" alt="">Mirai</span><span class="n">Elezioni d’istituto</span></div>
+ <img class="fox" src="../assets/fox.png" alt="">
+ <div class="h A"><div class="l outw">Lista</div><div class="m gold">Mirai</div></div>
+ <div class="school">Galileo Galilei</div>
+ <div class="claim">Il futuro <span class="gold">inizia da noi.</span></div>
+ <div class="follow">
+  <div class="hd">Seguici<br><span class="gold">su Instagram</span></div>
+  <span class="p">Scansiona il QR →</span>
+  <div class="at">@lista.mirai</div>
+ </div>
+ <div class="card"><span class="sticker g">Scansiona per seguirci</span><div class="qr" id="qr"></div></div>
+</div>
+<script src="qrcode.js"></script><script src="qr.js"></script>
+<script>drawQR(document.getElementById('qr'),'https://www.instagram.com/lista.mirai');</script>
+</body></html>

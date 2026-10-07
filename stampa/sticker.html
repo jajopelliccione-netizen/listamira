@@ -1,0 +1,27 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><link rel="stylesheet" href="base.css">
+<style>
+@page{size:84mm 84mm;margin:0}
+html,body{background:transparent}
+.page{width:600px;height:600px;border-radius:50%;background:radial-gradient(420px 360px at 85% 5%,rgba(255,196,46,.38),transparent 62%),radial-gradient(420px 420px at 0% 100%,rgba(124,58,237,.8),transparent 60%),#1d0a45;box-shadow:inset 0 0 0 14px var(--gold),inset 0 0 0 18px #1d0a45,inset 0 0 0 20px rgba(255,196,46,.7)}
+.ring{position:absolute;inset:0;width:100%;height:100%}
+.ring text{font:400 52px "Anton";letter-spacing:.14em;text-transform:uppercase}
+.fox{position:absolute;left:50%;top:92px;width:80px;transform:translateX(-50%);z-index:3}
+.card{position:absolute;left:50%;top:306px;transform:translate(-50%,-50%);width:290px;height:290px;background:#fff;border-radius:34px;padding:18px;box-shadow:0 20px 34px -14px rgba(0,0,0,.7)}
+.card .qr{width:100%;height:100%}
+.tag{position:absolute;left:50%;top:50px;transform:translateX(-50%)}
+.sticker{font-size:17px;padding:8px 20px;white-space:nowrap}
+.at{position:absolute;left:50%;top:436px;transform:translateX(-50%);background:var(--gold);color:var(--ink);font:800 22px "DM Sans";letter-spacing:.02em;padding:8px 22px;border-radius:99px;white-space:nowrap;box-shadow:0 10px 20px -8px rgba(0,0,0,.7)}
+</style></head><body>
+<div class="page" id="p">
+ <svg class="ring" viewBox="0 0 600 600" aria-hidden="true">
+  <defs><path id="top" d="M 68 300 A 232 232 0 0 1 532 300"/><path id="bot" d="M 38 300 A 262 262 0 0 0 562 300"/></defs>
+  <text fill="#ffc42e" text-anchor="middle"><textPath href="#top" startOffset="50%">Lista Mirai</textPath></text>
+  <text fill="#fff" text-anchor="middle" style="font-size:40px;letter-spacing:.2em"><textPath href="#bot" startOffset="50%" side="left">Galileo Galilei</textPath></text>
+ </svg>
+ <img class="fox" src="../assets/fox.png" alt="">
+ <div class="card"><div class="qr" id="qr"></div></div>
+ <div class="at">@lista.mirai</div>
+</div>
+<script src="qrcode.js"></script><script src="qr.js"></script>
+<script>drawQR(document.getElementById('qr'),'https://www.instagram.com/lista.mirai');</script>
+</body></html>
