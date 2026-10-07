@@ -47,7 +47,7 @@ a { color: inherit; }
 .site-header { position: sticky; top: 0; z-index: 50; background: rgba(30, 10, 74, .92); backdrop-filter: blur(12px); color: #fff; }
 .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 800 1.45rem var(--font-display); }
-.brand-mark { width: 38px; height: 38px; border-radius: 50%; }
+.brand-mark { height: 46px; width: auto; flex: none; }
 .nav-links { display: none; gap: 26px; list-style: none; margin: 0; padding: 0; }
 .nav-links a { text-decoration: none; font-weight: 500; opacity: .9; padding: 8px 2px; }
 .nav-links a:hover { opacity: 1; color: var(--orange-300); }
