@@ -13,15 +13,50 @@ p.s{margin:12px 0 26px;color:#ddd6fe}
 .c h2{font:400 1.7rem/1 "Anton",Impact,sans-serif;text-transform:uppercase}
 .c p{margin:6px 0 14px;color:#5b5670;font-size:.95rem}
 .c b{color:#12062b}
-a.b{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:99px;background:#ffc42e;color:#12062b;font-weight:800;text-decoration:none;font-size:1.05rem}
-a.b:active{transform:scale(.98)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:54px;border:0;border-radius:99px;background:#ffc42e;color:#12062b;font:800 1.05rem "DM Sans",sans-serif;text-decoration:none;cursor:pointer}
+.btn:active{transform:scale(.98)}
+.btn[disabled]{opacity:.7;cursor:wait}
+.btn.ok{background:#16a34a;color:#fff}
+.hint{margin-top:10px;font-size:.88rem;color:#16a34a;font-weight:700;text-align:center}
+.err{margin-top:10px;font-size:.9rem;color:#b91c1c;font-weight:700;text-align:center}
 small{display:block;margin-top:22px;color:#c4b5fd;font-size:.85rem;line-height:1.5}
 </style></head><body><main>
 <img class="l" src="../assets/logo.png" alt="Lista Mirai">
 <h1>Scarica i <span>file</span></h1>
-<p class="s">PDF pronti per la stampa. Carica questi file in tipografia.</p>
-<div class="c"><h2>Volantino progetti</h2><p>A5 verticale · file <b>150×212 mm</b> (formato finale 148×210 + 1 mm di abbondanza per lato)</p><a class="b" href="volantino-progetti-A5.pdf" download>⬇ Scarica PDF</a></div>
-<div class="c"><h2>Volantino Instagram</h2><p>A5 verticale · file <b>150×212 mm</b> (formato finale 148×210 + 1 mm di abbondanza per lato)</p><a class="b" href="volantino-instagram-A5.pdf" download>⬇ Scarica PDF</a></div>
-<div class="c"><h2>Adesivo rotondo</h2><p>Taglio <b>Ø 80 mm</b> · file quadrato <b>84×84 mm</b> (2 mm di abbondanza per lato)</p><a class="b" href="sticker-rotondo-80mm.pdf" download>⬇ Scarica PDF</a></div>
+<p class="s">PDF pronti per la stampa. Tocca “Scarica”, poi “Salva il PDF”.</p>
+
+<div class="c"><h2>Volantino progetti</h2><p>A5 verticale · file <b>150×212 mm</b> (formato finale 148×210 + 1 mm di abbondanza per lato)</p><div class="slot" data-file="volantino-progetti-A5.pdf"></div></div>
+<div class="c"><h2>Volantino Instagram</h2><p>A5 verticale · file <b>150×212 mm</b> (formato finale 148×210 + 1 mm di abbondanza per lato)</p><div class="slot" data-file="volantino-instagram-A5.pdf"></div></div>
+<div class="c"><h2>Adesivo rotondo</h2><p>Taglio <b>Ø 80 mm</b> · file quadrato <b>84×84 mm</b> (2 mm di abbondanza per lato)</p><div class="slot" data-file="sticker-rotondo-80mm.pdf"></div></div>
 <small>Il QR dei volantini e dell'adesivo porta a instagram.com/lista.mirai.</small>
-</main></body></html>
+</main>
+<script>
+document.querySelectorAll('.slot').forEach(function (slot) {
+  var file = slot.dataset.file;
+  function render() {
+    slot.innerHTML = '';
+    var b = document.createElement('button'); b.className = 'btn'; b.type = 'button'; b.textContent = '⬇ Scarica';
+    b.addEventListener('click', prepare); slot.appendChild(b);
+  }
+  function fail() {
+    render();
+    var e = document.createElement('div'); e.className = 'err'; e.textContent = 'Non riesco a scaricare. Riprova.'; slot.appendChild(e);
+  }
+  function prepare() {
+    var btn = slot.querySelector('button'); btn.disabled = true; btn.textContent = 'Preparo il file…';
+    fetch(file, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+      .then(function (buf) {
+        // octet-stream: il browser salva il file invece di aprire l'anteprima
+        var url = URL.createObjectURL(new Blob([buf], { type: 'application/octet-stream' }));
+        slot.innerHTML = '';
+        var a = document.createElement('a'); a.className = 'btn ok'; a.href = url; a.download = file; a.textContent = '✔ Salva il PDF';
+        a.addEventListener('click', function () {
+          var h = slot.querySelector('.hint'); if (!h) { h = document.createElement('div'); h.className = 'hint'; slot.appendChild(h); }
+          h.textContent = 'Download avviato. Lo trovi nei file scaricati.';
+        });
+        slot.appendChild(a);
+      }).catch(fail);
+  }
+  render();
+});
+</script></body></html>
