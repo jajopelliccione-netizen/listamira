@@ -1,88 +1,85 @@
 <!doctype html><html lang="it"><head><meta charset="utf-8"><link rel="stylesheet" href="base.css">
 <style>
-@page{size:210mm 297mm;margin:0}
-.page{width:794px;height:1123px}
-.blob.a{width:620px;height:620px;background:#7c3aed;right:-260px;top:-120px;opacity:.85}
-.blob.b{width:520px;height:520px;background:#ffb020;left:-260px;bottom:-200px;opacity:.5}
-.top{position:absolute;left:44px;right:44px;top:34px;display:flex;justify-content:space-between;align-items:center;font:800 15px "DM Sans";letter-spacing:.18em;text-transform:uppercase;z-index:5}
-.top .b{display:flex;align-items:center;gap:10px}.top img{height:38px}.top .n{color:var(--gold)}
-h1{position:absolute;left:44px;top:84px;font-size:96px;z-index:5}
-.sub{position:absolute;left:44px;top:196px;font:800 22px "DM Sans";z-index:5;display:flex;align-items:center;gap:12px}
-.sub i{display:inline-block;width:46px;height:5px;background:var(--gold);border-radius:3px}
-.grid{position:absolute;left:44px;right:44px;top:250px;bottom:134px;display:grid;grid-template-columns:1fr 1fr;gap:14px;z-index:5}
-.col{display:flex;flex-direction:column;gap:14px;min-height:0}
-.t{border-radius:26px;padding:18px 20px 16px;display:flex;flex-direction:column;gap:9px}
-.t.f1{flex:1}
-.t .h{display:flex;align-items:center;gap:10px;margin-bottom:2px}
-.t .no{font:400 38px/1 "Anton";opacity:.95}
-.t h2{font:400 25px/1 "Anton";text-transform:uppercase;letter-spacing:.01em}
-.it b{display:block;font:800 15.5px/1.15 "DM Sans"}
-.it span{display:block;font:500 12.6px/1.3 "DM Sans";opacity:.92;margin-top:2px}
+/* A5 verticale: file 150 x 212 mm (formato finale 148 x 210 + 1 mm di abbondanza per lato) */
+@page{size:150mm 212mm;margin:0}
+.page{width:150mm;height:212mm}
+.blob{filter:blur(55px)}
+.blob.a{width:420px;height:420px;background:#7c3aed;right:-190px;top:-90px;opacity:.85}
+.blob.b{width:360px;height:360px;background:#ffb020;left:-190px;bottom:-150px;opacity:.5}
+.in{position:absolute;left:7mm;right:7mm;top:7mm;bottom:7mm;z-index:5;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center;font:800 8.5px "DM Sans";letter-spacing:.18em;text-transform:uppercase}
+.top .b{display:flex;align-items:center;gap:6px}.top img{height:24px}.top .n{color:var(--gold)}
+h1{font-size:60px;margin-top:6px}
+.sub{font:800 13px "DM Sans";display:flex;align-items:center;gap:8px;margin:6px 0 9px}
+.sub i{display:inline-block;width:30px;height:4px;background:var(--gold);border-radius:3px}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.col{display:flex;flex-direction:column;gap:8px;min-height:0}
+.t{border-radius:16px;padding:10px 11px 9px;display:flex;flex-direction:column;gap:4.5px}
+.f1{flex:1}
+.t .h{display:flex;align-items:center;gap:6px;margin-bottom:1px}
+.t .no{font:400 25px/1 "Anton"}
+.t h2{font:400 16.5px/1.02 "Anton";text-transform:uppercase;letter-spacing:.01em}
+.it b{display:block;font:800 10.9px/1.12 "DM Sans"}
+.it span{display:block;font:500 9.4px/1.24 "DM Sans";opacity:.94;margin-top:1px}
 .t.gold{background:var(--gold);color:var(--ink)}
-.t.vi{background:linear-gradient(150deg,#5b21b6,#7c3aed);color:#fff;border:2px solid rgba(255,255,255,.25)}
+.t.vi{background:linear-gradient(150deg,#5b21b6,#7c3aed);color:#fff;border:1.5px solid rgba(255,255,255,.25)}
 .t.li{background:var(--lil);color:var(--ink)}
 .t.wh{background:#fff;color:var(--ink)}
-.foot{position:absolute;left:44px;right:44px;bottom:30px;height:88px;display:flex;align-items:center;gap:18px;z-index:5}
-.foot img{height:70px}
-.foot .tx b{display:block;font:400 34px/1 "Anton";text-transform:uppercase}
-.foot .tx span{font:700 14px "DM Sans";color:var(--gold)}
+.note{margin-top:auto;background:var(--ink);color:#fff;border-radius:11px;padding:6px 9px;font:500 9.4px/1.3 "DM Sans"}.note b{color:var(--gold);font-weight:800}
+.foot{height:62px;margin-top:9px;display:flex;align-items:center;gap:10px}
+.foot img{height:50px}
+.foot .tx b{display:block;font:400 21px/1 "Anton";text-transform:uppercase}
 .foot .sp{flex:1}
-.follow{display:flex;align-items:center;gap:12px;background:#fff;color:var(--ink);border-radius:22px;padding:8px 14px 8px 8px}
-.follow .qr{width:72px;height:72px}
-.follow b{display:block;font:800 13px "DM Sans";letter-spacing:.06em;text-transform:uppercase;color:var(--v)}
-.follow span{font:800 17px "DM Sans"}
-.note{margin-top:auto;background:var(--ink);color:#fff;border-radius:18px;padding:11px 15px;font:500 12.5px/1.3 "DM Sans"}.note b{color:var(--gold);font-weight:800}
+.follow{display:flex;align-items:center;gap:8px;background:#fff;color:var(--ink);border-radius:14px;padding:5px 9px 5px 5px}
+.follow .qr{width:56px;height:56px}
+.follow b{display:block;font:800 8px "DM Sans";letter-spacing:.06em;text-transform:uppercase;color:var(--v)}
+.follow span{font:800 10.5px "DM Sans"}
 </style></head><body>
 <div class="page" id="p">
  <div class="blob a"></div><div class="blob b"></div>
- <div class="top"><span class="b"><img src="../assets/fox-96.png" alt="">Lista Mirai</span><span class="n">ITIS Galileo Galilei</span></div>
- <h1 class="A">I nostri <span class="gold">progetti</span></h1>
- <div class="sub"><i></i>Idee concrete, studenti protagonisti</div>
- <div class="grid">
-  <div class="col">
-   <div class="t gold f1"><div class="h"><span class="no">01</span><h2>Vita scolastica</h2></div>
-    <div class="it"><b>Segnalazioni degli studenti</b><span>Creare un sistema semplice e diretto per raccogliere segnalazioni, problemi e proposte degli studenti.</span></div>
-    <div class="it"><b>Community WhatsApp</b><span>Utilizzare e valorizzare la Community WhatsApp già esistente per comunicare in modo rapido eventi, iniziative e informazioni importanti.</span></div>
-    <div class="it"><b>Period Box</b><span>Mettere a disposizione gratuitamente assorbenti e prodotti igienici essenziali per le studentesse.</span></div>
-    <div class="note"><b>Hai un’idea?</b> Cerca i QR in giro per la scuola e scrivila, in modo anonimo.</div>
+ <div class="in">
+  <div class="top"><span class="b"><img src="../assets/fox-96.png" alt="">Lista Mirai</span><span class="n">ITIS Galileo Galilei</span></div>
+  <h1 class="A">I nostri <span class="gold">progetti</span></h1>
+  <div class="sub"><i></i>Idee concrete, studenti protagonisti</div>
+  <div class="grid">
+   <div class="col">
+    <div class="t gold f1"><div class="h"><span class="no">01</span><h2>Vita scolastica</h2></div>
+     <div class="it"><b>Segnalazioni degli studenti</b><span>Creare un sistema semplice e diretto per raccogliere segnalazioni, problemi e proposte degli studenti.</span></div>
+     <div class="it"><b>Community WhatsApp</b><span>Utilizzare e valorizzare la Community WhatsApp già esistente per comunicare in modo rapido eventi, iniziative e informazioni importanti.</span></div>
+     <div class="it"><b>Period Box</b><span>Mettere a disposizione gratuitamente assorbenti e prodotti igienici essenziali per le studentesse.</span></div>
+     <div class="note"><b>Hai un’idea?</b> Cerca i QR in giro per la scuola e scrivila, in modo anonimo.</div>
+    </div>
+    <div class="t li f1"><div class="h"><span class="no">03</span><h2>Assemblee d’istituto</h2></div>
+     <div class="it"><b>I temi li scegliamo noi</b><span>Raccogliere i suggerimenti degli studenti e permettere loro di proporre gli argomenti delle assemblee.</span></div>
+     <div class="it"><b>Più ospiti</b><span>Invitare più esperti, professionisti e persone con esperienze interessanti da portare a scuola.</span></div>
+     <div class="it"><b>Dibattiti e confronti</b><span>Trasformare le assemblee in momenti realmente partecipativi, con domande, dibattiti e confronto tra studenti e ospiti.</span></div>
+     <div class="it"><b>Orientamento</b><span>Dedicare momenti all’orientamento universitario e professionale, con informazioni concrete sul dopo il liceo.</span></div>
+    </div>
    </div>
-   <div class="t li f1"><div class="h"><span class="no">03</span><h2>Assemblee d’istituto</h2></div>
-    <div class="it"><b>I temi li scegliamo noi</b><span>Raccogliere i suggerimenti degli studenti e permettere loro di proporre gli argomenti delle assemblee.</span></div>
-    <div class="it"><b>Più ospiti</b><span>Invitare più esperti, professionisti e persone con esperienze interessanti da portare a scuola.</span></div>
-    <div class="it"><b>Dibattiti e confronti</b><span>Trasformare le assemblee in momenti realmente partecipativi, con domande, dibattiti e confronto tra studenti e ospiti.</span></div>
-    <div class="it"><b>Orientamento</b><span>Dedicare momenti all’orientamento universitario e professionale, con informazioni concrete sul dopo il liceo.</span></div>
+   <div class="col">
+    <div class="t vi f1"><div class="h"><span class="no">02</span><h2>Eventi e socialità</h2></div>
+     <div class="it"><b>Tornei tra classi</b><span>Organizzare tornei sportivi tra le classi. Valutare la possibilità di organizzare sfide e tornei anche con altri istituti.</span></div>
+     <div class="it"><b>Settimana dello Studente</b><span>Una settimana dedicata agli studenti con: tornei sportivi, e-sport, cineforum, corsi e workshop, attività proposte direttamente dagli studenti.</span></div>
+     <div class="it"><b>Snow Galilei</b><span>Tutta la scuola un giorno sulla neve, con attrezzatura e DJ set.</span></div>
+     <div class="it"><b>Fashion Week</b><span>Una settimana all’insegna della moda, che classe vincerà?</span></div>
+     <div class="it"><b>Galile’s Got Talent</b><span>Un vero palco per permettere agli studenti di mostrare talenti, passioni e capacità.</span></div>
+     <div class="it"><b>Eventi serali</b><span>Organizzare serate a tema in discoteca. Creare eventi e aperitivi dedicati a tutti gli studenti.</span></div>
+     <div class="it"><b>Box di San Valentino</b><span>Un’iniziativa per permettere agli studenti di lasciare dediche, messaggi e pensieri, recapitati direttamente ai diretti interessati.</span></div>
+    </div>
+    <div class="t wh"><div class="h"><span class="no">04</span><h2>Mirai Social</h2></div>
+     <div class="it"><b>Gadget d’istituto</b><span>Creare gadget della scuola: felpe, magliette, accendini e altri prodotti.</span></div>
+     <div class="it"><b>Comunicazione social</b><span>Utilizzare i social per informare gli studenti sulle iniziative, raccontare gli eventi e aggiornare tutti sui progetti portati avanti dalla lista.</span></div>
+    </div>
    </div>
   </div>
-  <div class="col">
-   <div class="t vi f1"><div class="h"><span class="no">02</span><h2>Eventi e socialità</h2></div>
-    <div class="it"><b>Tornei tra classi</b><span>Organizzare tornei sportivi tra le classi. Valutare la possibilità di organizzare sfide e tornei anche con altri istituti.</span></div>
-    <div class="it"><b>Settimana dello Studente</b><span>Una settimana dedicata agli studenti con: tornei sportivi, e-sport, cineforum, corsi e workshop, attività proposte direttamente dagli studenti.</span></div>
-    <div class="it"><b>Snow Galilei</b><span>Tutta la scuola un giorno sulla neve, con attrezzatura e DJ set.</span></div>
-    <div class="it"><b>Fashion Week</b><span>Una settimana all’insegna della moda, che classe vincerà?</span></div>
-    <div class="it"><b>Galile’s Got Talent</b><span>Un vero palco per permettere agli studenti di mostrare talenti, passioni e capacità.</span></div>
-    <div class="it"><b>Eventi serali</b><span>Organizzare serate a tema in discoteca. Creare eventi e aperitivi dedicati a tutti gli studenti.</span></div>
-    <div class="it"><b>Box di San Valentino</b><span>Un’iniziativa per permettere agli studenti di lasciare dediche, messaggi e pensieri, recapitati direttamente ai diretti interessati.</span></div>
-   </div>
-   <div class="t wh"><div class="h"><span class="no">04</span><h2>Mirai Social</h2></div>
-    <div class="it"><b>Gadget d’istituto</b><span>Creare gadget della scuola: felpe, magliette, accendini e altri prodotti.</span></div>
-    <div class="it"><b>Comunicazione social</b><span>Utilizzare i social per informare gli studenti sulle iniziative, raccontare gli eventi e aggiornare tutti sui progetti portati avanti dalla lista.</span></div>
-   </div>
+  <div class="foot">
+   <img src="../assets/logo.png" alt="">
+   <div class="tx"><b>Il futuro<br><span class="gold">inizia da noi.</span></b></div>
+   <div class="sp"></div>
+   <div class="follow"><div class="qr" id="qr"></div><div><b>Seguici</b><span>@lista.mirai</span></div></div>
   </div>
- </div>
- <div class="foot">
-  <img src="../assets/logo.png" alt="">
-  <div class="tx"><b>Il futuro<br><span style="font:inherit" class="gold">inizia da noi.</span></b></div>
-  <div class="sp"></div>
-  <div class="follow"><div class="qr" id="qr"></div><div><b>Seguici</b><span>@lista.mirai</span></div></div>
  </div>
 </div>
 <script src="qrcode.js"></script><script src="qr.js"></script>
 <script>drawQR(document.getElementById('qr'),'https://www.instagram.com/lista.mirai');</script>
 </body></html>
-<style>
-.col:nth-child(2) .it span{font-size:11.7px;line-height:1.26}
-.col:nth-child(2) .it b{font-size:14.6px}
-.col:nth-child(2) .t{gap:7px;padding:15px 18px 14px}
-.col:nth-child(2) .t .no{font-size:34px}.col:nth-child(2) .t h2{font-size:23px}
-.grid{top:244px;bottom:128px}
-</style>

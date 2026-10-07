@@ -1,7 +1,9 @@
 <!doctype html><html lang="it"><head><meta charset="utf-8"><link rel="stylesheet" href="base.css">
 <style>
-@page{size:210mm 297mm;margin:0}
-.page{width:794px;height:1123px}
+@page{size:150mm 212mm;margin:0}
+.page{width:150mm;height:212mm}
+.sc{position:absolute;left:0;top:0;width:794px;height:1123px;transform:scale(.7139);transform-origin:0 0}
+.sc>.page,.sc{overflow:visible}
 .blob.a{width:700px;height:700px;background:#7c3aed;right:-300px;top:260px;opacity:.9}
 .blob.b{width:620px;height:620px;background:#ffb020;left:-300px;bottom:-240px;opacity:.55}
 .stripes{position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 250px,rgba(124,58,237,.16) 250px 300px)}
@@ -22,7 +24,7 @@
 .follow .at{margin-top:18px;font:800 30px "DM Sans"}
 .follow small{display:block;margin-top:6px;font:500 15px "DM Sans";opacity:.8}
 </style></head><body>
-<div class="page" id="p">
+<div class="page" id="p"><div class="sc">
  <div class="blob a"></div><div class="blob b"></div><div class="stripes"></div>
  <div class="top"><span class="b"><img src="../assets/fox-96.png" alt="">Mirai</span><span class="n">Elezioni d’istituto</span></div>
  <img class="fox" src="../assets/fox.png" alt="">
@@ -35,7 +37,7 @@
   <div class="at">@lista.mirai</div>
  </div>
  <div class="card"><span class="sticker g">Scansiona per seguirci</span><div class="qr" id="qr"></div></div>
-</div>
+</div></div>
 <script src="qrcode.js"></script><script src="qr.js"></script>
 <script>drawQR(document.getElementById('qr'),'https://www.instagram.com/lista.mirai');</script>
 </body></html>
