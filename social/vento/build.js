@@ -1,4 +1,4 @@
-// Post (1080x1350) e storie (1080x1920) "Levante": ironia sul vento, mai attacchi personali.
+// Post (1080x1350) e storie (1080x1920) sul tema vento: ironia, mai attacchi personali.
 const fs = require('fs');
 const P = 'post', S = 'storia';
 const D = [
