@@ -17,7 +17,7 @@ Sito di presentazione della lista (ITIS Galileo Galilei, Roma) + area proposte a
 6. Commit/push: GitHub Pages ripubblica da solo.
 
 ## Uso
-- **/admin/** → email/password dell'admin. Crea i QR (uno per posto), scarica PNG/SVG o stampa cartelli A4, disattiva i QR, leggi le proposte, cambia stato, esporta CSV.
+- **/admin/** → email/password dell’admin. Crea i QR (uno per posto), scarica il **foglio A4 grafico (PDF o PNG)** con logo e istruzioni, oppure solo il QR (PNG/SVG), o stampa, disattiva i QR, leggi le proposte, cambia stato, esporta CSV.
 - Il QR apre `proponi.html?c=<codice>`. Il codice è l'ID di un documento Firestore che non si può elencare: senza averlo scansionato non si può inviare nulla, e la regola di sicurezza accetta proposte solo per QR attivi. Sessione di 20 minuti.
 - Testi del sito: `config/site.json`.
 

@@ -47,19 +47,16 @@ code { background: var(--violet-100); padding: 1px 6px; border-radius: 6px; }
 .p-actions select { width: auto; padding: 8px 12px; min-height: 40px; font-size: .9rem; }
 .empty { text-align: center; color: var(--muted); padding: 40px 10px; background: #fff; border-radius: var(--radius); }
 
-/* stampa: un cartello A4 per QR */
+.mini.primary { background: var(--orange-500); border-color: var(--orange-500); color: #1b0a00; }
+.mini.primary:hover { background: #fdc650; border-color: #fdc650; }
+.mini[disabled], .btn[disabled] { opacity: .6; cursor: wait; }
+
+/* stampa: un foglio A4 (immagine già composta) per QR */
 #print-area { display: none; }
+@page { size: A4; margin: 0; }
 @media print {
   body.admin > *:not(#print-area) { display: none !important; }
   #print-area { display: block !important; }
-  .poster { page-break-after: always; break-after: page; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20mm; font-family: var(--font); color: var(--violet-900); }
-  .poster:last-child { page-break-after: auto; break-after: auto; }
-  .poster .p-logo { width: 38mm; height: 38mm; border: 0; border-radius: 50%; padding: 0; margin-bottom: 8pt; }
-  .poster .kick { background: var(--orange-500); color: #1b0a00; padding: 6px 18px; border-radius: 999px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; font-size: 14pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .poster h1 { font: 800 42pt var(--font-display); margin: 18pt 0 6pt; }
-  .poster h1 em { font-style: normal; color: var(--orange-600); }
-  .poster p { font-size: 16pt; margin: 0 0 22pt; }
-  .poster img { width: 105mm; height: 105mm; border: 6pt solid var(--violet-900); border-radius: 14pt; padding: 6pt; }
-  .poster .where { margin-top: 18pt; font-size: 12pt; color: #6b6585; }
-  .poster .foot { margin-top: 10pt; font: 800 20pt var(--font-display); color: var(--orange-600); }
+  .sheet { display: block; width: 210mm; height: 297mm; page-break-after: always; break-after: page; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .sheet:last-child { page-break-after: auto; break-after: auto; }
 }

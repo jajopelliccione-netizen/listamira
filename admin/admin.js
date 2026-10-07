@@ -79,9 +79,11 @@ function renderQrs() {
       el('span', { class: 'status-pill' }, q.active ? 'Attivo' : 'Disattivato'),
       el('div', { class: 'meta' }, el('span', {}, `👁 ${q.scans} scansioni`), el('span', {}, `💡 ${count} proposte`)),
       el('div', { class: 'actions' },
-        el('button', { class: 'mini', onclick: () => download(`qr-${slug(q.label)}.png`, qrPng(qrLink(q))) }, 'PNG'),
+        el('button', { class: 'mini primary', onclick: (e) => run(e, () => sheetPdf([q])) }, '⬇ Foglio A4 (PDF)'),
+        el('button', { class: 'mini', onclick: (e) => run(e, () => sheetPng(q)) }, 'A4 PNG'),
+        el('button', { class: 'mini', onclick: () => download(`qr-${slug(q.label)}.png`, qrPng(qrLink(q))) }, 'Solo QR'),
         el('button', { class: 'mini', onclick: () => download(`qr-${slug(q.label)}.svg`, blobUrl(qrSvg(qrLink(q)), 'image/svg+xml')) }, 'SVG'),
-        el('button', { class: 'mini', onclick: () => printQrs([q]) }, 'Stampa'),
+        el('button', { class: 'mini', onclick: (e) => run(e, () => printQrs([q])) }, 'Stampa'),
         el('button', { class: 'mini', onclick: () => toggleQr(q) }, q.active ? 'Disattiva' : 'Riattiva'),
         el('button', { class: 'mini danger', onclick: () => delQr(q) }, 'Elimina')));
   }));
@@ -96,18 +98,29 @@ async function delQr(q) {
   if (!confirm(`Eliminare il QR “${q.label}”? Se è già stampato smetterà di funzionare.`)) return;
   await db((t) => Core.fs.remove(cfg, 'qr_codes', q.id, t)); loadQrs();
 }
-function printQrs(list) {
-  const area = $('#print-area');
-  area.replaceChildren(...list.filter((q) => q.active).map((q) => el('section', { class: 'poster' },
-    el('img', { class: 'p-logo', src: '../assets/logo.png', alt: '' }), el('span', { class: 'kick' }, 'Lista Mirai'),
-    el('h1', {}, 'Hai un’idea per la ', el('em', {}, 'scuola?')),
-    el('p', {}, 'Inquadra il QR e scrivici la tua proposta. È anonima.'),
-    el('img', { src: qrPng(qrLink(q)), alt: '' }),
-    el('div', { class: 'where' }, q.label), el('div', { class: 'foot' }, 'Il futuro inizia da noi.'))));
-  if (!area.children.length) return alert('Nessun QR attivo da stampare.');
-  setTimeout(() => window.print(), 150);
+/* ---- foglio A4 con grafica ---- */
+const sheetCanvas = (q) => Sheet.render(qrMatrix(qrLink(q)), q.label, siteBase());
+async function run(e, fn) { // disattiva il pulsante mentre lavora
+  const b = e.currentTarget, t = b.textContent; b.disabled = true; b.textContent = '…';
+  try { await fn(); } catch (ex) { alert('Non sono riuscito a creare il foglio: ' + ex.message); } finally { b.disabled = false; b.textContent = t; }
 }
-$('#print-all').addEventListener('click', () => printQrs(qrs));
+async function sheetPng(q) { download(`foglio-a4-${slug(q.label)}.png`, URL.createObjectURL(await Sheet.toBlob(await sheetCanvas(q)))); }
+async function sheetPdf(list) {
+  const act = list.filter((q) => q.active);
+  if (!act.length) return alert('Nessun QR attivo da scaricare.');
+  const blob = await Sheet.pdf(await Promise.all(act.map(sheetCanvas)));
+  download(act.length === 1 ? `foglio-a4-${slug(act[0].label)}.pdf` : 'fogli-a4-mirai.pdf', URL.createObjectURL(blob));
+}
+async function printQrs(list) {
+  const act = list.filter((q) => q.active);
+  if (!act.length) return alert('Nessun QR attivo da stampare.');
+  const urls = await Promise.all(act.map(async (q) => (await sheetCanvas(q)).toDataURL('image/jpeg', 0.92)));
+  $('#print-area').replaceChildren(...urls.map((u) => el('img', { class: 'sheet', src: u, alt: '' })));
+  await Promise.all([...document.querySelectorAll('#print-area img')].map((i) => i.decode().catch(() => {})));
+  window.print();
+}
+$('#print-all').addEventListener('click', (e) => run(e, () => printQrs(qrs)));
+$('#pdf-all').addEventListener('click', (e) => run(e, () => sheetPdf(qrs)));
 
 /* ---- proposte ---- */
 async function loadProps() { proposals = (await db((t) => Core.fs.list(cfg, 'proposals', t))).sort((x, y) => y.createTime.localeCompare(x.createTime)); fillFilters(); renderProps(); }
