@@ -8,6 +8,7 @@ const ICONS = {
   party: '<path d="M4 20l4-12 8 8zM14 4v2M19 7l-1.5 1.2M20 13h-2"/>',
   leaf: '<path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15M5 19c3-5 6-8 10-10"/>',
   chip: '<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/>',
+  insta: '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6"/>',
   chat: '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
 };
 const svg = (n) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n] || ICONS.spark}</svg>`;
@@ -42,7 +43,11 @@ function render(c) {
     el('ul', {}, p.items.map((i) => el('li', {}, el('div', {}, el('strong', {}, i.title), el('span', {}, ' — ' + i.text))))))));
   $('#team-grid').replaceChildren(...c.team.map((m) => {
     const initials = m.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
-    return el('article', { class: 'card team-card reveal' }, el('div', { class: 'avatar', 'aria-hidden': 'true' }, initials), el('h3', {}, m.name), el('p', {}, m.role));
+    const handle = String(m.instagram || '').trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/^@/, '').replace(/[/?#].*$/, '');
+    const ig = /^[A-Za-z0-9._]{1,30}$/.test(handle)
+      ? el('a', { class: 'ig-btn', href: `https://instagram.com/${handle}`, target: '_blank', rel: 'noopener', 'aria-label': `Instagram di ${m.name}` }, el('span', { html: svg('insta') }), '@' + handle)
+      : '';
+    return el('article', { class: 'card team-card reveal' }, el('div', { class: 'avatar', 'aria-hidden': 'true' }, initials), el('h3', {}, m.name), el('p', {}, m.role), ig);
   }));
   $('#timeline').replaceChildren(...c.timeline.map((t) => el('li', { class: 'reveal' }, el('span', { class: 'when' }, t.when), el('h3', {}, t.title), el('p', {}, t.text))));
   $('#faq').replaceChildren(...c.faq.map((f) => el('details', {}, el('summary', {}, f.q), el('p', {}, f.a))));

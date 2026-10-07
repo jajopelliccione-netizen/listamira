@@ -187,3 +187,7 @@ select:focus, textarea:focus, input:focus { outline: none; border-color: var(--o
 .card li span { color: var(--muted); }
 .card.reveal ul { gap: 12px; }
 .center-link { text-align: center; margin-top: 32px; }
+.ig-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; min-height: 44px; padding: 0 16px; border-radius: 999px; background: var(--violet-700); color: #fff; font: 700 .9rem var(--font); text-decoration: none; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: background .2s, transform .2s; }
+.ig-btn span { display: inline-flex; color: var(--orange-500); }
+.ig-btn svg { width: 20px; height: 20px; }
+.ig-btn:hover { background: var(--violet-600); transform: translateY(-2px); }
