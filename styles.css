@@ -206,3 +206,9 @@ select:focus, textarea:focus, input:focus { outline: none; border-color: var(--o
 .hero { text-align: center; }
 .hero-cta { justify-content: center; }
 .hero p.lead { margin-inline: auto; }
+/* telefono: niente logo grande né pulsante "Dì la tua" in alto */
+@media (max-width: 899px) {
+  .hero-art { display: none; }
+  .nav > .btn { display: none; }
+  .hero { padding: 56px 0 110px; }
+}
