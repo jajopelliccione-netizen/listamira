@@ -122,9 +122,8 @@ section.block { padding: 84px 0; }
 .team-card:nth-child(3n+2) .avatar { background: linear-gradient(135deg, var(--orange-600), var(--orange-500)); color: #1b0a00; border-color: var(--violet-100); }
 .team-card h3 { font-size: 1.1rem; }
 .team-card p { font-size: .9rem; }
-.team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-@media (min-width: 700px) { .team-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 1000px) { .team-grid { grid-template-columns: repeat(6, 1fr); } .team-card { padding: 22px 12px; } }
+.team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.team-grid .team-card { flex: 1 1 150px; max-width: 250px; }
 
 /* timeline */
 .timeline { list-style: none; margin: 0; padding: 0 0 0 26px; border-left: 3px solid var(--orange-300); display: grid; gap: 28px; }

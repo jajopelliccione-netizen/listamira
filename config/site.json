@@ -139,28 +139,16 @@
   ],
   "team": [
     {
-      "name": "Nome Cognome",
-      "role": "Candidato/a — Classe 5A"
+      "name": "Giorgia Maino",
+      "role": "Candidato/a — Classe 4T"
     },
     {
-      "name": "Nome Cognome",
-      "role": "Candidato/a — Classe 4B"
+      "name": "Valerio Sessa",
+      "role": "Candidato/a — Classe 3E"
     },
     {
-      "name": "Nome Cognome",
-      "role": "Candidato/a — Classe 4C"
-    },
-    {
-      "name": "Nome Cognome",
-      "role": "Candidato/a — Classe 3A"
-    },
-    {
-      "name": "Nome Cognome",
-      "role": "Candidato/a — Classe 3D"
-    },
-    {
-      "name": "Nome Cognome",
-      "role": "Candidato/a — Classe 2B"
+      "name": "Daniele Fabbri",
+      "role": "Candidato/a — Classe 4F"
     }
   ],
   "timeline": [
