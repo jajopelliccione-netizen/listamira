@@ -9,7 +9,7 @@
   <link rel="icon" href="assets/favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
-  <link rel="stylesheet" href="styles.css?v=202610070844">
+  <link rel="stylesheet" href="styles.css?v=202610071014">
 </head>
 <body>
   <a class="skip" href="#main">Vai al contenuto</a>
@@ -25,13 +25,20 @@
           <li><a href="#contatti">Contatti</a></li>
         </ul>
         <a class="btn btn-primary" href="#proposte">Dì la tua</a>
-        <button class="menu-btn" aria-label="Apri menu" aria-expanded="false" aria-controls="mm"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <button class="menu-btn" aria-label="Apri il menu" aria-expanded="false" aria-controls="mm"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
       </nav>
-      <div class="mobile-menu" id="mm">
-        <a href="#chi-siamo">Chi siamo</a><a href="#programma">Programma</a><a href="#proposte">Proposte</a><a href="#team">Candidati</a><a href="#contatti">Contatti</a>
-      </div>
     </div>
   </header>
+
+  <nav class="mobile-menu" id="mm" aria-label="Menu" aria-hidden="true">
+    <a href="#chi-siamo"><small>01</small>Chi siamo</a>
+    <a href="#programma"><small>02</small>Programma</a>
+    <a href="#proposte"><small>03</small>Proposte</a>
+    <a href="#team"><small>04</small>Candidati</a>
+    <a href="#contatti"><small>05</small>Contatti</a>
+    <a class="btn btn-primary mm-cta" href="#proposte">Proponi un’idea</a>
+    <p class="mm-foot">ITIS Galileo Galilei · Roma</p>
+  </nav>
 
   <main id="main">
     <section class="hero" id="top">
@@ -114,7 +121,7 @@
 
   <footer class="site-footer"><div class="wrap">© <span id="yr"></span> Lista <span data-bind="name">Mirai</span> · <span data-bind="school"></span></div></footer>
   <noscript><p style="padding:20px;text-align:center">Per vedere il sito abilita JavaScript.</p></noscript>
-  <script src="core.js?v=202610070844"></script>
-  <script src="app.js?v=202610070844"></script>
+  <script src="core.js?v=202610071014"></script>
+  <script src="app.js?v=202610071014"></script>
 </body>
 </html>

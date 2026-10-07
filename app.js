@@ -72,8 +72,15 @@ function observe() {
 
 $('#yr').textContent = new Date().getFullYear();
 const mb = document.querySelector('.menu-btn'), mm = $('#mm');
-mb.addEventListener('click', () => { const o = mm.classList.toggle('open'); mb.setAttribute('aria-expanded', o); });
-mm.addEventListener('click', (e) => { if (e.target.tagName === 'A') { mm.classList.remove('open'); mb.setAttribute('aria-expanded', 'false'); } });
+function setMenu(open) {
+  mm.classList.toggle('open', open); mb.classList.toggle('open', open);
+  mb.setAttribute('aria-expanded', open); mb.setAttribute('aria-label', open ? 'Chiudi il menu' : 'Apri il menu');
+  mm.setAttribute('aria-hidden', !open); document.body.classList.toggle('no-scroll', open);
+}
+mb.addEventListener('click', () => setMenu(!mm.classList.contains('open')));
+mm.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+window.matchMedia('(min-width: 900px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
 
 Core.config().then(render).catch(() => { $('#main').prepend(el('p', { style: 'padding:40px;text-align:center' }, 'Impossibile caricare i contenuti. Riprova più tardi.')); });
 observe();
