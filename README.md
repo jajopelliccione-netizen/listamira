@@ -1,4 +1,4 @@
-# Lista Mira
+# Lista Mirai
 
 Sito di presentazione della lista (ITIS Galileo Galilei, Roma) + area proposte anonime accessibile **solo scansionando i QR della scuola**.
 È un sito statico (GitHub Pages); proposte, QR e login admin usano **Firebase** (piano gratuito Spark).

@@ -54,6 +54,7 @@ code { background: var(--violet-100); padding: 1px 6px; border-radius: 6px; }
   #print-area { display: block !important; }
   .poster { page-break-after: always; break-after: page; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20mm; font-family: var(--font); color: var(--violet-900); }
   .poster:last-child { page-break-after: auto; break-after: auto; }
+  .poster .p-logo { width: 38mm; height: 38mm; border: 0; border-radius: 50%; padding: 0; margin-bottom: 8pt; }
   .poster .kick { background: var(--orange-500); color: #1b0a00; padding: 6px 18px; border-radius: 999px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; font-size: 14pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .poster h1 { font: 800 42pt var(--font-display); margin: 18pt 0 6pt; }
   .poster h1 em { font-style: normal; color: var(--orange-600); }

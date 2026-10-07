@@ -26,7 +26,7 @@ function setText(key, val) { document.querySelectorAll(`[data-bind="${key}"]`).f
 
 function render(c) {
   const L = c.list;
-  document.title = `Lista ${L.name} — ${L.claim.split('.')[0]}`;
+  document.title = `Lista ${L.name} — ${L.claim.replace(/\.$/, '')}`;
   setText('name', L.name); setText('year', L.year); setText('intro', L.intro); setText('school', L.school);
   // claim: l'ultima parola in arancione (costruito via DOM, niente HTML da config)
   const h1 = $('[data-bind-html="claim"]');
@@ -38,8 +38,8 @@ function render(c) {
   $('#stats').replaceChildren(...c.stats.map((s) => el('div', { class: 'stat reveal' }, el('b', {}, s.value), el('span', {}, s.label))));
   $('#values').replaceChildren(...c.values.map((v) => el('article', { class: 'card reveal' }, el('div', { class: 'icon', html: svg(v.icon) }), el('h3', {}, v.title), el('p', {}, v.text))));
   $('#program').replaceChildren(...c.program.map((p) => el('article', { class: 'card reveal' },
-    el('div', { class: 'icon', html: svg(p.icon) }), el('h3', {}, p.title), el('p', {}, p.text),
-    el('ul', {}, p.points.map((t) => el('li', {}, t))))));
+    el('div', { class: 'icon', html: svg(p.icon) }), el('h3', {}, p.title), ...(p.text ? [el('p', {}, p.text)] : []),
+    el('ul', {}, p.items.map((i) => el('li', {}, el('div', {}, el('strong', {}, i.title), el('span', {}, ' — ' + i.text))))))));
   $('#team-grid').replaceChildren(...c.team.map((m) => {
     const initials = m.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
     return el('article', { class: 'card team-card reveal' }, el('div', { class: 'avatar', 'aria-hidden': 'true' }, initials), el('h3', {}, m.name), el('p', {}, m.role));

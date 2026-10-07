@@ -99,11 +99,11 @@ async function delQr(q) {
 function printQrs(list) {
   const area = $('#print-area');
   area.replaceChildren(...list.filter((q) => q.active).map((q) => el('section', { class: 'poster' },
-    el('span', { class: 'kick' }, 'Lista Mira'),
+    el('img', { class: 'p-logo', src: '../assets/logo.png', alt: '' }), el('span', { class: 'kick' }, 'Lista Mirai'),
     el('h1', {}, 'Hai un’idea per la ', el('em', {}, 'scuola?')),
     el('p', {}, 'Inquadra il QR e scrivici la tua proposta. È anonima.'),
     el('img', { src: qrPng(qrLink(q)), alt: '' }),
-    el('div', { class: 'where' }, q.label), el('div', { class: 'foot' }, 'Guarda oltre.'))));
+    el('div', { class: 'where' }, q.label), el('div', { class: 'foot' }, 'Il futuro inizia da noi.'))));
   if (!area.children.length) return alert('Nessun QR attivo da stampare.');
   setTimeout(() => window.print(), 150);
 }

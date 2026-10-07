@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lista Mira — Guarda oltre</title>
-  <meta name="description" content="Lista Mira: il programma, i candidati e il canale anonimo per proporre idee per migliorare la scuola.">
-  <meta name="theme-color" content="#1e0a4a">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Lista Mirai — Il futuro inizia da noi</title>
+  <meta name="description" content="Lista Mirai, ITIS Galileo Galilei di Roma: progetti, candidati e canale anonimo per proporre idee per migliorare la scuola.">
+  <meta name="theme-color" content="#3b1670">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="styles.css">
@@ -16,7 +16,7 @@
   <header class="site-header">
     <div class="wrap">
       <nav class="nav" aria-label="Principale">
-        <a class="brand" href="#top" aria-label="Lista Mira, inizio pagina"><svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#f97316"/><path d="M9 28V12l11 12 11-12v16" fill="none" stroke="#1e0a4a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-bind="name">Mira</span></a>
+        <a class="brand" href="#top" aria-label="Lista Mirai, inizio pagina"><img class="brand-mark" src="assets/logo-192.png" alt="" width="38" height="38"><span data-bind="name">Mirai</span></a>
         <ul class="nav-links">
           <li><a href="#chi-siamo">Chi siamo</a></li>
           <li><a href="#programma">Programma</a></li>
@@ -45,11 +45,11 @@
             <a class="btn btn-ghost" href="#proposte">Come proporre un’idea</a>
           </div>
         </div>
-        <div class="hero-art" aria-hidden="true">
-          <div class="orb a"></div>
-          <div class="orb b"><svg viewBox="0 0 40 40"><path d="M7 30V10l13 14L33 10v20" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span class="floaty one">💡 La tua idea conta</span>
-          <span class="floaty two">🗳️ Vota Mira</span>
+        <div class="hero-art">
+          <div class="orb a" aria-hidden="true"></div>
+          <img class="hero-logo" src="assets/logo.png" alt="Logo della lista Mirai: una volpe stilizzata" width="512" height="512">
+          <span class="floaty one" aria-hidden="true">💡 La tua idea conta</span>
+          <span class="floaty two" aria-hidden="true">🗳️ Vota Miraii</span>
         </div>
       </div>
     </section>
@@ -65,8 +65,9 @@
 
     <section class="block tinted" id="programma">
       <div class="wrap">
-        <div class="section-head reveal"><span class="kicker">Il programma</span><h2>Sei aree, tante cose da fare.</h2><p>Ogni punto nasce dalle richieste degli studenti e verrà aggiornato con le vostre proposte.</p></div>
-        <div class="grid cols-3 program" id="program"></div>
+        <div class="section-head reveal"><span class="kicker">Il programma</span><h2>Idee concrete, studenti protagonisti.</h2><p>Quattro aree di progetto, aggiornate con le vostre proposte.</p></div>
+        <div class="grid cols-2 program" id="program"></div>
+        <p class="center-link reveal"><a class="btn btn-violet" href="assets/progetti.jpg" target="_blank" rel="noopener">Apri la locandina dei progetti</a></p>
       </div>
     </section>
 
@@ -90,7 +91,7 @@
 
     <section class="block tinted" id="team">
       <div class="wrap">
-        <div class="section-head reveal"><span class="kicker">I candidati</span><h2>Le facce di Mira.</h2><p>Studenti come te, di ogni classe e indirizzo.</p></div>
+        <div class="section-head reveal"><span class="kicker">I candidati</span><h2>Le facce di Mirai.</h2><p>Studenti come te, di ogni classe e indirizzo.</p></div>
         <div class="team-grid" id="team-grid"></div>
       </div>
     </section>
@@ -111,7 +112,7 @@
     </section>
   </main>
 
-  <footer class="site-footer"><div class="wrap">© <span id="yr"></span> Lista <span data-bind="name">Mira</span> · <span data-bind="school"></span></div></footer>
+  <footer class="site-footer"><div class="wrap">© <span id="yr"></span> Lista <span data-bind="name">Mirai</span> · <span data-bind="school"></span></div></footer>
   <noscript><p style="padding:20px;text-align:center">Per vedere il sito abilita JavaScript.</p></noscript>
   <script src="core.js"></script>
   <script src="app.js"></script>

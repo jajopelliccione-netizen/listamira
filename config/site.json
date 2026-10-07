@@ -1,8 +1,8 @@
 {
   "list": {
-    "name": "Mira",
-    "claim": "Guarda oltre. Costruiamo la scuola che vorresti.",
-    "intro": "Siamo una lista di studenti che crede che la scuola migliore nasca ascoltando chi la vive ogni giorno. Qui trovi chi siamo, cosa vogliamo fare e come puoi dire la tua, in modo anonimo.",
+    "name": "Mirai",
+    "claim": "Il futuro inizia da noi.",
+    "intro": "Siamo la lista Mirai del Galilei: idee concrete, studenti protagonisti. Qui trovi i nostri progetti e puoi proporre la tua idea per migliorare la scuola, in modo anonimo.",
     "school": "ITIS Galileo Galilei — Roma",
     "year": "Elezioni d’istituto 2026/27",
     "contacts": {
@@ -18,12 +18,12 @@
   },
   "stats": [
     {
-      "value": "6",
-      "label": "aree di intervento"
+      "value": "4",
+      "label": "aree di progetto"
     },
     {
-      "value": "12",
-      "label": "candidati"
+      "value": "16",
+      "label": "idee concrete"
     },
     {
       "value": "100%",
@@ -33,79 +33,107 @@
   "values": [
     {
       "icon": "ear",
-      "title": "Ascolto",
-      "text": "Ogni idea conta. Nessuno è troppo piccolo o troppo nuovo per essere ascoltato."
+      "title": "Studenti protagonisti",
+      "text": "Le idee partono da voi: i temi, gli eventi e le assemblee li scegliamo insieme."
     },
     {
       "icon": "spark",
-      "title": "Concretezza",
-      "text": "Meno slogan, più cose fatte. Ogni promessa ha un piano e una scadenza."
+      "title": "Idee concrete",
+      "text": "Meno slogan, più cose fatte: ogni progetto ha un’azione chiara."
     },
     {
       "icon": "heart",
-      "title": "Inclusione",
-      "text": "Una scuola in cui ogni classe, ogni indirizzo e ogni studente si sente a casa."
+      "title": "Una scuola per tutti",
+      "text": "Più socialità, più servizi, più voce per ogni classe e ogni studente."
     }
   ],
   "program": [
     {
-      "icon": "building",
-      "title": "Spazi migliori",
-      "text": "Aule più accoglienti, zone relax, armadietti e un cortile da vivere davvero.",
-      "points": [
-        "Zone studio e relax",
-        "Più prese e Wi-Fi stabile",
-        "Cortile attrezzato"
-      ]
-    },
-    {
-      "icon": "book",
-      "title": "Studio e didattica",
-      "text": "Strumenti per studiare meglio e più sereni, a partire dalle verifiche.",
-      "points": [
-        "Calendario verifiche condiviso",
-        "Tutoraggio tra pari",
-        "Dispense in archivio comune"
+      "icon": "chat",
+      "title": "Vita scolastica",
+      "items": [
+        {
+          "title": "Segnalazioni degli studenti",
+          "text": "Un sistema semplice e diretto per raccogliere segnalazioni, problemi e proposte."
+        },
+        {
+          "title": "Community WhatsApp",
+          "text": "Valorizzare la community già esistente per comunicare in modo rapido eventi, iniziative e informazioni importanti."
+        },
+        {
+          "title": "Period Box",
+          "text": "Assorbenti e prodotti igienici essenziali a disposizione gratuitamente per le studentesse."
+        }
       ]
     },
     {
       "icon": "party",
-      "title": "Eventi e comunità",
-      "text": "Tornei, feste, giornate a tema: la scuola è anche stare insieme.",
-      "points": [
-        "Torneo d’istituto",
-        "Festa di fine anno",
-        "Mercatino dell’usato"
+      "title": "Eventi e socialità",
+      "items": [
+        {
+          "title": "Tornei tra classi",
+          "text": "Tornei sportivi tra le classi e, se possibile, sfide anche con altri istituti."
+        },
+        {
+          "title": "Settimana dello Studente",
+          "text": "Tornei sportivi, e-sport, cineforum, corsi e workshop: attività proposte direttamente dagli studenti."
+        },
+        {
+          "title": "Snow Galilei",
+          "text": "Lo Snow Galilei come evento separato, dedicato agli studenti."
+        },
+        {
+          "title": "Fashion Week",
+          "text": "Giornate ed eventi a tema moda, stile e creatività."
+        },
+        {
+          "title": "Galile’s Got Talent",
+          "text": "Un vero palco per mostrare talenti, passioni e capacità."
+        },
+        {
+          "title": "Eventi serali",
+          "text": "Serate a tema in discoteca e aperitivi per i maggiorenni, nel rispetto delle regole della scuola e dei locali."
+        },
+        {
+          "title": "Box di San Valentino",
+          "text": "Un’iniziativa per lasciare dediche, messaggi e pensieri."
+        }
       ]
     },
     {
-      "icon": "leaf",
-      "title": "Scuola sostenibile",
-      "text": "Piccole azioni quotidiane per una scuola più verde.",
-      "points": [
-        "Raccolta differenziata chiara",
-        "Borracce e distributori d’acqua",
-        "Orto scolastico"
+      "icon": "building",
+      "title": "Assemblee d’istituto",
+      "items": [
+        {
+          "title": "I temi li scegliamo noi",
+          "text": "Raccogliere i suggerimenti degli studenti e farli proporre gli argomenti delle assemblee."
+        },
+        {
+          "title": "Più ospiti",
+          "text": "Esperti, professionisti e persone con esperienze interessanti da portare a scuola."
+        },
+        {
+          "title": "Dibattiti e confronti",
+          "text": "Assemblee davvero partecipative, con domande, dibattiti e confronto tra studenti e ospiti."
+        },
+        {
+          "title": "Orientamento",
+          "text": "Momenti di orientamento universitario e professionale, con informazioni concrete sul dopo liceo."
+        }
       ]
     },
     {
       "icon": "chip",
-      "title": "Tecnologia",
-      "text": "Laboratori e strumenti digitali aperti a tutti, non solo a pochi.",
-      "points": [
-        "Laboratorio aperto il pomeriggio",
-        "Corsi di coding e grafica",
-        "Stampa a prezzo studenti"
-      ]
-    },
-    {
-      "icon": "chat",
-      "title": "Voce agli studenti",
-      "text": "Un canale diretto e anonimo per proporre, segnalare, migliorare.",
-      "points": [
-        "QR sparsi per la scuola",
-        "Risposte pubbliche mensili",
-        "Assemblee più utili"
+      "title": "Mirai Social",
+      "items": [
+        {
+          "title": "Gadget d’istituto",
+          "text": "Gadget della scuola e della lista: felpe, magliette, adesivi e altri prodotti."
+        },
+        {
+          "title": "Comunicazione social",
+          "text": "I social per informare sulle iniziative, raccontare gli eventi e aggiornare tutti sui progetti portati avanti dalla lista."
+        }
       ]
     }
   ],
@@ -153,7 +181,7 @@
     },
     {
       "when": "Giorno del voto",
-      "title": "Vota Mira",
+      "title": "Vota Mirai",
       "text": "Fai sentire la tua voce nell’urna."
     }
   ],

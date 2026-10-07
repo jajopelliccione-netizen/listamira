@@ -72,7 +72,7 @@ function form(sess, cfg) {
 
 function done(sess, cfg) {
   message({
-    icon: CHECK, ok: true, title: 'Grazie!', text: 'La tua idea è arrivata alla lista Mira. Ne parleremo e ti risponderemo sui nostri canali.',
+    icon: CHECK, ok: true, title: 'Grazie!', text: 'La tua idea è arrivata alla lista Mirai. Ne parleremo e ti risponderemo sui nostri canali.',
     actions: [el('button', { class: 'btn btn-violet', onclick: () => form(sess, cfg) }, 'Scrivine un’altra'), el('p', { style: 'margin-top:16px' }, el('a', { href: './' }, 'Torna al sito'))],
   });
 }
