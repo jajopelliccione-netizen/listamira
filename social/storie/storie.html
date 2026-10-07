@@ -1,0 +1,443 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@500;700;800&display=swap"><style>
+:root{--bg:#12062b;--gold:#ffc42e;--ink:#12062b}
+*{box-sizing:border-box;margin:0}
+body{background:#000;font-family:"DM Sans",sans-serif}
+.story{position:relative;width:1080px;height:1920px;overflow:hidden;color:#fff;background:var(--bg);margin-bottom:20px}
+.blob{position:absolute;border-radius:50%;filter:blur(100px)}
+.story::after{content:"";position:absolute;inset:0;z-index:60;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.A{font-family:"Anton",Impact,sans-serif;text-transform:uppercase;line-height:.93;white-space:nowrap}
+.w{color:#fff}.g{color:var(--gold)}.o{color:transparent;-webkit-text-stroke:4px #fff}.og{color:transparent;-webkit-text-stroke:4px var(--gold)}
+.brand{position:absolute;left:70px;top:236px;display:flex;align-items:center;gap:14px;z-index:10;font:800 26px "DM Sans";letter-spacing:.16em;text-transform:uppercase}
+.brand img{height:52px}
+.safe{position:absolute;left:70px;right:70px;top:330px;bottom:400px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:22px;z-index:8}
+.kick{display:inline-block;background:var(--gold);color:var(--ink);font:800 28px "DM Sans";letter-spacing:.12em;text-transform:uppercase;padding:12px 28px;border-radius:99px}
+.h{display:flex;flex-direction:column;gap:2px}
+.sub{font:800 58px/1.1 "DM Sans";max-width:900px}
+.desc{font:500 50px/1.22 "DM Sans";max-width:900px;color:rgba(255,255,255,.93)}
+.sticker{display:inline-block;background:#fff;color:var(--ink);font:800 42px "DM Sans";letter-spacing:.04em;text-transform:uppercase;padding:18px 36px;border-radius:99px;transform:rotate(-5deg);box-shadow:0 18px 40px -12px rgba(0,0,0,.6);margin-top:10px}
+.tape{position:absolute;left:-80px;width:1240px;height:104px;background:var(--gold);color:var(--ink);transform:rotate(-5deg);z-index:30;display:flex;align-items:center;white-space:nowrap;overflow:hidden;font:400 62px/1 "Anton";text-transform:uppercase;letter-spacing:.04em;box-shadow:0 22px 44px -14px rgba(0,0,0,.6)}
+.tape span{padding-right:34px}
+.fox{position:absolute;right:34px;top:196px;width:215px;z-index:5;transform:rotate(7deg);filter:drop-shadow(0 30px 40px rgba(0,0,0,.55))}
+.hastape .safe{bottom:430px}
+.handle{position:absolute;left:70px;right:70px;bottom:296px;z-index:20;display:flex;justify-content:space-between;font:800 30px "DM Sans";color:rgba(255,255,255,.9)}
+.handle b{color:var(--gold);font-weight:800}
+.logo{width:340px;height:340px;border-radius:50%;box-shadow:0 30px 70px -20px rgba(0,0,0,.65);margin-bottom:10px}
+.qrb{width:300px;height:300px;border-radius:64px;background:#fff;display:grid;place-items:center;transform:rotate(7deg);box-shadow:0 30px 60px -20px rgba(0,0,0,.6);margin-top:10px}
+.qrb svg{width:200px;height:200px}
+.card{width:100%;background:#fff;color:var(--ink);border-radius:56px;padding:60px 56px;font:800 54px/1.15 "DM Sans";box-shadow:0 30px 60px -22px rgba(0,0,0,.6);margin-top:14px}
+.card small{display:block;font:700 30px "DM Sans";color:#6b6585;margin-top:14px;letter-spacing:.04em}
+.bar{width:100%}.bar .lb{display:flex;justify-content:space-between;font:800 30px "DM Sans";letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px}.bar .lb b{color:var(--gold)}
+.track{height:64px;border-radius:99px;background:rgba(255,255,255,.12);border:3px solid rgba(255,255,255,.3);padding:6px}
+.fill{width:87%;height:100%;border-radius:99px;background:repeating-linear-gradient(115deg,#ffc42e 0 28px,#ffb020 28px 56px);box-shadow:0 0 40px rgba(255,196,46,.6)}
+.v0 .b1{width:900px;height:900px;background:#7c3aed;right:-380px;top:420px;opacity:.95}.v0 .b2{width:760px;height:760px;background:#ffb020;left:-330px;bottom:-250px;opacity:.5}.v1 .b1{width:900px;height:900px;background:#7c3aed;left:-380px;top:260px;opacity:.9}.v1 .b2{width:760px;height:760px;background:#ffb020;right:-330px;bottom:-260px;opacity:.5}.v2 .b1{width:980px;height:980px;background:#6d28d9;right:-420px;top:-120px;opacity:.9}.v2 .b2{width:800px;height:800px;background:#ffb020;left:-380px;bottom:120px;opacity:.42}</style></head><body><section class="story v0" id="s0" data-name="neutre/01-intro">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Lista Mirai · ITIS Galileo Galilei</span>
+  <div class="h"><div class="A fit w" data-max="250">Il Galilei</div><div class="A fit o" data-max="250">sta per</div><div class="A fit g" data-max="250">cambiare.</div></div>
+  <div class="sub">Una lista di studenti. Idee concrete.</div>
+  
+  
+  
+  
+  
+ </div>
+ <img class="fox" src="../../assets/fox.png" alt="">
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v1" id="s1" data-name="neutre/02-numeri">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">I nostri progetti</span>
+  <div class="h"><div class="A fit g" data-max="560">16</div><div class="A fit w" data-max="250">idee.</div></div>
+  <div class="sub">In 4 aree: vita scolastica, eventi, assemblee e social.</div>
+  
+  
+  
+  
+  
+ </div>
+ <img class="fox" src="../../assets/fox.png" alt="">
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v2" id="s2" data-name="neutre/03-snow-galilei">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Progetto · Eventi e socialità</span>
+  <div class="h"><div class="A fit w" data-max="250">Snow</div><div class="A fit g" data-max="250">Galilei</div></div>
+  
+  <div class="desc">Tutta la scuola un giorno sulla neve, con attrezzatura e DJ set.</div>
+  
+  
+  
+  <span class="sticker">Ci state? 🏂</span>
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v0" id="s3" data-name="neutre/04-fashion-week">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Progetto · Eventi e socialità</span>
+  <div class="h"><div class="A fit w" data-max="250">Fashion</div><div class="A fit g" data-max="250">Week</div></div>
+  
+  <div class="desc">Una settimana all’insegna della moda. Che classe vincerà?</div>
+  
+  
+  
+  <span class="sticker">Sfida tra classi 👗</span>
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v1" id="s4" data-name="neutre/05-got-talent">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Progetto · Eventi e socialità</span>
+  <div class="h"><div class="A fit w" data-max="250">Galile’s</div><div class="A fit g" data-max="250">Got Talent</div></div>
+  
+  <div class="desc">Un vero palco per mostrare talenti, passioni e capacità.</div>
+  
+  
+  
+  <span class="sticker">Tu cosa sai fare? 🎤</span>
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v2" id="s5" data-name="neutre/06-settimana-studente">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Progetto · Eventi e socialità</span>
+  <div class="h"><div class="A fit w" data-max="250">Settimana</div><div class="A fit o" data-max="250">dello</div><div class="A fit g" data-max="250">Studente</div></div>
+  
+  <div class="desc">Tornei sportivi, e-sport, cineforum, corsi e workshop. Le attività le proponete voi.</div>
+  
+  
+  
+  <span class="sticker">Decidete voi 🎮</span>
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v0" id="s6" data-name="neutre/07-period-box">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Progetto · Vita scolastica</span>
+  <div class="h"><div class="A fit w" data-max="250">Period</div><div class="A fit g" data-max="250">Box</div></div>
+  
+  <div class="desc">Assorbenti e prodotti igienici essenziali a disposizione gratuitamente per le studentesse.</div>
+  
+  
+  
+  <span class="sticker">Gratis, per tutte</span>
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v1" id="s7" data-name="neutre/08-assemblee">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Progetto · Assemblee d’istituto</span>
+  <div class="h"><div class="A fit w" data-max="250">I temi</div><div class="A fit o" data-max="250">li scegliamo</div><div class="A fit g" data-max="250">noi.</div></div>
+  
+  <div class="desc">Le assemblee parlano di quello che interessa a voi.</div>
+  
+  
+  
+  
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v2" id="s8" data-name="neutre/09-ospiti-orientamento">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Progetto · Assemblee d’istituto</span>
+  <div class="h"><div class="A fit w" data-max="250">Più</div><div class="A fit g" data-max="250">ospiti.</div></div>
+  
+  <div class="desc">Esperti, professionisti e persone con esperienze interessanti, e più orientamento sul dopo il liceo.</div>
+  
+  
+  
+  
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v0" id="s9" data-name="neutre/10-cerca-il-qr">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">100% anonimo</span>
+  <div class="h"><div class="A fit w" data-max="250">Hai</div><div class="A fit g" data-max="250">un’idea?</div></div>
+  
+  <div class="desc">Cerca il QR in giro per la scuola, inquadralo e scrivici cosa cambieresti.</div>
+  
+  
+  <div class="qrb"><svg viewBox="0 0 24 24" fill="none" stroke="#4c1d95" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h3M20 17v4"/></svg></div>
+  
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v1" id="s10" data-name="neutre/11-domanda">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Domanda del giorno</span>
+  <div class="h"><div class="A fit w" data-max="250">Cosa</div><div class="A fit g" data-max="250">cambieresti?</div></div>
+  
+  <div class="desc">Anche in anonimo: cerca i QR a scuola.</div>
+  <div class="card">Rispondi qui sotto 👇<small>Scrivi la tua idea</small></div>
+  
+  
+  
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v2" id="s11" data-name="neutre/12-presto">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Novità in arrivo</span>
+  <div class="h"><div class="A fit w" data-max="420">Presto</div></div>
+  <div class="sub">Aggiornamenti in arrivo.</div>
+  
+  
+  <div class="bar"><div class="lb"><span>Caricamento…</span><b>87%</b></div><div class="track"><div class="fill"></div></div></div>
+  
+  
+ </div>
+ <img class="fox" src="../../assets/fox.png" alt="">
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v0" id="s12" data-name="neutre/13-brand">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  <img class="logo" src="../../assets/logo.png" alt="">
+  <span class="kick">Lista Mirai</span>
+  <div class="h"><div class="A fit w" data-max="250">Il futuro</div><div class="A fit o" data-max="250">inizia</div><div class="A fit g" data-max="250">da noi.</div></div>
+  
+  
+  
+  
+  
+  
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v1" id="s13" data-name="neutre/14-seguici">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Seguici</span>
+  <div class="h"><div class="A fit w" data-max="250">Resta</div><div class="A fit g" data-max="250">connesso.</div></div>
+  
+  <div class="desc">Notizie, eventi e novità: tutto su @lista.mirai</div>
+  
+  
+  
+  <span class="sticker">Attiva le notifiche 🔔</span>
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v2 hastape" id="s14" data-name="provocatorie/01-servivamo-noi">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Lista Mirai</span>
+  <div class="h"><div class="A fit o" data-max="250">Servivamo</div><div class="A fit g" data-max="420">noi.</div></div>
+  <div class="sub">per migliorare il lavoro degli altri.</div>
+  
+  
+  
+  
+  <span class="sticker">Con affetto 😘</span>
+ </div>
+ <img class="fox" src="../../assets/fox.png" alt="">
+ <div class="tape" style="top:1490px"><span>Meno promesse • Più fatti</span><span>•</span><span>Meno promesse • Più fatti</span><span>•</span><span>Meno promesse • Più fatti</span><span>•</span><span>Meno promesse • Più fatti</span><span>•</span></div>
+ 
+</section><section class="story v0 hastape" id="s15" data-name="provocatorie/02-gli-altri-promettono">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Lista Mirai</span>
+  <div class="h"><div class="A fit w" data-max="250">Gli altri</div><div class="A fit o" data-max="250">promettono.</div><div class="A fit w" data-max="250">Noi</div><div class="A fit g" data-max="250">facciamo.</div></div>
+  
+  
+  
+  
+  
+  
+ </div>
+ <img class="fox" src="../../assets/fox.png" alt="">
+ <div class="tape" style="top:1490px"><span>Servivamo noi • Servivamo noi</span><span>•</span><span>Servivamo noi • Servivamo noi</span><span>•</span><span>Servivamo noi • Servivamo noi</span><span>•</span><span>Servivamo noi • Servivamo noi</span><span>•</span></div>
+ 
+</section><section class="story v1" id="s16" data-name="provocatorie/03-scusate-il-ritardo">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Lista Mirai</span>
+  <div class="h"><div class="A fit w" data-max="250">Scusate</div><div class="A fit g" data-max="250">il ritardo.</div></div>
+  <div class="sub">Qualcuno doveva alzare l’asticella.</div>
+  
+  
+  
+  
+  <span class="sticker">Con calma 😏</span>
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v2 hastape" id="s17" data-name="provocatorie/04-meno-promesse">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Lista Mirai</span>
+  <div class="h"><div class="A fit o" data-max="250">Meno</div><div class="A fit w" data-max="250">promesse.</div><div class="A fit g" data-max="250">Più fatti.</div></div>
+  
+  
+  
+  
+  
+  
+ </div>
+ 
+ <div class="tape" style="top:1490px"><span>16 progetti • 4 aree • zero scuse</span><span>•</span><span>16 progetti • 4 aree • zero scuse</span><span>•</span><span>16 progetti • 4 aree • zero scuse</span><span>•</span><span>16 progetti • 4 aree • zero scuse</span><span>•</span></div>
+ 
+</section><section class="story v0" id="s18" data-name="provocatorie/05-la-luna">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Lista Mirai</span>
+  <div class="h"><div class="A fit w" data-max="250">Non</div><div class="A fit o" data-max="250">promettiamo</div><div class="A fit g" data-max="250">la luna.</div></div>
+  <div class="sub">Cominciamo dalle cose che si possono fare.</div>
+  
+  
+  
+  
+  <span class="sticker">Un passo alla volta 🚀</span>
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v1 hastape" id="s19" data-name="provocatorie/06-candidati-tanti">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Lista Mirai</span>
+  <div class="h"><div class="A fit w" data-max="250">Candidati</div><div class="A fit o" data-max="250">ce ne sono</div><div class="A fit w" data-max="250">tanti.</div></div>
+  <div class="sub">Idee concrete, meno.</div>
+  
+  
+  
+  
+  <span class="sticker">Indovina chi le ha 👀</span>
+ </div>
+ 
+ <div class="tape" style="top:1490px"><span>Idee concrete • Idee concrete</span><span>•</span><span>Idee concrete • Idee concrete</span><span>•</span><span>Idee concrete • Idee concrete</span><span>•</span><span>Idee concrete • Idee concrete</span><span>•</span></div>
+ 
+</section><section class="story v2" id="s20" data-name="provocatorie/07-piu-di-un-volantino">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Lista Mirai</span>
+  <div class="h"><div class="A fit w" data-max="250">Il Galilei</div><div class="A fit o" data-max="250">merita più di</div><div class="A fit g" data-max="250">un volantino.</div></div>
+  
+  
+  
+  
+  
+  
+ </div>
+ <img class="fox" src="../../assets/fox.png" alt="">
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v0 hastape" id="s21" data-name="provocatorie/08-chi-parla-chi-fa">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Lista Mirai</span>
+  <div class="h"><div class="A fit o" data-max="250">Chi parla.</div><div class="A fit g" data-max="250">Chi fa.</div></div>
+  <div class="sub">Indovina chi siamo. 😉</div>
+  
+  
+  
+  
+  
+ </div>
+ 
+ <div class="tape" style="top:1490px"><span>Chi parla • Chi fa • Chi parla • Chi fa</span><span>•</span><span>Chi parla • Chi fa • Chi parla • Chi fa</span><span>•</span><span>Chi parla • Chi fa • Chi parla • Chi fa</span><span>•</span><span>Chi parla • Chi fa • Chi parla • Chi fa</span><span>•</span></div>
+ 
+</section><section class="story v1" id="s22" data-name="provocatorie/09-non-i-migliori">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Lista Mirai</span>
+  <div class="h"><div class="A fit w" data-max="250">Non diciamo</div><div class="A fit w" data-max="250">che siamo</div><div class="A fit o" data-max="250">i migliori.</div></div>
+  <div class="sub">Lo dicono i 16 progetti.</div>
+  
+  
+  
+  
+  <span class="sticker">Fatti, non parole 💜</span>
+ </div>
+ 
+ 
+ <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
+</section><section class="story v2 hastape" id="s23" data-name="provocatorie/10-due-domande">
+ <div class="blob b1"></div><div class="blob b2"></div>
+ <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div class="safe">
+  
+  <span class="kick">Lista Mirai</span>
+  <div class="h"><div class="A fit w" data-max="250">Fatevi</div><div class="A fit o" data-max="250">due</div><div class="A fit g" data-max="250">domande.</div></div>
+  <div class="sub">Poi guardate i nostri 16 progetti.</div>
+  
+  
+  
+  
+  
+ </div>
+ <img class="fox" src="../../assets/fox.png" alt="">
+ <div class="tape" style="top:1490px"><span>Servivamo noi • Servivamo noi</span><span>•</span><span>Servivamo noi • Servivamo noi</span><span>•</span><span>Servivamo noi • Servivamo noi</span><span>•</span><span>Servivamo noi • Servivamo noi</span><span>•</span></div>
+ 
+</section>
+<script>
+document.fonts.ready.then(()=>{document.querySelectorAll('.fit').forEach(e=>{const max=+e.dataset.max;let s=max;e.style.fontSize=s+'px';const w=e.scrollWidth;const box=940;if(w>box){s=Math.floor(s*box/w);e.style.fontSize=s+'px'}});document.body.dataset.ready=1});
+</script></body></html>
