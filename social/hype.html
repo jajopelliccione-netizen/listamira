@@ -1,0 +1,45 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@500;700;800&display=swap">
+<style>
+:root{--bg:#12062b;--gold:#ffc42e;--ink:#12062b}
+*{box-sizing:border-box;margin:0}
+body{background:#000;font-family:"DM Sans",sans-serif}
+.slide{position:relative;width:1080px;height:1350px;overflow:hidden;color:#fff;background:var(--bg)}
+.blob{position:absolute;border-radius:50%;filter:blur(90px)}
+.slide::after{content:"";position:absolute;inset:0;z-index:50;pointer-events:none;opacity:.16;mix-blend-mode:overlay;
+ background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.A{font-family:"Anton",Impact,sans-serif;text-transform:uppercase;line-height:.92}
+.gold{color:var(--gold)}
+.top{position:absolute;top:62px;left:70px;right:70px;display:flex;justify-content:space-between;align-items:center;z-index:10;font-weight:800;font-size:28px;letter-spacing:.16em;text-transform:uppercase}
+.top .b{display:flex;align-items:center;gap:16px}.top img{height:56px}.top .n{color:var(--gold)}
+.blob.a{width:900px;height:900px;background:#7c3aed;right:-350px;top:250px;opacity:.95}
+.blob.b{width:700px;height:700px;background:#ffb020;left:-300px;bottom:-250px;opacity:.5}
+h1{position:absolute;left:62px;top:140px;font-size:338px;z-index:6;letter-spacing:-.005em}
+.sub{position:absolute;left:70px;top:520px;font:800 58px/1.05 "DM Sans";z-index:6}
+.load{position:absolute;left:70px;right:70px;top:640px;z-index:6}
+.load .lb{display:flex;justify-content:space-between;font:800 30px "DM Sans";letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px}
+.load .lb b{color:var(--gold)}
+.track{height:62px;border-radius:99px;background:rgba(255,255,255,.12);border:3px solid rgba(255,255,255,.3);padding:6px}
+.fill{width:87%;height:100%;border-radius:99px;background:repeating-linear-gradient(115deg,#ffc42e 0 28px,#ffb020 28px 56px);box-shadow:0 0 40px rgba(255,196,46,.6)}
+.fox{position:absolute;right:40px;top:752px;width:420px;z-index:4;transform:rotate(-5deg);filter:drop-shadow(0 30px 40px rgba(0,0,0,.55))}
+.tape{position:absolute;left:-60px;width:1240px;top:985px;height:104px;background:var(--gold);color:var(--ink);transform:rotate(-5deg);z-index:12;display:flex;align-items:center;white-space:nowrap;overflow:hidden;font:400 62px/1 "Anton";text-transform:uppercase;letter-spacing:.04em;box-shadow:0 22px 44px -14px rgba(0,0,0,.6)}
+.tape span{padding-right:34px}
+.tape2{position:absolute;left:-60px;width:1240px;top:1040px;height:104px;background:#fff;transform:rotate(3deg);z-index:11;opacity:.0}
+.sticker{position:absolute;left:70px;top:770px;z-index:20;background:#fff;color:var(--ink);font:800 40px "DM Sans";letter-spacing:.05em;text-transform:uppercase;padding:18px 34px;border-radius:99px;transform:rotate(-6deg);box-shadow:0 18px 40px -12px rgba(0,0,0,.6)}
+.cta{position:absolute;left:70px;bottom:70px;right:70px;z-index:20;display:flex;justify-content:space-between;align-items:flex-end}
+.cta .l{font:800 36px/1.2 "DM Sans"}
+.cta .l b{display:block;font:400 64px/1 "Anton";text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.cta .r{font:800 34px "DM Sans";text-align:right}
+</style></head><body>
+<section class="slide" id="s">
+ <div class="blob a"></div><div class="blob b"></div>
+ <div class="top"><span class="b"><img src="../assets/fox-96.png" alt="">Mirai</span><span class="n">Novità in arrivo</span></div>
+ <h1 class="A">Presto<span class="gold">.</span></h1>
+ <div class="sub">Aggiornamenti <span class="gold">in arrivo.</span></div>
+ <div class="load"><div class="lb"><span>Caricamento…</span><b>87%</b></div><div class="track"><div class="fill"></div></div></div>
+ <div class="sticker">Non perderti niente 👀</div>
+ <img class="fox" src="../assets/fox.png" alt="">
+ <div class="tape"><span>Presto</span><span>•</span><span>Qualcosa si muove</span><span>•</span><span>Presto</span><span>•</span><span>Qualcosa si muove</span><span>•</span><span>Presto</span></div>
+ <div class="cta"><div class="l"><b>Attiva le notifiche 🔔</b>Il futuro inizia da noi.</div><div class="r">@lista.mirai</div></div>
+</section>
+</body></html>
