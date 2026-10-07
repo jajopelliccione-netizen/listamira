@@ -3,18 +3,18 @@ const fs = require('fs');
 const P = 'post', S = 'storia';
 const D = [
  // ---------- POST ----------
- { t:P, id:'01-il-vento-passa', kicker:'Per Levante, con simpatia 🌬️', lines:[['Il vento','o'],['sta cambiando…','w'],['le idee','g'],['restano.','g']], sticker:'Con simpatia 😉', tape:'Il vento passa • Le idee restano', wind:1 },
+ { t:P, id:'01-il-vento-passa', kicker:'Ogni riferimento è casuale 😇', lines:[['Il vento','o'],['sta cambiando…','w'],['le idee','g'],['restano.','g']], sticker:'Con simpatia 😉', tape:'Il vento passa • Le idee restano', wind:1 },
  { t:P, id:'02-meno-vento', kicker:'Il vento sta cambiando…', lines:[['Meno','o'],['vento.','w'],['Più idee.','g']], sub:'16 progetti. Zero aria fritta.', sticker:'Con affetto 😘', fox:1, wind:1 },
- { t:P, id:'03-verso-dove', kicker:'Per Levante 🌬️', lines:[['Il vento','w'],['cambia.','o'],['Ma verso','w'],['dove?','g']], sub:'Noi la direzione ce l’abbiamo.', sticker:'Chiedetelo a chi vota 🧭', wind:1 },
+ { t:P, id:'03-verso-dove', kicker:'Per chi ha capito 🌬️', lines:[['Il vento','w'],['cambia.','o'],['Ma verso','w'],['dove?','g']], sub:'Noi la direzione ce l’abbiamo.', sticker:'Chiedetelo a chi vota 🧭', wind:1 },
  // ---------- STORIE ----------
- { t:S, id:'01-abbiamo-letto-lo-slogan', kicker:'Per Levante 🌬️', lines:[['Abbiamo letto','w'],['il vostro','o'],['slogan.','g']], sub:'Bello. Noi però abbiamo i progetti.', sticker:'Con simpatia 😉', wind:1 },
+ { t:S, id:'01-abbiamo-letto-lo-slogan', kicker:'Indovina a chi 👀', lines:[['Abbiamo letto','w'],['il vostro','o'],['slogan.','g']], sub:'Bello. Noi però abbiamo i progetti.', sticker:'Con simpatia 😉', wind:1 },
  { t:S, id:'02-il-vento-passa', kicker:'Il vento sta cambiando…', lines:[['Il vento','o'],['passa.','w'],['Le idee','g'],['restano.','g']], tape:'Il vento passa • Le idee restano', wind:1 },
- { t:S, id:'03-meno-vento', kicker:'Per Levante 🌬️', lines:[['Meno','o'],['vento.','w'],['Più idee.','g']], sub:'16 progetti. Zero aria fritta.', fox:1, wind:1 },
+ { t:S, id:'03-meno-vento', kicker:'Ogni riferimento è casuale 😇', lines:[['Meno','o'],['vento.','w'],['Più idee.','g']], sub:'16 progetti. Zero aria fritta.', fox:1, wind:1 },
  { t:S, id:'04-verso-dove', kicker:'Il vento sta cambiando…', lines:[['Ma verso','w'],['dove?','g',360]], sub:'Noi la direzione ce l’abbiamo.', sticker:'Bussola inclusa 🧭', wind:1 },
- { t:S, id:'05-porta-via-le-parole', kicker:'Per Levante 🌬️', lines:[['Il vento','o'],['porta via','w'],['le parole.','w'],['Noi lasciamo','g'],['16 progetti.','g']], wind:1 },
+ { t:S, id:'05-porta-via-le-parole', kicker:'Un pensiero per qualcuno 🌬️', lines:[['Il vento','o'],['porta via','w'],['le parole.','w'],['Noi lasciamo','g'],['16 progetti.','g']], wind:1 },
  { t:S, id:'06-quando-il-vento-cala', kicker:'Il vento sta cambiando…', lines:[['Quando','w'],['il vento','o'],['cala,','w'],['servono','g'],['i fatti.','g']], tape:'Servono i fatti • Servono i fatti', wind:1 },
  { t:S, id:'07-non-inseguiamo-il-vento', kicker:'Lista Mirai', lines:[['Non','w'],['inseguiamo','o'],['il vento.','w'],['Costruiamo.','g']], fox:1, wind:1 },
- { t:S, id:'08-quanti-ne-avete', kicker:'Per Levante 🌬️', lines:[['Noi','w'],['16 progetti.','g'],['Voi','w'],['quanti?','o']], sticker:'Si chiede per curiosità 👀', wind:1 },
+ { t:S, id:'08-quanti-ne-avete', kicker:'Per chi ha capito 🌬️', lines:[['Noi','w'],['16 progetti.','g'],['Voi','w'],['quanti?','o']], sticker:'Si chiede per curiosità 👀', wind:1 },
  { t:S, id:'09-sfida-aperta', kicker:'Il vento sta cambiando…', lines:[['Sfida','o'],['aperta.','g']], sub:'Confrontiamo le idee, non gli slogan.', sticker:'Quando volete 🤝', tape:'Idee contro slogan • Idee contro slogan', wind:1 },
  { t:S, id:'10-che-vinca-la-scuola', kicker:'Fair play', lines:[['Che vinca','w'],['la scuola.','g']], desc:'Rispetto per tutte le liste. Poi però votateci. 😉', wind:1 },
 ];
@@ -74,7 +74,7 @@ D.forEach((s, i) => {
  ${s.tape ? '' : '<div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>'}
 </section>`;
 });
-fs.writeFileSync('levante.html', `<!doctype html><html lang="it"><head><meta charset="utf-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@500;700;800&display=swap"><style>${css}</style></head><body>${body}
+fs.writeFileSync('vento.html', `<!doctype html><html lang="it"><head><meta charset="utf-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@500;700;800&display=swap"><style>${css}</style></head><body>${body}
 <script>document.fonts.ready.then(()=>{document.querySelectorAll('.fit').forEach(e=>{const max=+e.dataset.max;let s=max;e.style.fontSize=s+'px';const w=e.scrollWidth;if(w>940){s=Math.floor(s*940/w);e.style.fontSize=s+'px'}});document.body.dataset.ready=1});</script></body></html>`);
 fs.writeFileSync('lista.json', JSON.stringify(D.map((s, i) => ({ i, name: `${s.t === P ? 'post' : 'storie'}/${s.id}` }))));
 console.log(D.length);
