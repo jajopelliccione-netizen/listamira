@@ -7,8 +7,8 @@
   <title>Admin — Lista Mirai</title>
   <link rel="icon" href="../assets/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=1791496858">
-  <link rel="stylesheet" href="admin.css?v=1791496858">
+  <link rel="stylesheet" href="../styles.css?v=1791497186">
+  <link rel="stylesheet" href="admin.css?v=1791497186">
 </head>
 <body class="admin">
   <section id="login" class="prop-page" hidden>
@@ -31,6 +31,7 @@
         <strong class="logo">Mirai · Admin</strong>
         <nav class="tabs" role="tablist" aria-label="Sezioni">
           <button role="tab" data-tab="qr" aria-selected="true">QR code</button>
+          <button role="tab" data-tab="stats" aria-selected="false">Statistiche</button>
           <button role="tab" data-tab="props" aria-selected="false">Proposte <span class="badge" id="new-count" hidden></span></button>
         </nav>
         <button class="btn-link" id="logout">Esci</button>
@@ -43,19 +44,36 @@
         <div class="panel">
           <h2>Crea un nuovo QR</h2>
           <p class="hint" id="qr-base"></p>
-          <p class="hint">Dai un nome al punto della scuola dove lo appenderai: così vedi da dove arrivano le idee.</p>
+          <p class="hint">Scegli la <b>zona</b> (es. Piano terra, Primo piano, Cortile) e il <b>punto</b> preciso (es. Bagni, Aula 12). Nelle statistiche vedrai i dati per zona e per singolo punto.</p>
           <form id="qr-form" class="row">
-            <label class="sr-only" for="qr-label">Posizione</label>
-            <input id="qr-label" type="text" maxlength="60" placeholder="Es. Atrio piano terra, Bagni 2° piano, Mensa…" required>
+            <label class="sr-only" for="qr-group">Zona</label>
+            <input id="qr-group" type="text" list="group-list" maxlength="40" placeholder="Zona (es. Primo piano)" required>
+            <datalist id="group-list"></datalist>
+            <label class="sr-only" for="qr-label">Punto</label>
+            <input id="qr-label" type="text" maxlength="60" placeholder="Punto (es. Bagni, Aula 12, Mensa…)" required>
             <button class="btn btn-primary">Genera QR</button>
           </form>
           <div id="qr-err" class="msg err" hidden></div>
         </div>
         <div class="toolbar">
           <h2>I tuoi QR <span id="qr-total" class="muted"></span></h2>
+          <label class="sr-only" for="qr-filter">Filtra per zona</label><select id="qr-filter"><option value="">Tutte le zone</option></select>
           <div class="row"><button class="btn btn-primary" id="pdf-all">⬇ Tutti i fogli A4 (PDF)</button><button class="btn btn-violet" id="print-all">🖨️ Stampa tutti</button></div>
         </div>
         <div id="qr-list" class="qr-grid"></div>
+      </section>
+
+      <!-- Statistiche -->
+      <section id="tab-stats" hidden>
+        <div class="toolbar"><h2>Statistiche</h2>
+          <div class="row"><label class="sr-only" for="st-range">Periodo</label>
+            <select id="st-range"><option value="0">Da sempre</option><option value="7">Ultimi 7 giorni</option><option value="30">Ultimi 30 giorni</option></select></div></div>
+        <div id="st-kpi" class="kpi"></div>
+        <div class="panel"><h2>Per zona</h2><p class="hint">Tocca una zona per vedere i singoli punti. La percentuale indica le proposte ogni 100 scansioni.</p><div id="st-groups"></div></div>
+        <div class="two">
+          <div class="panel"><h2>Proposte per categoria</h2><div id="st-cats"></div></div>
+          <div class="panel"><h2>Proposte per giorno</h2><div id="st-days"></div></div>
+        </div>
       </section>
 
       <!-- Proposte -->
@@ -77,9 +95,9 @@
 
   <!-- area stampa: riempita da JS -->
   <div id="print-area" aria-hidden="true"></div>
-  <script src="../vendor/qrcode.js?v=1791496858"></script>
-  <script src="../core.js?v=1791496858"></script>
-  <script src="sheet.js?v=1791496858"></script>
-  <script src="admin.js?v=1791496858"></script>
+  <script src="../vendor/qrcode.js?v=1791497186"></script>
+  <script src="../core.js?v=1791497186"></script>
+  <script src="sheet.js?v=1791497186"></script>
+  <script src="admin.js?v=1791497186"></script>
 </body>
 </html>
