@@ -47,7 +47,7 @@ function render(c) {
     const ig = /^[A-Za-z0-9._]{1,30}$/.test(handle)
       ? el('a', { class: 'ig-btn', href: `https://instagram.com/${handle}`, target: '_blank', rel: 'noopener', 'aria-label': `Instagram di ${m.name}` }, el('span', { html: svg('insta') }), '@' + handle)
       : '';
-    return el('article', { class: 'card team-card reveal' }, (m.photo ? el('div', { class: 'avatar photo' }, el('img', { src: m.photo, alt: m.name, width: 96, height: 96, loading: 'lazy' })) : el('div', { class: 'avatar', 'aria-hidden': 'true' }, initials)), el('h3', {}, m.name), ...(m.badge ? [el('span', { class: 'badge-lead' }, m.badge)] : []), el('p', {}, m.role), ig);
+    return el('article', { class: 'card team-card reveal' }, (m.photo ? el('div', { class: 'avatar photo' }, el('img', { src: m.photo, alt: m.name, width: 96, height: 96, decoding: 'async' })) : el('div', { class: 'avatar', 'aria-hidden': 'true' }, initials)), el('h3', {}, m.name), ...(m.badge ? [el('span', { class: 'badge-lead' }, m.badge)] : []), el('p', {}, m.role), ig);
   }));
   $('#timeline').replaceChildren(...c.timeline.map((t) => el('li', { class: 'reveal' }, el('span', { class: 'when' }, t.when), el('h3', {}, t.title), el('p', {}, t.text))));
   $('#faq').replaceChildren(...c.faq.map((f) => el('details', {}, el('summary', {}, f.q), el('p', {}, f.a))));
