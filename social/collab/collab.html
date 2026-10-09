@@ -35,10 +35,13 @@ body{background:#000;font-family:"DM Sans",sans-serif}
 .card.astra img{position:absolute;left:50%;top:50%;width:700px;height:700px;margin:-350px 0 0 -350px;object-fit:cover}
 .card.hype{right:50px;top:1130px;width:760px;height:340px;transform:rotate(4deg)}
 .card.hype img{width:100%;height:100%;object-fit:cover;display:block}
-.x{position:absolute;left:560px;top:1010px;z-index:9;width:130px;height:130px;border-radius:50%;background:var(--gold);color:var(--ink);display:grid;place-items:center;font:800 90px/1 "DM Sans";padding-bottom:10px;box-shadow:0 18px 36px -12px rgba(0,0,0,.7)}
-.s2 .side{position:absolute;right:60px;top:690px;width:380px;z-index:8;font:800 54px/1.1 "DM Sans";text-align:right}
+.x{position:absolute;left:480px;top:1050px;z-index:9;width:112px;height:112px;border-radius:50%;background:var(--gold);color:var(--ink);display:grid;place-items:center;font:800 76px/1 "DM Sans";padding-bottom:8px;box-shadow:0 18px 36px -12px rgba(0,0,0,.7)}
+.s2 .side{position:absolute;right:60px;top:720px;width:400px;z-index:8;font:800 54px/1.1 "DM Sans";text-align:right}
 .s2 .side b{display:block;font:400 100px/.95 "Anton";text-transform:uppercase;color:var(--gold)}
 
+.logo-a,.logo-h{position:absolute;z-index:7;display:block}
+.logo-a{filter:drop-shadow(0 14px 26px rgba(255,110,60,.35))}
+.logo-h{filter:drop-shadow(0 0 22px rgba(255,70,200,.55))}
 /* 3 — biglietto */
 .s3 .t1{position:absolute;left:70px;right:70px;top:330px;z-index:8;display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center}
 .ticket{position:absolute;left:90px;top:760px;width:900px;height:560px;z-index:6;transform:rotate(-4deg);filter:drop-shadow(0 40px 50px rgba(0,0,0,.6))}
@@ -80,10 +83,10 @@ body{background:#000;font-family:"DM Sans",sans-serif}
  <div class="s2">
   <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
   <div class="t1"><span class="kick">Eventi d’istituto</span><div class="A"><div class="o" data-box="900" data-max="260">Insieme</div></div></div>
-  <div class="card astra shadow"><img src="astra.jpg" alt="Astra"></div>
+  <img class="logo-a" src="astra.png" alt="Astra" style="left:70px;top:690px;width:470px;transform:rotate(-5deg)">
   <div class="side"><b data-box="380" data-max="100">Una</b><b data-box="380" data-max="100">squadra</b>per le serate<br>del Galilei</div>
   <div class="x">×</div>
-  <div class="card hype shadow"><img src="hype.jpg" alt="Hype Events"></div>
+  <img class="logo-h" src="hype.png" alt="Hype Events" style="right:90px;top:1200px;width:520px;transform:rotate(4deg)">
   <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
  </div>
 </section>
@@ -110,7 +113,7 @@ body{background:#000;font-family:"DM Sans",sans-serif}
   <div class="col"><span class="kick" style="align-self:flex-start">Resta connesso</span>
    <div class="h A" style="display:flex;flex-direction:column"><div class="w" data-box="680" data-max="170">Le date</div><div class="g" data-box="680" data-max="170">arrivano</div><div class="o" data-box="680" data-max="170">presto.</div></div>
    <div class="sub" style="font-size:44px">Attiva le notifiche 🔔</div>
-   <div class="mini"><div class="row"><div class="card a shadow"><img src="astra.jpg" alt="Astra"></div><div class="card h2 shadow" style="width:300px;height:134px"><img src="hype.jpg" alt="Hype Events"></div></div></div>
+   <div class="mini"><div class="row"><img class="logo-a" src="astra.png" alt="Astra" style="position:relative;width:230px"><img class="logo-h" src="hype.png" alt="Hype Events" style="position:relative;width:260px"></div></div>
   </div>
  </div>
 </section>
