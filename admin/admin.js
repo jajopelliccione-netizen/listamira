@@ -6,6 +6,7 @@ const TOKEN_KEY = 'mira-admin';
 let cfg, token = null, qrs = [], proposals = [];
 
 /* ---- sessione admin (Firebase Auth, solo per questa scheda) ---- */
+const tokenEmail = () => { try { return JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).email || ''; } catch { return ''; } };
 const saved = () => { try { return JSON.parse(sessionStorage.getItem(TOKEN_KEY)); } catch { return null; } };
 const persist = (s) => { try { s ? sessionStorage.setItem(TOKEN_KEY, JSON.stringify(s)) : sessionStorage.removeItem(TOKEN_KEY); } catch { /* ignora */ } };
 
@@ -13,7 +14,7 @@ async function db(fn) {
   try { return await fn(token); }
   catch (e) {
     if (e.status === 401) { showLogin(); throw new Error('auth'); }
-    if (e.status === 403) throw new Error('Permesso negato: controlla che l’email in firestore.rules sia quella dell’admin e che le regole siano pubblicate.');
+    if (e.status === 403) throw new Error('Permesso negato. Sei entrato come “' + (tokenEmail() || '?') + '”: nelle regole di Firestore deve esserci ESATTAMENTE questa email (tutta minuscola) alla riga request.auth.token.email == \'…\', poi premi Pubblica.');
     throw e;
   }
 }
@@ -228,6 +229,7 @@ async function start() {
   if (!s || s.exp < Date.now()) return showLogin();
   token = s.token;
   $('#login').hidden = true; $('#app').hidden = false;
+  $('#who').textContent = tokenEmail();
   try { await loadProps(); await loadQrs(); } catch (e) { if (e.message !== 'auth') flash($('#qr-err'), 'Errore nel caricamento: ' + e.message, false); }
 }
 
