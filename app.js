@@ -85,25 +85,42 @@ window.matchMedia('(min-width: 900px)').addEventListener('change', (e) => { if (
 Core.config().then(render).catch(() => { $('#main').prepend(el('p', { style: 'padding:40px;text-align:center' }, 'Impossibile caricare i contenuti. Riprova più tardi.')); });
 observe();
 
-// striscia team: scorre di lato mentre si scorre la pagina, con movimento morbido (lerp su rAF)
+// striscia team: va avanti e indietro da sola (ping-pong), si può trascinare col dito, con barra di avanzamento
 (() => {
   const strip = document.getElementById('team-grid'); if (!strip) return;
+  const bar = el('div', { class: 'team-bar', 'aria-hidden': 'true' }, el('i'));
+  const thumb = bar.firstChild;
+  strip.after(bar);
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let cur = 0, target = 0, raf = 0;
-  const calc = () => {
-    const max = strip.scrollWidth - strip.clientWidth; if (max <= 0) { target = 0; return; }
-    const r = strip.getBoundingClientRect(), vh = window.innerHeight;
-    target = -Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height))) * max;
+  const SPEED = 38, PAUSE = 1000; // px al secondo, attesa agli estremi (ms)
+  let pos = 0, dir = 1, hold = 0, last = 0, user = false, resume, visible = true, raf = 0;
+  const max = () => strip.scrollWidth - strip.clientWidth;
+  const paint = () => {
+    const m = max(); bar.style.display = m > 4 ? '' : 'none'; if (m <= 4) return;
+    const w = strip.clientWidth / strip.scrollWidth;
+    thumb.style.width = (w * 100) + '%';
+    thumb.style.transform = `translateX(${(strip.scrollLeft / m) * (1 / w - 1) * 100}%)`;
   };
-  const tick = () => {
-    cur += (target - cur) * (reduce ? 1 : 0.1);
-    if (Math.abs(target - cur) < 0.3) cur = target;
-    strip.style.setProperty('--tx', cur.toFixed(2) + 'px');
-    raf = cur === target ? 0 : requestAnimationFrame(tick);
+  const tick = (t) => {
+    raf = requestAnimationFrame(tick);
+    const dt = Math.min(64, t - (last || t)); last = t;
+    const m = max();
+    if (m <= 4) { paint(); return; }
+    if (user || !visible || reduce) { pos = strip.scrollLeft; paint(); return; }
+    if (hold > 0) { hold -= dt; paint(); return; }
+    pos += dir * SPEED * dt / 1000;
+    if (pos >= m) { pos = m; dir = -1; hold = PAUSE; }
+    else if (pos <= 0) { pos = 0; dir = 1; hold = PAUSE; }
+    strip.scrollLeft = pos; paint();
   };
-  const kick = () => { calc(); if (!raf) raf = requestAnimationFrame(tick); };
-  window.addEventListener('scroll', kick, { passive: true });
-  window.addEventListener('resize', kick);
-  new MutationObserver(kick).observe(strip, { childList: true });
-  kick();
+  const grab = () => { user = true; clearTimeout(resume); };
+  const release = () => { clearTimeout(resume); resume = setTimeout(() => { user = false; pos = strip.scrollLeft; dir = pos > max() / 2 ? -1 : 1; }, 2500); };
+  strip.addEventListener('touchstart', grab, { passive: true });
+  strip.addEventListener('touchend', release, { passive: true });
+  strip.addEventListener('touchcancel', release, { passive: true });
+  strip.addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse') grab(); });
+  window.addEventListener('pointerup', (e) => { if (e.pointerType === 'mouse' && user) release(); });
+  strip.addEventListener('wheel', () => { grab(); release(); }, { passive: true });
+  new IntersectionObserver((es) => { visible = es[0].isIntersecting; }, { threshold: 0.1 }).observe(strip);
+  raf = requestAnimationFrame(tick);
 })();
