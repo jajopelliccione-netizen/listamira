@@ -140,21 +140,21 @@
   "team": [
     {
       "name": "Giorgia Maino",
-      "role": "Capolista — Classe 4T",
+      "role": "Candidata — Classe 4T",
       "instagram": "giorgia_maino",
       "photo": "assets/team/giorgia.jpg"
-    },
-    {
-      "name": "Valerio Sessa",
-      "role": "Candidato/a — Classe 3E",
-      "instagram": "___valerio_00_",
-      "photo": "assets/team/valerio.jpg"
     },
     {
       "name": "Daniele Fabbri",
       "role": "Candidato/a — Classe 4F",
       "instagram": "daniele.fabbri__",
       "photo": "assets/team/daniele.jpg"
+    },
+    {
+      "name": "Valerio Sessa",
+      "role": "Candidato/a — Classe 3E",
+      "instagram": "___valerio_00_",
+      "photo": "assets/team/valerio.jpg"
     },
     {
       "name": "Annalaura Giongo",
