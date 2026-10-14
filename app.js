@@ -85,20 +85,25 @@ window.matchMedia('(min-width: 900px)').addEventListener('change', (e) => { if (
 Core.config().then(render).catch(() => { $('#main').prepend(el('p', { style: 'padding:40px;text-align:center' }, 'Impossibile caricare i contenuti. Riprova più tardi.')); });
 observe();
 
-// striscia team: scorre di lato mentre si scorre la pagina (si può anche trascinare col dito)
+// striscia team: scorre di lato mentre si scorre la pagina, con movimento morbido (lerp su rAF)
 (() => {
   const strip = document.getElementById('team-grid'); if (!strip) return;
-  let touching = false, tid;
-  const update = () => {
-    if (touching) return;
-    const max = strip.scrollWidth - strip.clientWidth; if (max <= 0) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur = 0, target = 0, raf = 0;
+  const calc = () => {
+    const max = strip.scrollWidth - strip.clientWidth; if (max <= 0) { target = 0; return; }
     const r = strip.getBoundingClientRect(), vh = window.innerHeight;
-    const p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
-    strip.scrollLeft = p * max;
+    target = -Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height))) * max;
   };
-  strip.addEventListener('touchstart', () => { touching = true; clearTimeout(tid); }, { passive: true });
-  strip.addEventListener('touchend', () => { clearTimeout(tid); tid = setTimeout(() => { touching = false; }, 2500); }, { passive: true });
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update);
-  new MutationObserver(update).observe(strip, { childList: true });
+  const tick = () => {
+    cur += (target - cur) * (reduce ? 1 : 0.1);
+    if (Math.abs(target - cur) < 0.3) cur = target;
+    strip.style.setProperty('--tx', cur.toFixed(2) + 'px');
+    raf = cur === target ? 0 : requestAnimationFrame(tick);
+  };
+  const kick = () => { calc(); if (!raf) raf = requestAnimationFrame(tick); };
+  window.addEventListener('scroll', kick, { passive: true });
+  window.addEventListener('resize', kick);
+  new MutationObserver(kick).observe(strip, { childList: true });
+  kick();
 })();
