@@ -235,3 +235,9 @@ select:focus, textarea:focus, input:focus { outline: none; border-color: var(--o
   .team-grid .team-card { max-width: none; }
   .team-grid .team-card:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 6px); }
 }
+/* team: striscia orizzontale che scorre con la pagina (mobile) */
+@media (max-width: 899px) {
+  .team-grid { display: flex !important; flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; gap: 14px; padding: 8px 20px 24px; margin-inline: -20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .team-grid::-webkit-scrollbar { display: none; }
+  .team-grid .team-card, .team-grid .team-card:last-child:nth-child(odd) { flex: 0 0 230px; width: 230px; max-width: 230px; justify-self: auto; }
+}
