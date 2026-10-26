@@ -43,23 +43,23 @@ body{background:#000;font-family:"DM Sans",sans-serif}
 .lab{font:800 22px "DM Sans";letter-spacing:.12em;text-transform:uppercase;color:#7c3aed;margin-top:18px}
 .num{display:inline-flex;width:62px;height:62px;border-radius:50%;background:var(--gold);color:var(--ink);font:400 40px/62px "Anton";justify-content:center;flex:none}
 .st{display:flex;align-items:center;gap:20px;font:800 36px/1.12 "DM Sans"}
-#p0 .st{font-size:33px}#p0 .sheet{margin-top:20px!important}</style></head><body>
+#p0 .st{font-size:33px}#p0 .sheet{margin-top:14px!important}#p0 .A{margin-top:16px!important}</style></head><body>
 
 
 <section class="c p v0" id="p0"><div class="blob b1"></div><div class="blob b2"></div>
  <div class="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
- <div style="position:absolute;left:70px;right:70px;top:150px;z-index:8">
+ <div style="position:absolute;left:70px;right:70px;top:128px;z-index:8">
   <span class="kick">Si vota il 28 ottobre</span>
   <div class="A" style="margin-top:26px"><div class="w" data-box="940" data-max="125">Come si vota</div><div class="g" data-box="940" data-max="170">Mirai.</div></div>
   <div class="sheet" style="margin-top:30px">
    <div class="row"><span class="box"></span>Lista 1</div>
    <div class="row"><span class="box"></span>Lista 2</div>
    <div class="row me"><span class="box"></span>Lista 3 · Mirai<img src="../../assets/fox-96.png" alt=""></div>
-   <div class="lab">Preferenze — scrivi i nomi</div>
-   <div class="line">Giorgia Maino</div><div class="line" style="margin-top:2px">Daniele Fabbri</div></div>
+   <div class="lab">Una sola preferenza — scrivi un nome</div>
+   <div class="line">Giorgia Maino <span style="font:700 26px 'DM Sans';color:#a79fc4;letter-spacing:.08em;text-transform:uppercase;margin:0 10px">oppure</span> Daniele Fabbri</div></div>
   <div style="display:flex;flex-direction:column;gap:16px;margin-top:30px">
    <div class="st"><span class="num">1</span>Segna una croce su Lista 3: Mirai</div>
-   <div class="st"><span class="num">2</span>Scrivi: Giorgia Maino e Daniele Fabbri</div></div></div>
+   <div class="st"><span class="num">2</span>Scrivi un nome: Giorgia Maino o Daniele Fabbri</div><div style="align-self:flex-start;background:var(--gold);color:var(--ink);font:800 28px 'DM Sans';letter-spacing:.06em;text-transform:uppercase;padding:10px 24px;border-radius:99px;transform:rotate(-2deg)">Non tutti e due: ne vale solo uno</div></div></div>
  <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
 </section>
 
@@ -72,11 +72,11 @@ body{background:#000;font-family:"DM Sans",sans-serif}
    <div class="row"><span class="box"></span>Lista 1</div>
    <div class="row"><span class="box"></span>Lista 2</div>
    <div class="row me"><span class="box"></span>Lista 3 · Mirai<img src="../../assets/fox-96.png" alt=""></div>
-   <div class="lab">Preferenze — scrivi i nomi</div>
-   <div class="line">Giorgia Maino</div><div class="line" style="margin-top:2px">Daniele Fabbri</div></div>
+   <div class="lab">Una sola preferenza — scrivi un nome</div>
+   <div class="line">Giorgia Maino <span style="font:700 26px 'DM Sans';color:#a79fc4;letter-spacing:.08em;text-transform:uppercase;margin:0 10px">oppure</span> Daniele Fabbri</div></div>
   <div style="display:flex;flex-direction:column;gap:18px">
    <div class="st"><span class="num">1</span>Croce su Lista 3: Mirai</div>
-   <div class="st"><span class="num">2</span>Scrivi Giorgia Maino e Daniele Fabbri</div></div></div>
+   <div class="st"><span class="num">2</span>Scrivi Giorgia Maino o Daniele Fabbri</div><div style="align-self:flex-start;background:var(--gold);color:var(--ink);font:800 28px 'DM Sans';letter-spacing:.06em;text-transform:uppercase;padding:10px 24px;border-radius:99px;transform:rotate(-2deg)">Non tutti e due: ne vale solo uno</div></div></div>
  <div class="handle"><span>@lista.mirai</span><b>Il futuro inizia da noi.</b></div>
 </section>
 <script>document.fonts.ready.then(()=>{document.querySelectorAll('[data-max]').forEach(e=>{let s=+e.dataset.max;const box=+(e.dataset.box||940);e.style.fontSize=s+'px';e.style.display='table';if(e.parentElement.style.alignItems==='center'||e.parentElement.classList.contains('ctr')){e.style.marginLeft='auto';e.style.marginRight='auto'}const w=e.scrollWidth;if(w>box){s=Math.floor(s*box/w);e.style.fontSize=s+'px'}});document.body.dataset.ready=1})</script></body></html>
