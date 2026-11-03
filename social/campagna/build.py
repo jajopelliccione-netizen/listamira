@@ -26,38 +26,13 @@ H+=sec('p','c0',BR+f'''<div class="n">01/06</div>
  <div style="position:absolute;left:70px;right:70px;top:170px;z-index:8"><span class="kick">Rappresentanza d’istituto</span>
   <div class="A" style="margin-top:28px"><div class="w" data-box="940" data-max="230">Ci presentiamo.</div><div class="o" data-box="940" data-max="170">Lista 3</div><div class="g" data-box="940" data-max="260">Mirai.</div></div></div>
  <div style="position:absolute;left:70px;bottom:210px;display:flex;z-index:8">{faces}</div>'''+HAND('Scorri →'),'v0')
-# slide 1: foto grande in alto centrata
-t=team[0]
-H+=sec('p','c1',BR+f'''<div class="n">02/06</div>
- <div class="ph" style="left:70px;right:70px;top:140px;height:640px;border-radius:56px;border:10px solid var(--gold);transform:rotate(-1.5deg)"><img src="img/{t[0]}.jpg" style="object-position:50% 14%"></div>
- <div style="position:absolute;left:70px;right:70px;top:815px;z-index:8"><span class="chip g">{t[5]} · Classe {t[3]}</span>
-  <div class="A" style="margin-top:16px"><div class="w" data-box="940" data-max="125">{t[1]}</div><div class="g" data-box="940" data-max="165">{t[2]}</div></div></div>
- <div class="handle"><span>@{t[4]}</span><b>Lista 3 · Mirai</b></div>''','v1')
-# slide 2: foto a sinistra a tutta altezza, nome a destra verticale
-t=team[1]
-H+=sec('p','c2',f'''<div class="ph" style="left:0;top:0;width:620px;height:1350px"><img src="img/{t[0]}.jpg" style="object-position:50% 20%"></div>
- <div class="fade" style="left:0;width:620px;height:500px;opacity:.75"></div>
- <div class="brand" style="left:660px">Mirai</div><div class="n">03/06</div>
- <div style="position:absolute;left:660px;right:50px;top:300px;z-index:8;text-align:left">
-  <span class="chip g" style="font-size:26px">{t[5]}</span><div class="A" style="margin-top:22px"><div class="w" data-box="360" data-max="130">{t[1]}</div><div class="g" data-box="360" data-max="130">{t[2]}</div></div>
-  <div class="sub" style="font-size:44px;margin-top:26px">Classe {t[3]}</div></div>
- <div style="position:absolute;left:660px;bottom:150px;z-index:8"><span class="ig">@{t[4]}</span></div>
- <div class="handle" style="left:660px"><b>Lista 3 · Mirai</b></div>''','v0')
-# slide 3: cerchio grande
-t=team[2]
-H+=sec('p','c3',BR+f'''<div class="n">04/06</div>
- <div class="ring" style="width:800px;height:800px;left:140px;top:130px"></div>
- <div class="ph" style="width:660px;height:660px;left:210px;top:200px;border-radius:50%;border:12px solid var(--gold)"><img src="img/{t[0]}.jpg" style="object-position:50% 12%"></div>
- <div style="position:absolute;left:70px;right:70px;top:880px;z-index:8;text-align:center"><div class="A" style="display:flex;flex-direction:column;align-items:center"><div class="o" data-box="940" data-max="105">{t[1]}</div><div class="g" data-box="940" data-max="160">{t[2]}</div></div>
-  <div style="margin-top:16px"><span class="chip">{t[5]} · Classe {t[3]}</span></div></div>
- <div class="handle"><span>@{t[4]}</span><b>Lista 3 · Mirai</b></div>''','v2')
-# slide 4: foto a tutto schermo
-t=team[3]
-H+=sec('p','c4',f'''<div class="ph" style="left:0;top:0;right:0;height:1350px;box-shadow:none"><img src="img/{t[0]}.jpg" style="object-position:50% 14%"></div>
- <div class="fade" style="height:760px"></div><div style="position:absolute;left:0;right:0;top:0;height:200px;background:linear-gradient(180deg,rgba(18,6,43,.85),rgba(18,6,43,0));z-index:5"></div>{BR}<div class="n">05/06</div>
+def cand(id,n,t,v):
+    return sec('p',id,f'''<div class="ph" style="left:0;top:0;right:0;height:1350px;box-shadow:none"><img src="img/{t[0]}.jpg" style="object-position:50% 14%"></div>
+ <div class="fade" style="height:760px"></div><div style="position:absolute;left:0;right:0;top:0;height:200px;background:linear-gradient(180deg,rgba(18,6,43,.85),rgba(18,6,43,0));z-index:5"></div>{BR}<div class="n">{n}/06</div>
  <div style="position:absolute;left:70px;right:70px;bottom:140px;z-index:8"><span class="chip g">{t[5]} · Classe {t[3]}</span>
   <div class="A" style="margin-top:14px"><div class="w" data-box="940" data-max="150">{t[1]}</div><div class="g" data-box="940" data-max="200">{t[2]}</div></div></div>
- <div class="handle"><span>@{t[4]}</span><b>Lista 3 · Mirai</b></div>''','v1')
+ <div class="handle"><span>@{t[4]}</span><b>Lista 3 · Mirai</b></div>''',v)
+H+=cand('c1','02',team[0],'v1')+cand('c2','03',team[1],'v0')+cand('c3','04',team[2],'v2')+cand('c4','05',team[3],'v1')
 # chiusura
 H+=sec('p','c5',BR+f'''<div class="n">06/06</div><div class="ring" style="width:880px;height:880px;left:100px;top:180px"></div>
  <div class="ctr" style="top:150px;bottom:230px"><img src="../../assets/logo.png" alt="" style="width:360px;height:360px;border-radius:50%;box-shadow:0 30px 60px -20px rgba(0,0,0,.7)">
