@@ -34,11 +34,11 @@ def cand(id,n,t,v):
  <div class="handle"><span>@{t[4]}</span><b>Lista 3 · Mirai</b></div>''',v)
 H+=cand('c1','02',team[0],'v1')+cand('c2','03',team[1],'v0')+cand('c3','04',team[2],'v2')+cand('c4','05',team[3],'v1')
 # chiusura
-H+=sec('p','c5',BR+f'''<div class="n">06/06</div><div class="ring" style="width:880px;height:880px;left:100px;top:180px"></div>
+H+=sec('p','c5',BR+f'''<div class="n">06/06</div>
  <div class="ctr" style="top:150px;bottom:230px"><img src="../../assets/logo.png" alt="" style="width:360px;height:360px;border-radius:50%;box-shadow:0 30px 60px -20px rgba(0,0,0,.7)">
   <span class="kick" style="margin-top:14px">Lista 3 · Mirai</span>
   <div class="A" style="display:flex;flex-direction:column;align-items:center"><div class="w" data-box="940" data-max="170">Quattro facce.</div><div class="g" data-box="940" data-max="230">Un futuro.</div></div>
-  <div class="desc" style="font-size:40px;max-width:820px">Seguici per scoprire il programma e le idee di tutta la lista.</div></div>'''+HAND('@lista.mirai'),'v0')
+  <div class="desc" style="font-size:40px;max-width:820px">Seguici per scoprire il programma e le idee di tutta la lista.</div></div>'''+HAND(),'v0')
 # ---------- PROGRAMMA (post) ----------
 def prog(id,n,kick,title1,title2,items,cols,v):
     cards=''.join(f'<div class="card {c}"><b>{t}</b><span>{x}</span></div>' for (t,x),c in zip(items,cols))
@@ -55,7 +55,7 @@ H+=prog('g5','06','Area 4','Mirai','Social.',[('Gadget d’istituto','Felpe, mag
 H+=sec('p','g6',BR+'''<div class="n">07/07</div>
  <div class="ctr" style="top:150px;bottom:230px"><span class="kick">Lista 3 · Mirai</span>
   <div class="A" style="display:flex;flex-direction:column;align-items:center"><div class="o" data-box="940" data-max="200">Meno slogan.</div><div class="w" data-box="940" data-max="260">Più cose</div><div class="g" data-box="940" data-max="330">fatte.</div></div>
-  <div class="desc" style="font-size:40px;max-width:820px">Salva il post e mandalo a chi vuole una scuola che cambia davvero.</div></div>'''+HAND('@lista.mirai'),'v2')
+  <div class="desc" style="font-size:40px;max-width:820px">Salva il post e mandalo a chi vuole una scuola che cambia davvero.</div></div>'''+HAND(),'v2')
 # ---------- STORIE vento ----------
 S=lambda id,inner,v:sec('s',id,BR+inner+HAND(),v)
 H+=S('w0','''<div class="ctr" style="top:340px;bottom:430px;gap:26px"><span class="kick">Notato anche tu?</span>
