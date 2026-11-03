@@ -68,16 +68,25 @@ H+=sec('p','g5',BR+'''<div class="n">06/06</div>
   <div class="desc" style="font-size:40px;max-width:820px">Salva il post e mandalo a chi vuole una scuola che cambia davvero.</div></div>'''+HAND(),'v2')
 # ---------- POST COLLAB Hype x Astra ----------
 LK=lambda h=150:f'<div style="display:flex;align-items:center;justify-content:center;gap:34px"><img src="img/astra.png" alt="Astra Events" style="height:{h}px;filter:drop-shadow(0 8px 18px rgba(255,110,60,.4))"><span style="font:800 64px/1 \'DM Sans\';color:var(--gold)">×</span><img src="img/hype.png" alt="Hype Events" style="height:{h}px;filter:drop-shadow(0 0 16px rgba(255,60,190,.6))"></div>'
-H+=sec('p','e0',BR+'<div class="n">01/03</div>'+f'''<div class="ctr" style="top:150px;bottom:230px;gap:34px"><span class="kick">Novità</span>
-  <div class="A" style="display:flex;flex-direction:column;align-items:center"><div class="w" data-box="940" data-max="210">Qualcosa</div><div class="g" data-box="940" data-max="230">sta arrivando.</div></div>
-  {LK(170)}<div class="desc" style="font-size:38px">Scorri →</div></div>'''+HAND(),'v0')
-H+=sec('p','e1',BR+'<div class="n">02/03</div>'+'''<div style="position:absolute;left:70px;right:70px;top:170px;z-index:8"><span class="kick">Eventi serali</span>
-  <div class="A" style="margin-top:26px"><div class="o" data-box="940" data-max="240">Serate</div><div class="w" data-box="940" data-max="240">tutto</div><div class="g" data-box="940" data-max="300">l’anno.</div></div>
-  <div class="sub" style="margin-top:34px;font-size:48px">Organizzate insieme da due <span style="color:var(--gold)">organizzazioni di eventi</span>, pensate per gli studenti.</div></div>'''+HAND(),'v1')
-H+=sec('p','e2',BR+'<div class="n">03/03</div>'+f'''<div class="ctr" style="top:150px;bottom:230px;gap:34px"><span class="kick">Lista 3 · Mirai</span>
-  {LK(150)}
-  <div class="sub" style="font-size:48px;max-width:880px">Collaborazione con <span style="color:var(--gold)">Hype Events</span> e <span style="color:var(--gold)">Astra Events</span></div>
-  <div class="desc" style="font-size:38px;max-width:800px">Resta sintonizzato: presto scoprirai di più.<br>Segui <b>@lista.mirai</b></div></div>'''+HAND(),'v2')
+N=5
+H+=sec('p','e0',BR+f'<div class="n">01/0{N}</div>'+f'''<div class="ctr" style="top:150px;bottom:230px;gap:30px"><span class="kick">È ufficiale</span>
+  <div class="A" style="display:flex;flex-direction:column;align-items:center"><div class="w" data-box="940" data-max="170">La collaborazione</div><div class="g" data-box="940" data-max="240">è partita.</div></div>
+  {LK(170)}
+  <div class="sub" style="font-size:44px;max-width:880px">Collaborazione con <span style="color:var(--gold)">Hype Events</span> e <span style="color:var(--gold)">Astra Events</span></div></div>'''+HAND('Scorri →'),'v0')
+H+=sec('p','e1',BR+f'<div class="n">02/0{N}</div>'+'''<div style="position:absolute;left:70px;right:70px;top:170px;z-index:8"><span class="kick">Eventi esclusivi</span>
+  <div class="A" style="margin-top:26px"><div class="o" data-box="940" data-max="210">Serate</div><div class="w" data-box="940" data-max="210">tra scuole.</div><div class="g" data-box="940" data-max="210">Esclusive.</div></div>
+  <div class="sub" style="margin-top:36px;font-size:46px">Serate fatte apposta per la nostra scuola, insieme ad altre scuole. <span style="color:var(--gold)">E noi siamo stati selezionati.</span></div></div>'''+HAND(),'v1')
+H+=sec('p','e2',BR+f'<div class="n">03/0{N}</div>'+''' <div class="ctr" style="top:150px;bottom:230px;gap:26px"><span class="kick">Per gli studenti</span>
+  <div class="A" style="display:flex;flex-direction:column;align-items:center"><div class="w" data-box="900" data-max="190">Prezzi</div><div class="g" data-box="900" data-max="280">vantaggiosi.</div></div>
+  <div class="sub" style="font-size:46px;max-width:800px">Nei <span style="color:var(--gold)">locali migliori</span>.</div></div>'''+HAND(),'v2')
+def lr(i,n,c,m=0):return f'<div style="display:flex;align-items:baseline;gap:26px;margin-left:{m}px"><span style="font:800 34px \'DM Sans\';color:var(--gold)">{i}</span><span class="A {c}" data-box="760" data-max="170">{n}</span></div>'
+H+=sec('p','e3',BR+f'<div class="n">04/0{N}</div>'+'''<div style="position:absolute;left:70px;right:70px;top:160px;z-index:8"><span class="kick">I locali</span>
+  <div class="sub" style="margin-top:22px;font-size:46px">Dove si va?</div></div>
+ <div style="position:absolute;left:70px;right:70px;top:420px;z-index:8;display:flex;flex-direction:column;gap:14px">'''+lr('01','Kalaya','w')+lr('02','Hacienda','o',60)+lr('03','Qube','g')+lr('04','Garden','o',60)+'</div>'+HAND(),'v1')
+H+=sec('p','e4',BR+f'<div class="n">05/0{N}</div>'+f'''<div class="ctr" style="top:150px;bottom:230px;gap:30px"><span class="kick">Lista 3 · Mirai</span>
+  <div class="A" style="display:flex;flex-direction:column;align-items:center"><div class="w" data-box="940" data-max="190">Serate</div><div class="g" data-box="940" data-max="260">tutto l’anno.</div></div>
+  {LK(130)}
+  <div class="desc" style="font-size:38px;max-width:800px">Resta sintonizzato per date e novità.<br>Segui <b>@lista.mirai</b></div></div>'''+HAND(),'v2')
 # ---------- STORIE vento ----------
 S=lambda id,inner,v:sec('s',id,BR+inner+HAND(),v)
 H+=S('w0','''<div class="ctr" style="top:340px;bottom:430px;gap:26px"><span class="kick">Notato anche tu?</span>

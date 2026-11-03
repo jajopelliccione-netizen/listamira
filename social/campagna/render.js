@@ -5,6 +5,6 @@ const { chromium } = require('/opt/node22/lib/node_modules/playwright');
  const O='/home/user/listamira/social/campagna/';
  for (let i=0;i<6;i++) await p.locator('#c'+i).screenshot({ path: O+'candidati-0'+(i+1)+'.png' });
  const gs=['g0','g1','g2','g3','g4','g5']; for (let i=0;i<gs.length;i++) await p.locator('#'+gs[i]).screenshot({ path: O+'programma-0'+(i+1)+'.png' });
- for (let i=0;i<3;i++) await p.locator('#e'+i).screenshot({ path: O+'collab-0'+(i+1)+'.png' });
+ for (let i=0;i<5;i++) await p.locator('#e'+i).screenshot({ path: O+'collab-0'+(i+1)+'.png' });
  for (let i=0;i<6;i++) await p.locator('#w'+i).screenshot({ path: O+'storia-vento-0'+(i+1)+'.png' });
  await b.close(); })();
