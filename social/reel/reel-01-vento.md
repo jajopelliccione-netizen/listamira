@@ -29,8 +29,7 @@ Ogni proposta dura 3–4 secondi: **grafica Mirai a tutto schermo + candidato ch
 2. **Daniele:** "Le assemblee? Le **scegliete voi**: temi, ospiti, dibattiti." — *testo: ASSEMBLEE SCELTE DA VOI*
 3. **Valerio:** "**Snow Galilei**: tutta la scuola, un giorno sulla neve, con DJ set." — *testo: SNOW GALILEI ❄️*
 4. **Giorgia:** "**Settimana dello Studente**, **Fashion Week**, **Galile's Got Talent**: tornei, e-sport, moda, palco." — *testo: 3 EVENTI, 1 SCUOLA*
-5. **Daniele:** "E **serate fatte per noi**, con le migliori organizzazioni di eventi per minorenni su Roma, prezzi da studenti." — *testo: HYPE × ASTRA 🪩*
-6. **Valerio (sorriso):** "L'**annuario**. Quello vero. Noi lo facciamo davvero." — *testo: ANNUARIO 😉*
+5. **Valerio (sorriso):** "L'**annuario**. Quello vero. Noi lo facciamo davvero." — *testo: ANNUARIO 😉*
 
 ### 0:34–0:42 · IL CONFRONTO
 - **Visivo:** inquadratura larga: i tre insieme, Giorgia al centro.
@@ -50,6 +49,5 @@ Ogni proposta dura 3–4 secondi: **grafica Mirai a tutto schermo + candidato ch
 - **Ritmo:** nessuna inquadratura sopra i 3 secondi. Tagli secchi, niente dissolvenze.
 - **Sottotitoli:** una parola chiave per riga evidenziata in giallo (VENTO, PROGRAMMA, SCEGLIETE VOI, DAVVERO).
 - **Se vuoi più provocazione:** nello 0:09–0:14 aggiungere "…e non lo dico io, lo dice il contatore."
-- **Se serve accorciarlo a 30 secondi:** tenere gancio, conto, stacco e solo le proposte 1, 2, 3 e 6.
-- **Le serate (proposta 5):** vanno dette solo se la collaborazione è ufficiale. Si può aggiungere in coda: "…solo se votate Lista 3."
+- **Se serve accorciarlo a 30 secondi:** tenere gancio, conto, stacco e solo le proposte 1, 2, 3 e 5.
 - **Caption suggerita:** *"Vento qua, vento là. E a scuola cosa cambia? Noi abbiamo 16 idee. 🦊 Programma in bio. #lista3 #mirai #ilfuturoiniziadanoi"*
