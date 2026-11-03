@@ -21,7 +21,7 @@ def sec(cls,id,inner,v='v0'):
 team=[('giorgia','Giorgia','Maino','4T','giorgia_maino','Candidata'),('daniele','Daniele','Fabbri','4F','daniele.fabbri__','Candidato'),('valerio','Valerio','Sessa','3E','___valerio_00_','Candidato'),('annalaura','Annalaura','Giongo','2T','annalauragiongo_','Candidata')]
 H=''
 # ---------- CANDIDATI (post) ----------
-faces=''.join(f'<div style="width:215px;height:215px;border-radius:50%;overflow:hidden;border:8px solid var(--gold);margin-left:{0 if i==0 else -38}px;box-shadow:0 20px 40px -14px rgba(0,0,0,.7)"><img src="img/{t[0]}.jpg" style="width:100%;height:100%;object-fit:cover;object-position:50% 14%"></div>' for i,t in enumerate(team))
+faces=''.join(f'<div style="width:215px;height:215px;border-radius:50%;overflow:hidden;border:8px solid var(--gold);margin-left:{0 if i==0 else -38}px;box-shadow:0 20px 40px -14px rgba(0,0,0,.7)"><img src="img/{t[0]}.jpg" style="width:100%;height:100%;object-fit:cover;object-position:50% 14%;filter:blur(16px);transform:scale(1.25)"></div>' for i,t in enumerate(team))
 H+=sec('p','c0',BR+f'''<div class="n">01/06</div>
  <div style="position:absolute;left:70px;right:70px;top:170px;z-index:8"><span class="kick">Rappresentanza d’istituto</span>
   <div class="A" style="margin-top:28px"><div class="w" data-box="940" data-max="230">Ci presentiamo.</div><div class="o" data-box="940" data-max="170">Lista 3</div><div class="g" data-box="940" data-max="260">Mirai.</div></div></div>
