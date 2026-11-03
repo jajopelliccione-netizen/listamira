@@ -1,0 +1,100 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@500;700;800&display=swap">
+<style>
+*{box-sizing:border-box;margin:0}html,body{width:1080px;height:1920px;overflow:hidden;background:transparent}
+#stage{position:absolute;inset:0;overflow:hidden}
+.bgl{position:absolute;inset:0}
+.blob{position:absolute;border-radius:50%;filter:blur(110px)}
+.n{position:absolute;left:0;width:1080px;text-align:center;transform-origin:50% 50%;white-space:nowrap;color:#fff;font-family:"Anton",Impact,sans-serif;text-transform:uppercase;line-height:1;text-shadow:0 6px 30px rgba(0,0,0,.45)}
+.n.sans{font-family:"DM Sans",sans-serif;text-transform:none;font-weight:800;text-shadow:0 4px 20px rgba(0,0,0,.5)}
+.g{color:#ffc42e}.o{color:transparent;-webkit-text-stroke:5px #fff;text-shadow:none}
+.pill{position:absolute;left:50%;margin-left:-250px;width:500px;text-align:center;background:#ffc42e;color:#12062b;font:800 34px "DM Sans";letter-spacing:.1em;text-transform:uppercase;padding:16px 0;border-radius:99px;box-shadow:0 14px 30px -10px rgba(0,0,0,.5)}
+.chip{position:absolute;left:50%;transform-origin:50% 50%;white-space:nowrap;font:800 54px "DM Sans";padding:22px 44px;border-radius:99px;box-shadow:0 20px 40px -14px rgba(0,0,0,.6)}
+.neonp{text-shadow:0 0 10px #ff3cbe,0 0 34px #ff3cbe,0 0 80px #ff3cbe;color:#fff}.neono{text-shadow:0 0 10px #ff8a3c,0 0 34px #ff8a3c,0 0 80px #ff6a1c;color:#fff}
+.card{position:absolute;left:110px;width:860px;background:#fff;color:#12062b;border-radius:44px;padding:38px 44px;box-shadow:0 40px 70px -24px rgba(0,0,0,.7)}
+.bar{height:38px;border-radius:99px;background:#ede9fe;margin-top:16px;position:relative;overflow:hidden}.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:#7c3aed;width:0}
+.lab{font:800 30px "DM Sans";margin-top:14px}
+.em{position:absolute;left:0;width:1080px;text-align:center;transform-origin:50% 50%;font-family:"Noto Color Emoji","Apple Color Emoji",sans-serif;line-height:1}
+</style></head><body><div id="stage"></div>
+<script>
+const Q=new URLSearchParams(location.search),SC=Q.get('s'),MODE=Q.get('m')||'bg';
+const stage=document.getElementById('stage');
+const E={lin:t=>t,out:t=>1-Math.pow(1-t,3),io:t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2,back:t=>{const c=1.70158,d=c+1;return 1+d*Math.pow(t-1,3)+c*Math.pow(t-1,2)},elastic:t=>t===0?0:t===1?1:Math.pow(2,-10*t)*Math.sin((t*10-.75)*(2*Math.PI)/3)+1};
+const nodes=[],fx=[];let DUR=3.6;
+function mk(cls,html,css,parent){const d=document.createElement('div');d.className=cls;d.innerHTML=html;Object.assign(d.style,css||{});(parent||stage).appendChild(d);const n={d,tr:[],base:{}};nodes.push(n);return n}
+function tr(n,t0,dur,to,from,ease){n.tr.push({t0,dur,to,from:from||null,ease:E[ease||'back']});return n}
+function evalN(n,t){const st=Object.assign({x:0,y:0,s:1,r:0,o:1,sx:1},n.base);const ts=n.tr;if(!ts.length)return st;
+ if(t<ts[0].t0){Object.assign(st,ts[0].from||{o:0});if(!ts[0].from)st.o=0;return st}
+ for(const k of ts){if(t<k.t0)break;const p=Math.min(1,(t-k.t0)/k.dur),e=k.ease(p);const f=Object.assign({},st,k.from||{});if(k.from&&p===0||true){for(const key in k.to)st[key]=f[key]+(k.to[key]-f[key])*e}}
+ return st}
+function draw(t){for(const n of nodes){const s=evalN(n,t);n.d.style.opacity=Math.max(0,Math.min(1,s.o));n.d.style.transform=`translate(${s.x}px,${s.y}px) rotate(${s.r}deg) scale(${s.s*s.sx},${s.s})`}
+ for(const f of fx)f(t);
+ const ex=Math.max(0,Math.min(1,(t-(DUR-.35))/.35));stage.style.opacity=1-E.io(ex);stage.style.transform=`scale(${1+.04*ex})`}
+const T=(txt,top,size,cls,extra)=>mk('n '+(cls||''),txt,Object.assign({top:top+'px',fontSize:size+'px'},extra||{}));
+const PILL=(txt,top,t0)=>{const n=mk('pill',txt,{top:top+'px'});tr(n,t0||0,.45,{y:0,o:1},{y:-50,o:0},'out');return n};
+const EM=(ch,top,size,t0)=>{const n=mk('em',ch,{top:top+'px',fontSize:size+'px'});tr(n,t0,.7,{s:1,o:1},{s:0,o:0},'elastic');return n};
+function letters(txt,top,size,cls,t0,stag,ease){const w=mk('n '+(cls||''),'',{top:top+'px',fontSize:size+'px'});w.d.style.display='block';w.base={};
+ // nodi figli individuali
+ const sp=[];w.d.innerHTML='';[...txt].forEach((c,i)=>{const s=document.createElement('span');s.style.display='inline-block';s.style.whiteSpace='pre';s.textContent=c;w.d.appendChild(s);const nn={d:s,tr:[],base:{}};nodes.push(nn);tr(nn,t0+i*stag,.55,{y:0,o:1,r:0},{y:-260,o:0,r:-12},ease||'back')});
+ nodes.splice(nodes.indexOf(w),1);return w}
+function bgInit(kind){if(MODE!=='bg')return;const b=mk('bgl','',{background:kind==='neon'?'#07030f':'#12062b'});b.tr=[];
+ const cols=kind==='neon'?[['#ff3cbe',-300,500,.5],['#ff8a3c',380,1300,.5]]:[['#7c3aed',-300,500,.9],['#ffb020',400,1350,.5]];
+ cols.forEach((c,i)=>{const bl=document.createElement('div');bl.className='blob';Object.assign(bl.style,{width:'900px',height:'900px',background:c[0],left:c[1]+'px',top:c[2]+'px',opacity:c[3]});b.d.appendChild(bl);fx.push(t=>{bl.style.transform=`translate(${(i?-1:1)*t*22}px,${t*14}px)`})});
+ stage.prepend(b.d)}
+const SCN={};
+SCN.period=()=>{DUR=3.6;bgInit();PILL('Vita scolastica',470,0);
+ letters('PERIOD',600,250,'',.15,.06);
+ const b=T('BOX',860,340,'g');tr(b,.55,.8,{s:1,r:0,o:1},{s:.2,r:-10,o:0},'elastic');
+ const s=T('Assorbenti gratis in bagno',1250,58,'sans');tr(s,1.1,.5,{y:0,o:1},{y:40,o:0},'out');
+ EM('🩷',1370,190,1.4);
+ const hs=[];for(let i=0;i<8;i++){const h=mk('em','💗',{top:'1450px',fontSize:'90px'});hs.push(h)}
+ fx.push(t=>{hs.forEach((h,i)=>{const p=((t-1.6-i*.28)/1.6);const q=p<0||p>1?0:p;h.d.style.opacity=q?Math.sin(q*Math.PI)*.9:0;h.d.style.transform=`translate(${(i%2?1:-1)*(40+i*50)*q}px,${-260*q-30*i%90*q}px) scale(${.6+q*.6})`})})};
+SCN.assemblee=()=>{DUR=3.8;bgInit();PILL("Assemblee d'istituto",430,0);
+ const a=T('SCELTE',560,300,'');tr(a,.1,.6,{x:0,o:1},{x:-700,o:0},'out');
+ const b=T('DA VOI.',840,300,'g');tr(b,.3,.6,{x:0,o:1},{x:700,o:0},'out');
+ const c=mk('card','<div style="font:800 34px \'DM Sans\'">Ogni voce conta 🗳️</div><div class="lab">I temi</div><div class="bar"><i></i></div><div class="lab">Più ospiti</div><div class="bar"><i></i></div><div class="lab">Dibattiti</div><div class="bar"><i></i></div><div class="lab">Orientamento</div><div class="bar"><i></i></div>',{top:'1170px'});
+ tr(c,1.0,.7,{y:0,o:1},{y:300,o:0},'back');const bars=[...c.d.querySelectorAll('.bar i')];const W=[92,70,56,80];
+ fx.push(t=>bars.forEach((x,i)=>{const p=Math.max(0,Math.min(1,(t-1.5-i*.25)/.7));x.style.width=(W[i]*E.out(p))+'%'}))};
+SCN.snow=()=>{DUR=3.8;bgInit();
+ const fl=[];for(let i=0;i<36;i++){const f=mk('em','❄️',{top:'0px',fontSize:(30+(i*37)%50)+'px',opacity:.85});f.base={};fl.push(f)}
+ fx.push(t=>fl.forEach((f,i)=>{const sp=160+(i*53)%220,x=((i*97)%1080),y=((t*sp+i*171)%2100)-100;f.d.style.opacity=.2+((i*13)%7)/10;f.d.style.transform=`translate(${x-540+Math.sin(t*2+i)*40}px,${y}px)`}));
+ PILL('Eventi',470,0);
+ letters('SNOW',590,380,'',.15,.07);
+ const g=T('GALILEI',930,250,'g');tr(g,.7,.7,{x:0,o:1},{x:800,o:0},'out');
+ const s=T('Tutta la scuola. Un giorno sulla neve.',1260,50,'sans');tr(s,1.3,.5,{y:0,o:1},{y:40,o:0},'out');
+ const d=mk('chip','DJ SET 🎧',{top:'1380px',marginLeft:'-170px',background:'#fff',color:'#12062b'});tr(d,1.8,.7,{s:1,o:1,r:-4},{s:0,o:0,r:10},'elastic')};
+SCN.eventi=()=>{DUR=3.8;bgInit();PILL('Eventi e socialità',460,0);
+ const a=T('3 EVENTI,',590,230,'');tr(a,.1,.6,{y:0,o:1},{y:-120,o:0},'out');
+ const b=T('1 SCUOLA.',810,230,'g');tr(b,.35,.6,{y:0,o:1},{y:120,o:0},'out');
+ const P=[['🎓 Settimana dello Studente','#fff','#12062b',1180,-4,-900],['👗 Fashion Week','#ffc42e','#12062b',1330,3,900],['🎤 Galile’s Got Talent','#7c3aed','#fff',1480,-3,-900]];
+ P.forEach((p,i)=>{const c=mk('chip',p[0],{top:p[3]+'px',background:p[1],color:p[2],marginLeft:'-'+(p[0].length*13)+'px'});tr(c,1+i*.4,.7,{x:0,o:1,r:p[4]},{x:p[5],o:0,r:p[4]*5},'back')})};
+SCN.serate=()=>{DUR=3.8;bgInit('neon');
+ const a=T('SERATE',520,330,'neonp');tr(a,.1,.5,{s:1,o:1},{s:1.6,o:0},'out');
+ const b=T('FATTE PER NOI',860,190,'neono');tr(b,.5,.5,{s:1,o:1},{s:1.5,o:0},'out');
+ fx.push(t=>{if(t>.6&&t<1.1){const f=[1,.3,1,.2,1,.6,1][Math.floor((t-.6)*14)%7];a.d.style.opacity=f}});
+ const lg=mk('em','<img src="astra.png" style="height:200px;margin-right:36px;filter:drop-shadow(0 0 24px rgba(255,110,60,.7))"><span style="font:800 80px \'DM Sans\';color:#ffc42e;vertical-align:60px">×</span><img src="hype.png" style="height:200px;margin-left:36px;filter:drop-shadow(0 0 24px rgba(255,60,190,.8))">',{top:'1120px'});tr(lg,1.2,.7,{s:1,o:1},{s:.3,o:0},'back');
+ const c=mk('chip','Prezzi da studenti',{top:'1400px',marginLeft:'-260px',background:'#ffc42e',color:'#12062b'});tr(c,1.9,.7,{s:1,o:1,r:-3},{s:0,o:0,r:8},'elastic');
+ EM('🪩',380,140,.6)};
+SCN.annuario=()=>{DUR=3.8;bgInit();PILL('Mirai Social',430,0);
+ const bk=EM('📖',520,330,.1);fx.push(t=>{if(t>.9&&t<1.6){bk.d.style.transform=`scale(${Math.abs(Math.cos((t-.9)*Math.PI*2))},1)`}});
+ letters('ANNUARIO',900,200,'',.7,.06);
+ const s=T('Noi lo facciamo',1160,70,'sans');tr(s,1.5,.5,{y:0,o:1},{y:40,o:0},'out');
+ const d=T('DAVVERO',1260,230,'g');tr(d,2.0,.35,{s:1,o:1},{s:3,o:0},'out');fx.push(t=>{if(t>2.3&&t<2.6)d.d.style.marginLeft=(Math.sin(t*90)*10)+'px';else d.d.style.marginLeft='0'});
+ EM('😉',1470,150,2.5)};
+SCN.numeri=()=>{DUR=3.8;bgInit();
+ const n=T('0',320,720,'g');n.d.style.width='1080px';tr(n,0,.4,{s:1,o:1},{s:.6,o:0},'out');
+ fx.push(t=>{const p=Math.max(0,Math.min(1,(t-.2)/1.4));n.d.textContent=Math.round(16*E.out(p))});
+ tr(n,1.6,.35,{s:1.12},null,'out');tr(n,1.95,.4,{s:1},null,'elastic');
+ const i=T('IDEE',1050,260,'');tr(i,1.5,.6,{y:0,o:1},{y:100,o:0},'out');
+ const C=[['Vita scolastica','#fff','#12062b',1360,-3],['Eventi e socialità','#ffc42e','#12062b',1480,2],['Assemblee','#7c3aed','#fff',1600,-2],['Mirai Social','#fff','#12062b',1720,3]];
+ C.forEach((c,k)=>{const p=mk('chip',c[0],{top:(c[3]-60)+'px',background:c[1],color:c[2],fontSize:'46px',padding:'16px 36px',marginLeft:'-'+(c[0].length*11)+'px'});tr(p,2.0+k*.28,.5,{s:1,o:1,r:c[4]},{s:0,o:0,r:10},'elastic')})};
+SCN.vento=()=>{DUR=3.4;bgInit();
+ const v=T('VENTO',620,420,'o');tr(v,0,.5,{s:1,o:1},{s:1.4,o:0},'out');
+ const ln=mk('chip','',{top:'790px',left:'90px',width:'0px',height:'26px',padding:0,background:'#ffc42e',borderRadius:'8px',marginLeft:0,transform:'rotate(-4deg)'});ln.tr=[];
+ fx.push(t=>{const p=Math.max(0,Math.min(1,(t-.7)/.4));ln.d.style.width=(900*E.out(p))+'px';ln.d.style.opacity=p>0?1:0});
+ const a=T('NON È UN',1010,130,'');tr(a,1.3,.5,{y:0,o:1},{y:60,o:0},'out');
+ const b=T('PROGRAMMA.',1150,210,'g');tr(b,1.6,.6,{s:1,o:1},{s:.4,o:0},'elastic')};
+SCN[SC]();
+window.draw=draw;window.DUR=DUR;window.ready=true;draw(0);
+document.fonts.ready.then(()=>{window.fontsOk=true});
+</script></body></html>
