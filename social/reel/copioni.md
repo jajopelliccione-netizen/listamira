@@ -12,14 +12,7 @@ Rappresentanza d'istituto · campagna dall'8 novembre
 
 ---
 
-## 1 · "Due liste, stesso vento" 🌬️ (provocatorio)
-**Gancio (0–2s)**, testo a schermo: *"Avete notato che parlano tutti di VENTO?"*
-**Parlato (Giorgia, a camera):** "Avete notato che due liste su tre parlano di vento? Vento che cambia, vento che fischia, vento qua, vento là…"
-**Scena 2 (montaggio veloce):** screen di storie/post senza nomi né loghi, solo la parola "vento" evidenziata e un *contatore* che sale: 1… 2… 3… 4…
-**Parlato:** "Ok, abbiamo capito che tira vento. Ma a scuola cosa cambia?"
-**Scena 3:** stacco secco, sfondo viola Mirai, testo grande: *"Noi abbiamo 16 idee."*
-**Chiusura:** "Il vento passa. Le idee restano. Lista 3, Mirai."
-**CTA:** "Il programma è in bio."
+## 1 · "Due liste, stesso vento" 🌬️ (provocatorio) → **versione completa in `reel-01-vento.md`**
 
 ## 2 · "Mirai non è inglese" 🇯🇵
 **Gancio:** testo *"Sai cosa significa MIRAI?"* e Valerio che scrive 未来 su un foglio.
