@@ -25,7 +25,7 @@
 
 ### 0:18–0:34 · LE PROPOSTE (il cuore del video)
 Ogni proposta dura 3–4 secondi: **grafica Mirai a tutto schermo + candidato che la dice a camera** (alternare Giorgia, Daniele, Valerio). Ritmo veloce, sempre con la frase *"Noi, invece…"* all'inizio.
-1. **Giorgia:** "Noi, invece, mettiamo gli assorbenti gratis in bagno: la **Period Box**." — *testo: PERIOD BOX*
+1. **Giorgia:** "Mettiamo gli assorbenti gratis in bagno: la **Period Box**." — *testo: PERIOD BOX*
 2. **Daniele:** "Le assemblee? Le **scegliete voi**: temi, ospiti, dibattiti." — *testo: ASSEMBLEE SCELTE DA VOI*
 3. **Valerio:** "**Snow Galilei**: tutta la scuola, un giorno sulla neve, con DJ set." — *testo: SNOW GALILEI ❄️*
 4. **Giorgia:** "**Settimana dello Studente**, **Fashion Week**, **Galile's Got Talent**: tornei, e-sport, moda, palco." — *testo: 3 EVENTI, 1 SCUOLA*
@@ -38,7 +38,7 @@ Ogni proposta dura 3–4 secondi: **grafica Mirai a tutto schermo + candidato ch
 
 ### 0:42–0:50 · CHIUSURA + CTA
 - **Visivo:** Giorgia a camera, mezzo sorriso di sfida.
-- **Parlato:** "Il vento passa. Le idee restano. Lista 3, Mirai. Il futuro inizia da noi."
+- **Parlato:** "Quindi, preferisci il vento… o le idee? Lista 3, Mirai. Il futuro inizia da noi."
 - **Testo a schermo:** *LISTA 3 · MIRAI* + *IL PROGRAMMA COMPLETO È IN BIO 🔗*
 - **Ultima inquadratura (1 secondo):** logo Mirai su sfondo viola.
 
