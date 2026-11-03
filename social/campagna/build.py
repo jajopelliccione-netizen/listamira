@@ -4,9 +4,9 @@ head=head[:head.index('<body>')+6].replace('</head>','''<style>
 .ph{position:absolute;overflow:hidden;box-shadow:0 40px 70px -26px rgba(0,0,0,.8)}.ph img{width:100%;height:100%;object-fit:cover;display:block}
 .chip{display:inline-block;background:#fff;color:var(--ink);font:800 30px "DM Sans";padding:12px 28px;border-radius:99px}.chip.g{background:var(--gold)}
 .ig{display:inline-flex;align-items:center;gap:10px;font:800 32px "DM Sans";color:#fff;background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.3);padding:12px 26px;border-radius:99px}
-.card{border-radius:40px;padding:30px 38px;flex:1;display:flex;flex-direction:column;justify-content:center}.card b{display:block;font:800 46px/1.1 "DM Sans"}.card span{display:block;font:500 33px/1.25 "DM Sans";margin-top:8px;opacity:.92}
+.card{border-radius:36px;padding:22px 36px;min-height:0;flex:1;display:flex;flex-direction:column;justify-content:center}.card b{display:block;font:800 42px/1.1 "DM Sans"}.card span{display:block;font:500 30px/1.22 "DM Sans";margin-top:6px;opacity:.92}
 .card.gold{background:var(--gold);color:var(--ink)}.card.vi{background:linear-gradient(150deg,#5b21b6,#7c3aed);border:2px solid rgba(255,255,255,.25)}.card.li{background:#c4b5fd;color:var(--ink)}.card.wh{background:#fff;color:var(--ink)}
-.stack{position:absolute;left:70px;right:70px;display:flex;flex-direction:column;gap:22px;z-index:8}
+.stack{position:absolute;left:70px;right:70px;display:flex;flex-direction:column;gap:16px;z-index:8}
 .fade{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg,#12062b 12%,rgba(18,6,43,0));z-index:5}
 .strike{position:relative;display:inline-block}.strike::after{content:"";position:absolute;left:-2%;right:-2%;top:52%;height:14px;background:var(--gold);transform:rotate(-3deg);border-radius:4px}
 .ghost{color:transparent;-webkit-text-stroke:4px rgba(255,255,255,.55)}
