@@ -1,0 +1,11 @@
+ANIMAZIONI PER I REEL — Lista 3 · Mirai (1080x1920, 30 fps, 3-4 secondi ciascuna)
+
+CARTELLA "con-sfondo": scene complete con lo sfondo viola Mirai.
+  Si usano a TUTTO SCHERMO tra una clip e l'altra (come nel copione del reel 1).
+
+CARTELLA "schermo-verde": solo testi e grafiche su sfondo VERDE.
+  Si sovrappongono al video: in CapCut → clip sopra il video → Cutout / "Chroma key" → scegli il verde → intensità al massimo.
+  (In Premiere / DaVinci: effetto Ultra Key / Chroma Key.)
+
+Le animazioni: 01 Period Box · 02 Assemblee scelte da voi · 03 Snow Galilei · 04 3 eventi, 1 scuola
+05 Serate Hype x Astra · 06 Annuario · 07 16 idee / 4 aree · 08 "Il vento non e' un programma"
