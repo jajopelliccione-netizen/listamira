@@ -1,6 +1,6 @@
 // Lista Mira — regole di sicurezza Firestore
 // Incolla in Firebase Console → Firestore Database → Regole → Pubblica.
-// PRIMA sostituisci jacopo@mirai.com con l'email dell'utente admin.
+// L'email admin è quella nella funzione isAdmin() qui sotto: deve coincidere con l'utente creato in Authentication.
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
