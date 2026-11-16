@@ -68,5 +68,12 @@ const Core = (() => {
 
   const signIn = (c, email, password) => call(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${c.firebase.apiKey}`, { method: 'POST', body: { email, password, returnSecureToken: true } });
 
-  return { ROOT, config, configured, el, fs, signIn };
+  /* ---- notifica push sull'iPhone dell'admin (ntfy.sh). Mai bloccante, mai col testo della proposta. ---- */
+  const notify = (c, title, message) => {
+    const topic = c.notify && c.notify.ntfyTopic;
+    if (!topic) return;
+    fetch('https://ntfy.sh/', { method: 'POST', body: JSON.stringify({ topic, title, message, tags: ['bell'] }) }).catch(() => {});
+  };
+
+  return { ROOT, config, configured, el, fs, signIn, notify };
 })();

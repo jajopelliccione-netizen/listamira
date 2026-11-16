@@ -202,5 +202,8 @@
   "firebase": {
     "apiKey": "AIzaSyBvz6d5x7v3cuydmv5PICWnfQOBRYfaAfs",
     "projectId": "mira-903be"
+  },
+  "notify": {
+    "ntfyTopic": "mira-114979fe9bc0c674"
   }
 }
