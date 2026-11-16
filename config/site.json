@@ -204,6 +204,7 @@
     "projectId": "mira-903be"
   },
   "notify": {
+    "workerUrl": "",
     "ntfyTopic": "mira-114979fe9bc0c674"
   }
 }

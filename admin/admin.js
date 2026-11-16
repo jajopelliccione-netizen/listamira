@@ -7,11 +7,28 @@ let cfg, token = null, qrs = [], proposals = [];
 
 /* ---- sessione admin (Firebase Auth, solo per questa scheda) ---- */
 const tokenEmail = () => { try { return JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).email || ''; } catch { return ''; } };
-const saved = () => { try { return JSON.parse(sessionStorage.getItem(TOKEN_KEY)); } catch { return null; } };
-const persist = (s) => { try { s ? sessionStorage.setItem(TOKEN_KEY, JSON.stringify(s)) : sessionStorage.removeItem(TOKEN_KEY); } catch { /* ignora */ } };
+const saved = () => { for (const st of [localStorage, sessionStorage]) { try { const v = JSON.parse(st.getItem(TOKEN_KEY)); if (v) return v; } catch { /* ignora */ } } return null; };
+// "Resta connesso" (default) = salvato su questo dispositivo; altrimenti vale solo finché la scheda resta aperta
+const persist = (v) => {
+  for (const st of [localStorage, sessionStorage]) { try { st.removeItem(TOKEN_KEY); } catch { /* ignora */ } }
+  if (v) { try { (v.remember === false ? sessionStorage : localStorage).setItem(TOKEN_KEY, JSON.stringify(v)); } catch { /* ignora */ } }
+};
+const authErr = () => Object.assign(new Error('auth'), { status: 401 });
+// token valido (lo rinnova da solo con il refresh token quando sta per scadere)
+async function freshToken() {
+  let v = saved();
+  if (!v) throw authErr();
+  if (v.exp < Date.now() + 60000) {
+    if (!v.refresh) throw authErr();
+    const d = await Core.refreshToken(cfg, v.refresh);
+    v = { token: d.id_token, refresh: d.refresh_token, remember: v.remember, exp: Date.now() + (Number(d.expires_in) - 60) * 1000 };
+    persist(v);
+  }
+  return (token = v.token);
+}
 
 async function db(fn) {
-  try { return await fn(token); }
+  try { return await fn(await freshToken()); }
   catch (e) {
     if (e.status === 401) { showLogin(); throw new Error('auth'); }
     if (e.status === 403) throw new Error('Permesso negato. Sei entrato come “' + (tokenEmail() || '?') + '”: nelle regole di Firestore deve esserci ESATTAMENTE questa email (tutta minuscola) alla riga request.auth.token.email == \'…\', poi premi Pubblica.');
@@ -26,7 +43,7 @@ $('#login-form').addEventListener('submit', async (e) => {
   try {
     const d = await Core.signIn(cfg, $('#em').value.trim(), $('#pw').value);
     $('#pw').value = '';
-    persist({ token: d.idToken, exp: Date.now() + (Number(d.expiresIn) - 60) * 1000 });
+    persist({ token: d.idToken, refresh: d.refreshToken, remember: $('#remember').checked, exp: Date.now() + (Number(d.expiresIn) - 60) * 1000 });
     start();
   } catch { err.textContent = 'Email o password errata.'; err.hidden = false; }
 });
@@ -225,12 +242,86 @@ function renderStats() {
 $('#st-range').addEventListener('change', renderStats);
 
 async function start() {
-  const s = saved();
-  if (!s || s.exp < Date.now()) return showLogin();
-  token = s.token;
+  try { await freshToken(); } catch { return showLogin(); }
   $('#login').hidden = true; $('#app').hidden = false;
   $('#who').textContent = tokenEmail();
   try { await loadProps(); await loadQrs(); } catch (e) { if (e.message !== 'auth') flash($('#qr-err'), 'Errore nel caricamento: ' + e.message, false); }
+  if (location.hash === '#props') $('[data-tab="props"]').click();
+  initPush();
+}
+
+/* ---- aggiorna i dati quando riapri l'app (es. toccando una notifica) ---- */
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && !$('#app').hidden) { loadProps().catch(() => {}); loadQrs().catch(() => {}); }
+});
+window.addEventListener('hashchange', () => { if (location.hash === '#props' && !$('#app').hidden) $('[data-tab="props"]').click(); });
+
+/* ---- app installabile + notifiche push (Worker Cloudflare) ---- */
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const standalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const pushSupported = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+const workerUrl = () => ((cfg.notify && cfg.notify.workerUrl) || '').replace(/\/+$/, '');
+const keyBytes = (s) => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - (s.length % 4)) % 4)), (c) => c.charCodeAt(0));
+
+async function worker(path, method = 'GET', body, auth) {
+  const headers = {};
+  if (auth) headers.Authorization = 'Bearer ' + (await freshToken());
+  if (body) headers['Content-Type'] = 'application/json';
+  const r = await fetch(workerUrl() + path, { method, headers, body: body ? JSON.stringify(body) : undefined });
+  const d = await r.json().catch(() => null);
+  if (!r.ok) throw new Error((d && d.error) || 'Errore ' + r.status);
+  return d;
+}
+const currentSub = async () => (await navigator.serviceWorker.ready).pushManager.getSubscription();
+
+async function enablePush() {
+  const box = $('#push-msg');
+  try {
+    if ((await Notification.requestPermission()) !== 'granted') return renderPush();
+    const reg = await navigator.serviceWorker.ready;
+    const { publicKey } = await worker('/vapid');
+    let sub = await reg.pushManager.getSubscription();
+    if (sub) await sub.unsubscribe(); // riparte pulito (evita chiavi vecchie)
+    sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes(publicKey) });
+    await worker('/subscribe', 'POST', { subscription: sub.toJSON() }, true);
+    await renderPush();
+    flash(box, 'Fatto! Ora premi “Invia una prova”.', true);
+  } catch (e) { renderPush(); flash(box, 'Non sono riuscito ad attivarle: ' + e.message, false); }
+}
+async function disablePush() {
+  try { const sub = await currentSub(); if (sub) { await worker('/unsubscribe', 'POST', { subscription: sub.toJSON() }, true).catch(() => {}); await sub.unsubscribe(); } } catch { /* ignora */ }
+  renderPush();
+}
+async function testPush() {
+  const box = $('#push-msg');
+  try { const d = await worker('/test', 'POST', {}, true); flash(box, d.sent ? 'Prova inviata: guarda il telefono.' : 'Nessun telefono iscritto: riattiva le notifiche.', !!d.sent); }
+  catch (e) { flash(box, 'Prova non riuscita: ' + e.message, false); }
+}
+
+async function renderPush() {
+  const panel = $('#push-panel'), status = $('#push-status'), actions = $('#push-actions');
+  actions.replaceChildren();
+  panel.hidden = false;
+  const say = (t, cls) => { status.textContent = t; panel.className = 'panel push-panel ' + (cls || ''); };
+  if (!workerUrl()) return say('🔔 Notifiche push: non ancora collegate (manca l’indirizzo del Worker Cloudflare in config/site.json).');
+  if (isIos && !standalone()) return say('🔔 Per ricevere le notifiche: tocca Condividi (quadrato con la freccia) → “Aggiungi alla schermata Home”, poi apri Mirai dalla Home e torna qui.');
+  if (!pushSupported()) return say('🔔 Questo browser non supporta le notifiche push.');
+  if (Notification.permission === 'denied') return say('🔔 Notifiche bloccate. Sbloccale da Impostazioni → Notifiche → Mirai (o dalle impostazioni del sito).');
+  const sub = Notification.permission === 'granted' ? await currentSub() : null;
+  if (!sub) {
+    say('🔔 Attiva le notifiche per sapere subito quando qualcuno scansiona un QR o invia una proposta.');
+    return actions.append(el('button', { class: 'btn btn-primary', type: 'button', onclick: enablePush }, 'Attiva le notifiche'));
+  }
+  say('✅ Notifiche attive su questo telefono.', 'on');
+  actions.append(el('button', { class: 'mini', type: 'button', onclick: testPush }, 'Invia una prova'), el('button', { class: 'mini', type: 'button', onclick: disablePush }, 'Disattiva'));
+}
+async function initPush() {
+  try {
+    await renderPush();
+    // già iscritto: riallinea l'iscrizione al Worker (utile se è cambiata)
+    if (workerUrl() && pushSupported() && Notification.permission === 'granted') { const sub = await currentSub(); if (sub) await worker('/subscribe', 'POST', { subscription: sub.toJSON() }, true).catch(() => {}); }
+  } catch { /* ignora */ }
 }
 
 (async () => {
