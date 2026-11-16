@@ -2,10 +2,17 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex">
-  <title>Admin — Lista Mirai</title>
+  <title>Mirai</title>
   <link rel="icon" href="../assets/favicon.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#2b0f57">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Mirai">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="../styles.css?v=1544432143">
   <link rel="stylesheet" href="admin.css?v=1544432143">
@@ -21,6 +28,7 @@
       <label for="pw">Password</label>
       <input id="pw" type="password" autocomplete="current-password" required>
       <div id="login-err" class="msg err" role="alert" hidden></div>
+      <label class="check"><input id="remember" type="checkbox" checked> Resta connesso su questo dispositivo</label>
       <button class="btn btn-primary" style="width:100%;margin-top:18px">Entra</button>
     </form>
   </section>
@@ -28,7 +36,7 @@
   <div id="app" hidden>
     <header class="admin-bar">
       <div class="wrap bar-in">
-        <strong class="logo">Mirai · Admin <small id="who" class="who"></small></strong>
+        <strong class="logo">Mirai <small id="who" class="who"></small></strong>
         <nav class="tabs" role="tablist" aria-label="Sezioni">
           <button role="tab" data-tab="qr" aria-selected="true">QR code</button>
           <button role="tab" data-tab="stats" aria-selected="false">Statistiche</button>
@@ -39,6 +47,12 @@
     </header>
 
     <main class="wrap admin-main">
+      <div id="push-panel" class="panel push-panel" hidden>
+        <p id="push-status"></p>
+        <div id="push-actions" class="row"></div>
+        <div id="push-msg" class="msg" role="status" hidden></div>
+      </div>
+
       <!-- QR -->
       <section id="tab-qr">
         <div class="panel">

@@ -83,3 +83,13 @@ details.grp summary::after{display:none}
 .sub-list{display:flex;flex-wrap:wrap;gap:6px 14px;margin:12px 0 8px;color:var(--muted);font-size:.85rem}
 
 .who{display:block;font:500 .72rem var(--font);color:#c4b5fd;letter-spacing:0;margin:2px 0 0 20px}
+
+/* app installata (iPhone): rispetta tacca e barra in basso */
+.admin-bar { padding-top: env(safe-area-inset-top); }
+.prop-page { padding-top: max(24px, env(safe-area-inset-top)); }
+.admin-main { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+.check { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-weight: 500; }
+.check input { width: 20px; height: 20px; flex: none; }
+.push-panel { display: flex; flex-direction: column; gap: 12px; padding: 18px 20px; margin-bottom: 20px; border-left: 6px solid var(--orange-500); }
+.push-panel.on { border-left-color: #16a34a; }
+.push-panel p { margin: 0; font-weight: 500; }
