@@ -243,6 +243,23 @@ function renderStats() {
 }
 $('#st-range').addEventListener('change', renderStats);
 
+/* ---- azzera le scansioni (con conferma scritta, per non farlo per sbaglio) ---- */
+$('#reset-stats').addEventListener('click', async (e) => {
+  const btn = e.currentTarget, msg = $('#reset-msg');
+  const tot = qrs.reduce((n, q) => n + (q.scans || 0), 0);
+  if (!tot) return flash(msg, 'Le scansioni sono già a zero.', true);
+  const v = prompt(`Stai per azzerare le scansioni di tutti i QR (${tot} in totale, su ${qrs.length} QR).\nLe proposte NON vengono toccate e i QR restano attivi.\nNon si può annullare.\n\nPer confermare scrivi AZZERA:`);
+  if (v === null) return;
+  if (v.trim().toUpperCase() !== 'AZZERA') return flash(msg, 'Non ho azzerato niente: non hai scritto AZZERA.', false);
+  btn.disabled = true;
+  try {
+    for (const q of qrs.filter((x) => x.scans)) await db((t) => Core.fs.update(cfg, 'qr_codes', q.id, { scans: 0 }, t));
+    await loadQrs(); renderStats();
+    flash(msg, 'Fatto: scansioni azzerate.', true);
+  } catch (ex) { if (ex.message !== 'auth') { await loadQrs().catch(() => {}); renderStats(); flash(msg, 'Non sono riuscito ad azzerare tutto: ' + ex.message, false); } }
+  finally { btn.disabled = false; }
+});
+
 async function start() {
   try { await freshToken(); } catch { return showLogin(); }
   $('#login').hidden = true; $('#app').hidden = false;

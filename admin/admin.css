@@ -123,3 +123,8 @@ details.grp summary { grid-template-columns: 1fr auto auto auto; }
 .push-panel .btn { align-self: flex-start; }
 .row input[type=text], .row input[type=url], .row select { min-width: 0; max-width: 100%; }
 .row input[type=text], .row input[type=url] { flex: 1 1 180px; }
+
+.danger-zone { border: 2px solid #fecaca; }
+.danger-zone h2 { color: #991b1b; }
+.btn-danger { background: #dc2626; color: #fff; }
+.btn-danger:hover { background: #b91c1c; }
