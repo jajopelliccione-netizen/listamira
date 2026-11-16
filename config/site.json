@@ -204,7 +204,7 @@
     "projectId": "mira-903be"
   },
   "notify": {
-    "workerUrl": "",
+    "workerUrl": "https://mirai-push.listamiraigalilei.workers.dev",
     "ntfyTopic": "mira-114979fe9bc0c674"
   }
 }
