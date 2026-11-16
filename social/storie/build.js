@@ -29,8 +29,7 @@ const S = [
  { k:P, id:'08-chi-parla-chi-fa', kicker:'Lista Mirai', lines:[['Chi parla.','o'],['Chi fa.','g']], sub:'Indovina chi siamo. 😉', tape:'Chi parla • Chi fa • Chi parla • Chi fa' },
  { k:P, id:'09-non-i-migliori', kicker:'Lista Mirai', lines:[['Non diciamo','w'],['che siamo','w'],['i migliori.','o']], sub:'Lo dicono i 16 progetti.', sticker:'Fatti, non parole 💜' },
  { k:P, id:'10-due-domande', kicker:'Lista Mirai', lines:[['Fatevi','w'],['due','o'],['domande.','g']], sub:'Poi guardate i nostri 16 progetti.', tape:'Servivamo noi • Servivamo noi', fox:'br' },
- { k:P, id:'11-aula-autogestita', kicker:'Lista Mirai', lines:[['L’aula','w'],['autogestita?','o'],['Da 2 anni.','g']], sub:'Promessa, promessa, promessa…', sticker:'Con affetto', emoji:'apple-eyeroll.png', tape:'Meno promesse • Più fatti', fox:'br' },
- { k:P, id:'12-aula-attesa', kicker:'Lista Mirai', lines:[['Due anni','w'],['di promesse','o'],['sull’aula.','g']], sub:'Noi intanto ci mettiamo al lavoro.', sticker:'Con calma', emoji:'apple-smirk.png', tape:'Meno promesse • Più fatti' },
+ { k:P, id:'11-aula-autogestita', kicker:'Lista Mirai', lines:[['Qualcuno ha','w'],['visto l’aula','o'],['autogestita?','g']], sub:'Ce l’avevano promessa.', tape:'Meno promesse • Più fatti', fox:'br' },
 ];
 const blobs = [
  '.b1{width:900px;height:900px;background:#7c3aed;right:-380px;top:420px;opacity:.95}.b2{width:760px;height:760px;background:#ffb020;left:-330px;bottom:-250px;opacity:.5}',
