@@ -29,6 +29,8 @@ const S = [
  { k:P, id:'08-chi-parla-chi-fa', kicker:'Lista Mirai', lines:[['Chi parla.','o'],['Chi fa.','g']], sub:'Indovina chi siamo. 😉', tape:'Chi parla • Chi fa • Chi parla • Chi fa' },
  { k:P, id:'09-non-i-migliori', kicker:'Lista Mirai', lines:[['Non diciamo','w'],['che siamo','w'],['i migliori.','o']], sub:'Lo dicono i 16 progetti.', sticker:'Fatti, non parole 💜' },
  { k:P, id:'10-due-domande', kicker:'Lista Mirai', lines:[['Fatevi','w'],['due','o'],['domande.','g']], sub:'Poi guardate i nostri 16 progetti.', tape:'Servivamo noi • Servivamo noi', fox:'br' },
+ { k:P, id:'11-aula-autogestita', kicker:'Lista Mirai', lines:[['L’aula','w'],['autogestita?','o'],['Da 2 anni.','g']], sub:'Promessa, promessa, promessa…', sticker:'Con affetto', emoji:'apple-eyeroll.png', tape:'Meno promesse • Più fatti', fox:'br' },
+ { k:P, id:'12-aula-attesa', kicker:'Lista Mirai', lines:[['Due anni','w'],['di promesse','o'],['sull’aula.','g']], sub:'Noi intanto ci mettiamo al lavoro.', sticker:'Con calma', emoji:'apple-smirk.png', tape:'Meno promesse • Più fatti' },
 ];
 const blobs = [
  '.b1{width:900px;height:900px;background:#7c3aed;right:-380px;top:420px;opacity:.95}.b2{width:760px;height:760px;background:#ffb020;left:-330px;bottom:-250px;opacity:.5}',
@@ -87,7 +89,7 @@ S.forEach((s, i) => {
   ${s.card ? `<div class="card">${esc(s.card)}<small>Scrivi la tua idea</small></div>` : ''}
   ${s.bar ? '<div class="bar"><div class="lb"><span>Caricamento…</span><b>87%</b></div><div class="track"><div class="fill"></div></div></div>' : ''}
   ${s.qr ? `<div class="qrb">${qrSvg}</div>` : ''}
-  ${s.sticker ? `<span class="sticker">${esc(s.sticker)}</span>` : ''}
+  ${s.sticker ? `<span class="sticker">${esc(s.sticker)}${s.emoji ? ` <img src="../campagna/img/${s.emoji}" style="height:1.05em;vertical-align:-.15em">` : ''}</span>` : ''}
  </div>
  ${s.fox ? '<img class="fox" src="../../assets/fox.png" alt="">' : ''}
  ${s.tape ? `<div class="tape" style="top:${tapeTop}px">${tapeText}</div>` : ''}
