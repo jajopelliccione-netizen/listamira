@@ -50,8 +50,8 @@ open('qr-domani.html','w',encoding='utf-8').write(pre+'\n'.join(out)+'\n'+post)
 
 # ---------------- COMUNICATO su foglio bianco ----------------
 PG=[
- ["Come lista Mirai sentiamo il dovere di fare chiarezza su quanto sta accadendo in questi giorni. Lo facciamo con trasparenza, perché crediamo che gli studenti abbiano il diritto di sapere come si sta svolgendo questa campagna elettorale.",
-  "Il fatto più grave riguarda le votazioni per la consulta. A tutti i rappresentanti di classe dell’istituto è stato scritto di non votare la nostra lista e, non solo la nostra, di non votare nessuna delle altre liste candidate. A scriverlo è stata una lista che già l’anno scorso aveva un ruolo di rilievo nella scuola e che, proprio per questo, manteneva contatti diretti con i rappresentanti di classe.",
+ ["Come lista Mirai sentiamo il dovere di fare chiarezza su quanto sta accadendo in questi giorni, perché gli studenti hanno il diritto di sapere come si sta svolgendo questa campagna elettorale.",
+  "Il fatto più grave riguarda le votazioni per la consulta. A tutti i rappresentanti di classe dell’istituto è stato scritto di non votare la nostra lista e, non solo la nostra, di non votare nessuna delle altre liste candidate. A scriverlo è stata una lista che già l’anno scorso aveva un ruolo di rilievo nella scuola e che, proprio per questo, manteneva contatti diretti con i rappresentanti di classe. Di questo non avevamo parlato subito, ma adesso siamo arrivati a un limite.",
   "Riteniamo che usare questi contatti per influenzare un voto non sia corretto. Un’elezione si vince con le idee e con il confronto, non chiedendo a chi vota di escludere chi si candida: è un messaggio che colpisce tutte le liste e, prima ancora, il diritto di ogni studente di scegliere liberamente."],
  ["A questo si aggiungono episodi che si ripetono: vengono fatti continuamente insulti nei nostri confronti, vengono fatte circolare nei gruppi foto scattate a scuola, mentre presentavamo il programma nelle classi, e ci risulta che ci sia stato un accordo per staccare i materiali che affiggiamo. Non ci sembrano comportamenti adatti a un ambiente scolastico.",
   "Noi siamo aperti al confronto in ogni modo. È giusto che ognuno la pensi in maniera diversa, ed è normale che le liste abbiano idee e programmi differenti. Abbiamo sempre parlato delle altre liste con molto rispetto e continueremo a farlo. Poi sta agli studenti scegliere cosa votare e cosa non votare.",
@@ -62,7 +62,7 @@ PG=[
 ]
 def sheet(id,story,page,paras,title=True,sign=False):
     W,Hh=(940,1110) if not story else (940,1290)
-    fs=30 if not story else 34
+    fs=30 if not story else 32
     top=130 if not story else 270
     letter=('<div style="display:flex;align-items:center;gap:20px;border-bottom:3px solid #ffc42e;padding-bottom:20px;margin-bottom:28px">'
             '<img src="../../assets/logo.png" style="width:78px;height:78px;border-radius:50%"><div><div style="font:700 30px Tinos;letter-spacing:.14em;color:#12062b">LISTA 3 · MIRAI</div>'
