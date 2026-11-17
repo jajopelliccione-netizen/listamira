@@ -50,14 +50,15 @@ open('qr-domani.html','w',encoding='utf-8').write(pre+'\n'.join(out)+'\n'+post)
 
 # ---------------- COMUNICATO su foglio bianco ----------------
 P1=[
- "Come lista Mirai sentiamo il dovere di fare chiarezza su quanto sta accadendo in questi giorni, nel rispetto di tutti gli studenti e di tutte le liste.",
- "In occasione delle votazioni per la consulta, a tutti i rappresentanti di classe dell’istituto è stato scritto di non votare la nostra lista. Riteniamo che questa non sia una tattica corretta: un’elezione si vince con le idee e con il confronto, non chiedendo di escludere chi si candida.",
- "Ci risulta inoltre che nostre foto, scattate mentre presentavamo il programma nelle classi, siano state fatte circolare in alcuni gruppi, e che ci sia stato un accordo per rimuovere i materiali che affiggiamo nella scuola. Sono comportamenti che non rispecchiano il clima di rispetto che una scuola dovrebbe avere.",
+ "Come lista Mirai sentiamo il dovere di fare chiarezza su quanto sta accadendo in questi giorni.",
+ "In occasione delle votazioni per la consulta, un’altra lista candidata ha scritto a tutti i rappresentanti di classe dell’istituto, con cui era in contatto, chiedendo di non votare la nostra lista. Riteniamo che questa non sia una tattica corretta: un’elezione si vince con le idee e con il confronto, non chiedendo di escludere chi si candida.",
+ "Ci risulta inoltre che nostre foto, scattate mentre presentavamo il programma nelle classi, siano state fatte circolare in alcuni gruppi, e che ci sia stato un accordo per rimuovere i materiali che affiggiamo nella scuola.",
+ "Da parte nostra, abbiamo sempre parlato delle altre liste con molto rispetto, e continueremo a farlo.",
 ]
 P2=[
  "Da domani affiggeremo in tutto l’istituto dei cartelloni con dei QR code. Attraverso di essi ogni studente potrà inviarci, in forma completamente anonima, segnalazioni e proposte. Lo facciamo perché vogliamo sapere cosa pensate e cosa volete davvero.",
  "Se anche questi cartelloni dovessero essere staccati, sarebbe un segnale chiaro: che c’è chi non lascia spazio alle idee di tutti.",
- "Noi continueremo a fare la nostra campagna a viso aperto, con rispetto per chiunque. Chiediamo a tutti di fare altrettanto: lasciate che gli studenti ascoltino, si confrontino e scelgano liberamente.",
+ "Non ci lasciamo condizionare: sono comportamenti di basso livello e non ci interessano. Continuiamo la nostra campagna a testa alta e senza paura di nessuno. Vogliamo che gli studenti facciano caso a tutto questo.",
 ]
 def sheet(id,story,page,paras,title=True,sign=False):
     W,Hh=(940,1110) if not story else (940,1290)
