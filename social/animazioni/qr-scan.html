@@ -18,7 +18,7 @@
 #screen{position:absolute;left:16px;top:16px;width:478px;height:1066px;border-radius:70px;overflow:hidden;background:#0d0d12}
 #island{position:absolute;left:50%;top:14px;margin-left:-70px;width:140px;height:38px;border-radius:30px;background:#000;z-index:8}
 #cam{position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,#2a2a36,transparent 60%),radial-gradient(circle at 80% 90%,#1d1b2b,transparent 55%),#0c0c12}
-#site{position:absolute;left:0;top:34px;width:478px;opacity:0}#sbar{position:absolute;left:0;top:0;width:478px;height:80px;background:#301d58;opacity:0;z-index:6}
+#site{position:absolute;left:0;top:44px;width:478px;opacity:0}#sbar{position:absolute;left:0;top:0;width:478px;height:36px;background:#301d58;opacity:0;z-index:6}
 .br{position:absolute;width:54px;height:54px;border:0 solid #ffc42e;z-index:35}
 #scan{position:absolute;height:6px;border-radius:3px;background:linear-gradient(90deg,transparent,#ffc42e,transparent);box-shadow:0 0 24px #ffc42e;z-index:36;opacity:0}
 #flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:40}
@@ -117,8 +117,8 @@ window.draw=function(t){
  const so=eio(seg(t,6.0,6.7));
  $('cam').style.opacity=1-so;
  const site=$('site');site.style.opacity=so;$('sbar').style.opacity=so;
- const scroll=eio(seg(t,7.0,9.4))*130;
- site.style.transform=`translateY(${-scroll}px) scale(${lerp(1.12,1,so)})`;site.style.transformOrigin='50% 20%';
+ const scroll=0, zoom=1+eio(seg(t,7.0,10.2))*0.035;
+ site.style.transform=`translateY(${-scroll}px) scale(${lerp(1.12,1,so)*zoom})`;site.style.transformOrigin="50% 0%";
  setCap(t);
 };
 document.fonts.ready.then(()=>{window.fontsOk=true});
