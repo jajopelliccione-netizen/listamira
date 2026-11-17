@@ -49,16 +49,16 @@ out+=stories
 open('qr-domani.html','w',encoding='utf-8').write(pre+'\n'.join(out)+'\n'+post)
 
 # ---------------- COMUNICATO su foglio bianco ----------------
-P1=[
- "Come lista Mirai sentiamo il dovere di fare chiarezza su quanto sta accadendo in questi giorni.",
- "In occasione delle votazioni per la consulta, un’altra lista candidata ha scritto a tutti i rappresentanti di classe dell’istituto, con cui era in contatto, chiedendo di non votare la nostra lista. Riteniamo che questa non sia una tattica corretta: un’elezione si vince con le idee e con il confronto, non chiedendo di escludere chi si candida.",
- "Ci risulta inoltre che nostre foto, scattate mentre presentavamo il programma nelle classi, siano state fatte circolare in alcuni gruppi, e che ci sia stato un accordo per rimuovere i materiali che affiggiamo nella scuola.",
- "Da parte nostra, abbiamo sempre parlato delle altre liste con molto rispetto, e continueremo a farlo.",
-]
-P2=[
- "Da domani affiggeremo in tutto l’istituto dei cartelloni con dei QR code. Attraverso di essi ogni studente potrà inviarci, in forma completamente anonima, segnalazioni e proposte. Lo facciamo perché vogliamo sapere cosa pensate e cosa volete davvero.",
- "Se anche questi cartelloni dovessero essere staccati, sarebbe un segnale chiaro: che c’è chi non lascia spazio alle idee di tutti.",
- "Non ci lasciamo condizionare: sono comportamenti di basso livello e non ci interessano. Continuiamo la nostra campagna a testa alta e senza paura di nessuno. Vogliamo che gli studenti facciano caso a tutto questo.",
+PG=[
+ ["Come lista Mirai sentiamo il dovere di fare chiarezza su quanto sta accadendo in questi giorni. Lo facciamo con trasparenza, perché crediamo che gli studenti abbiano il diritto di sapere come si sta svolgendo questa campagna elettorale.",
+  "Il fatto più grave riguarda le votazioni per la consulta. A tutti i rappresentanti di classe dell’istituto è stato scritto di non votare la nostra lista e, non solo la nostra, di non votare nessuna delle altre liste candidate. A scriverlo è stata una lista che già l’anno scorso aveva un ruolo di rilievo nella scuola e che, proprio per questo, manteneva contatti diretti con i rappresentanti di classe.",
+  "Riteniamo che usare questi contatti per influenzare un voto non sia corretto. Un’elezione si vince con le idee e con il confronto, non chiedendo a chi vota di escludere chi si candida: è un messaggio che colpisce tutte le liste e, prima ancora, il diritto di ogni studente di scegliere liberamente."],
+ ["A questo si aggiungono episodi che si ripetono: vengono fatti continuamente insulti nei nostri confronti, vengono fatte circolare nei gruppi foto scattate a scuola, mentre presentavamo il programma nelle classi, e ci risulta che ci sia stato un accordo per staccare i materiali che affiggiamo. Non ci sembrano comportamenti adatti a un ambiente scolastico.",
+  "Noi siamo aperti al confronto in ogni modo. È giusto che ognuno la pensi in maniera diversa, ed è normale che le liste abbiano idee e programmi differenti. Abbiamo sempre parlato delle altre liste con molto rispetto e continueremo a farlo. Poi sta agli studenti scegliere cosa votare e cosa non votare.",
+  "Crediamo nella comunicazione: parlare apertamente, spiegare le proprie proposte, ascoltare gli altri. Per questo da domani affiggeremo in tutto l’istituto dei cartelloni con dei QR code: ogni studente potrà inviarci, in forma anonima, segnalazioni e proposte. Vogliamo sapere cosa pensate e cosa volete davvero."],
+ ["Se anche questi cartelloni dovessero essere staccati, sarebbe un segnale chiaro: che c’è chi non lascia spazio alle idee di tutti.",
+  "Non ci lasciamo condizionare: sono comportamenti di basso livello e non ci interessano. Continuiamo la nostra campagna a testa alta e senza paura di nessuno, con le nostre idee e con il rispetto per chiunque.",
+  "Agli studenti chiediamo di fare caso a tutto questo e di scegliere con la propria testa. Ai rappresentanti di classe diciamo: siete liberi di ascoltare tutti, di confrontarvi e di votare secondo coscienza."],
 ]
 def sheet(id,story,page,paras,title=True,sign=False):
     W,Hh=(940,1110) if not story else (940,1290)
@@ -76,7 +76,7 @@ def sheet(id,story,page,paras,title=True,sign=False):
     brand2='<div class="brand2"><img src="../../assets/fox-96.png" alt="">Mirai</div>' if not story else ''
     return (f'<section class="c{" cs" if story else ""}" id="{id}"><div class="cbg"></div><div class="glow" style="width:800px;height:800px;background:#7c3aed;left:-350px;top:10%;opacity:.55"></div><div class="glow" style="width:700px;height:700px;background:#ffb020;right:-350px;bottom:-200px;opacity:.35"></div>'
       f'<img class="cfox" src="../../assets/fox.png" alt="" style="top:{foxtop}px">{brand2}'
-      f'<div class="sheet" style="top:{top}px;width:{W}px;height:{Hh}px;font:400 {fs}px/1.42 Tinos">{letter}{head}{body}{call}{signb}<div style="position:absolute;left:70px;right:70px;bottom:30px;display:flex;justify-content:space-between;font:400 20px Tinos;color:#8a849c;border-top:1px solid #e3dff0;padding-top:12px"><span>Roma, novembre 2026</span><span>Pagina {page} di 2</span></div></div>'
+      f'<div class="sheet" style="top:{top}px;width:{W}px;height:{Hh}px;font:400 {fs}px/1.42 Tinos">{letter}{head}{body}{call}{signb}<div style="position:absolute;left:70px;right:70px;bottom:30px;display:flex;justify-content:space-between;font:400 20px Tinos;color:#8a849c;border-top:1px solid #e3dff0;padding-top:12px"><span>Roma, novembre 2026</span><span>Pagina {page} di 3</span></div></div>'
       f'<div class="cfoot"><span>@lista.mirai</span><b>Comunicato ufficiale · Lista 3 Mirai</b></div></section>')
 css=("<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&display=swap\"><style>"
  "*{box-sizing:border-box;margin:0}body{background:#000;font-family:'DM Sans',sans-serif}"
@@ -89,5 +89,5 @@ css=("<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=T
  ".cfoot{position:absolute;left:70px;right:70px;bottom:44px;z-index:10;display:flex;justify-content:space-between;font:800 26px 'DM Sans';color:#fff}.cfoot b{color:#ffc42e}"
  ".cs .cfoot{bottom:296px}.brand2{position:absolute;left:70px;top:48px;z-index:10;display:flex;align-items:center;gap:14px;font:800 26px 'DM Sans';letter-spacing:.16em;text-transform:uppercase;color:#fff}.brand2 img{height:52px}"
  "</style>")
-c=[sheet('c1',0,1,P1),sheet('c2',0,2,P2,title=False,sign=True),sheet('c3',1,1,P1),sheet('c4',1,2,P2,title=False,sign=True)]
+c=[sheet('c1',0,1,PG[0]),sheet('c2',0,2,PG[1],title=False),sheet('c3',0,3,PG[2],title=False,sign=True),sheet('c4',1,1,PG[0]),sheet('c5',1,2,PG[1],title=False),sheet('c6',1,3,PG[2],title=False,sign=True)]
 open('comunicato.html','w',encoding='utf-8').write('<!doctype html><html lang="it"><head><meta charset="utf-8">'+css+'</head><body>'+'\n'.join(c)+'<script>document.fonts.ready.then(()=>{document.body.dataset.ready=1})</script></body></html>')

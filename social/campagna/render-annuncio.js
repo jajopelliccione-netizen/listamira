@@ -7,6 +7,6 @@ const { chromium } = require('/opt/node22/lib/node_modules/playwright');
  for (let i=1;i<=5;i++) await p.locator('#s'+i).screenshot({ path: D+`qrd-storia-0${i}.png` });
  p = await b.newPage({ viewport: { width: 1080, height: 3400 } });
  await p.goto('file://'+D+'comunicato.html'); await p.waitForSelector('body[data-ready="1"]'); await p.waitForTimeout(2500);
- for (let i=1;i<=2;i++) await p.locator('#c'+i).screenshot({ path: D+`comunicato-post-0${i}.png` });
- for (let i=3;i<=4;i++) await p.locator('#c'+i).screenshot({ path: D+`comunicato-storia-0${i-2}.png` });
+ for (let i=1;i<=3;i++) await p.locator('#c'+i).screenshot({ path: D+`comunicato-post-0${i}.png` });
+ for (let i=4;i<=6;i++) await p.locator('#c'+i).screenshot({ path: D+`comunicato-storia-0${i-3}.png` });
  await b.close(); })();

@@ -18,7 +18,7 @@
 #screen{position:absolute;left:16px;top:16px;width:478px;height:1066px;border-radius:70px;overflow:hidden;background:#0d0d12}
 #island{position:absolute;left:50%;top:14px;margin-left:-70px;width:140px;height:38px;border-radius:30px;background:#000;z-index:8}
 #cam{position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,#2a2a36,transparent 60%),radial-gradient(circle at 80% 90%,#1d1b2b,transparent 55%),#0c0c12}
-#site{position:absolute;left:0;top:44px;width:478px;opacity:0}#sbar{position:absolute;left:0;top:0;width:478px;height:36px;background:#301d58;opacity:0;z-index:6}
+#site{position:absolute;left:0;top:22px;width:478px;opacity:0}#sbar{position:absolute;left:0;top:0;width:478px;height:36px;background:#301d58;opacity:0;z-index:6}
 .br{position:absolute;width:54px;height:54px;border:0 solid #ffc42e;z-index:35}
 #scan{position:absolute;height:6px;border-radius:3px;background:linear-gradient(90deg,transparent,#ffc42e,transparent);box-shadow:0 0 24px #ffc42e;z-index:36;opacity:0}
 #flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:40}
@@ -40,11 +40,11 @@ body.post,body.post html{height:1350px}body.post #stage{height:1350px}body.post 
   <div class="A" style="top:0;font-size:230px;color:#fff;text-shadow:0 0 10px rgba(255,255,255,.35)">QR code</div>
   <div class="A pk" id="t2" style="top:230px;font-size:128px">in tutta la scuola</div>
  </div>
- <div id="cap"><span id="c1">Inquadra il QR</span><span id="c2">Si apre il nostro sito</span><span id="c3">Scrivici cosa pensi. Anche in anonimo.</span></div>
+ <div id="cap"><span id="c1">Inquadra il QR</span><span id="c2">Si apre il portale per segnalare</span><span id="c3">Scrivi la tua segnalazione. In anonimo.</span></div>
  <div id="phone">
   <div id="screen">
    <div id="cam"></div>
-   <img id="site" src="img/site-mobile.png" alt="">
+   <img id="site" src="img/portale-mobile.png" alt="">
    <div id="sbar"></div><div id="island"></div>
    <div id="flash"></div>
    <div id="banner"><img src="../../assets/fox-96.png" alt=""><div><b>listamirai.com</b><span>Apri nel browser</span></div></div>
@@ -67,7 +67,7 @@ const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)), lerp=(a,b,k)=>a+(b-a)*k;
 const eo=k=>1-Math.pow(1-clamp(k),3), eio=k=>{k=clamp(k);return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2}, eb=k=>{k=clamp(k);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(k-1,3)+c1*Math.pow(k-1,2)};
 const seg=(t,a,b)=>clamp((t-a)/(b-a));
 // QR reale verso il sito
-const q=qrcode(0,'M');q.addData('https://listamirai.com');q.make();const n=q.getModuleCount();
+const q=qrcode(0,'M');q.addData('https://listamirai.com/proponi.html?c=demo');q.make();const n=q.getModuleCount();
 let rects='';for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(q.isDark(r,c))rects+=`<rect x="${c}" y="${r}" width="1.02" height="1.02"/>`;
 $('qr').innerHTML=`<svg viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges" fill="#12062b">${rects}</svg>`;
 // fit titoli
@@ -120,7 +120,7 @@ window.draw=function(t){
  // camera -> sito
  const so=eio(seg(t,6.0,6.7));
  $('cam').style.opacity=1-so;
- const site=$('site');site.style.opacity=so;$('sbar').style.opacity=so;
+ const site=$('site');site.style.opacity=so;
  const scroll=0, zoom=1+eio(seg(t,7.0,10.2))*0.035;
  site.style.transform=`translateY(${-scroll}px) scale(${lerp(1.12,1,so)*zoom})`;site.style.transformOrigin="50% 0%";
  setCap(t);
