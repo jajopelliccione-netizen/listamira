@@ -3,6 +3,14 @@
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
 
+// Ricontrolla sempre sul server (con ETag: se non è cambiato niente costa quasi nulla), così
+// dopo un aggiornamento dell'app non restano in memoria pagine/script/stili vecchi.
+self.addEventListener('fetch', (e) => {
+  const r = e.request;
+  if (r.method !== 'GET' || new URL(r.url).origin !== self.location.origin) return;
+  e.respondWith(fetch(r, { cache: 'no-cache' }));
+});
+
 self.addEventListener('push', (e) => {
   let d = {};
   try { d = e.data ? e.data.json() : {}; } catch { /* messaggio non JSON */ }

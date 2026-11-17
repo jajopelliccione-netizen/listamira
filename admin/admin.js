@@ -56,7 +56,7 @@ document.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click
   if (b.dataset.tab === 'stats') renderStats();
 }));
 
-function flash(node, text, ok) { node.textContent = text; node.className = 'msg ' + (ok ? 'ok' : 'err'); node.hidden = false; setTimeout(() => (node.hidden = true), 4000); }
+function flash(node, text, ok, ms = 4000) { node.textContent = text; node.className = 'msg ' + (ok ? 'ok' : 'err'); node.hidden = false; clearTimeout(node._t); if (ms) node._t = setTimeout(() => (node.hidden = true), ms); }
 const fmt = (iso) => new Date(iso).toLocaleString('it-IT', { dateStyle: 'medium', timeStyle: 'short' });
 const slug = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'qr';
 
@@ -250,13 +250,13 @@ $('#reset-stats').addEventListener('click', async (e) => {
   if (!tot) return flash(msg, 'Le scansioni sono già a zero.', true);
   const v = prompt(`Stai per azzerare le scansioni di tutti i QR (${tot} in totale, su ${qrs.length} QR).\nLe proposte NON vengono toccate e i QR restano attivi.\nNon si può annullare.\n\nPer confermare scrivi AZZERA:`);
   if (v === null) return;
-  if (v.trim().toUpperCase() !== 'AZZERA') return flash(msg, 'Non ho azzerato niente: non hai scritto AZZERA.', false);
+  if (v.trim().toUpperCase() !== 'AZZERA') return flash(msg, 'Non ho azzerato niente: non hai scritto AZZERA.', false, 8000);
   btn.disabled = true;
   try {
     for (const q of qrs.filter((x) => x.scans)) await db((t) => Core.fs.update(cfg, 'qr_codes', q.id, { scans: 0 }, t));
     await loadQrs(); renderStats();
-    flash(msg, 'Fatto: scansioni azzerate.', true);
-  } catch (ex) { if (ex.message !== 'auth') { await loadQrs().catch(() => {}); renderStats(); flash(msg, 'Non sono riuscito ad azzerare tutto: ' + ex.message, false); } }
+    flash(msg, 'Fatto: scansioni azzerate.', true, 6000);
+  } catch (ex) { if (ex.message !== 'auth') { await loadQrs().catch(() => {}); renderStats(); flash(msg, 'Non sono riuscito ad azzerare tutto: ' + ex.message, false, 0); } }
   finally { btn.disabled = false; }
 });
 
