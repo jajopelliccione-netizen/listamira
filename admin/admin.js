@@ -80,6 +80,8 @@ function qrSvg(text) {
   for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) d += `M${k + quiet},${r + quiet}h1v1h-1z`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" shape-rendering="crispEdges"><rect width="${s}" height="${s}" fill="#fff"/><path d="${d}" fill="#2e1065"/></svg>`;
 }
+// QR in anteprima come SVG: resta nitido a qualsiasi dimensione (il PNG ridimensionato risultava sfocato)
+const svgUri = (svg) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 function download(name, href) { const a = el('a', { href, download: name }); document.body.append(a); a.click(); a.remove(); }
 const blobUrl = (text, type) => URL.createObjectURL(new Blob([text], { type }));
 
@@ -108,7 +110,7 @@ function renderQrs() {
   list.replaceChildren(...shownQrs.map((q) => {
     const count = proposals.filter((p) => p.qr === q.id).length;
     return el('article', { class: 'qr-card' + (q.active ? '' : ' revoked') },
-      el('img', { src: qrPng(qrLink(q), 512), alt: `QR code: ${q.label}`, width: 220, height: 220 }),
+      el('img', { class: 'qr-img', src: svgUri(qrSvg(qrLink(q))), alt: `QR code: ${q.label}`, width: 240, height: 240 }),
       el('h3', {}, q.label),
       el('div', { class: 'row-tags' }, el('span', { class: 'zone-tag' }, '📍 ' + groupOf(q)), el('span', { class: 'status-pill' }, q.active ? 'Attivo' : 'Disattivato')),
       el('div', { class: 'meta' }, el('span', {}, `👁 ${q.scans} scansioni`), el('span', {}, `💡 ${count} proposte`)),
@@ -240,6 +242,23 @@ function renderStats() {
   $('#st-days').replaceChildren(bars(rows));
 }
 $('#st-range').addEventListener('change', renderStats);
+
+/* ---- azzera le scansioni (con conferma scritta, per non farlo per sbaglio) ---- */
+$('#reset-stats').addEventListener('click', async (e) => {
+  const btn = e.currentTarget, msg = $('#reset-msg');
+  const tot = qrs.reduce((n, q) => n + (q.scans || 0), 0);
+  if (!tot) return flash(msg, 'Le scansioni sono già a zero.', true);
+  const v = prompt(`Stai per azzerare le scansioni di tutti i QR (${tot} in totale, su ${qrs.length} QR).\nLe proposte NON vengono toccate e i QR restano attivi.\nNon si può annullare.\n\nPer confermare scrivi AZZERA:`);
+  if (v === null) return;
+  if (v.trim().toUpperCase() !== 'AZZERA') return flash(msg, 'Non ho azzerato niente: non hai scritto AZZERA.', false);
+  btn.disabled = true;
+  try {
+    for (const q of qrs.filter((x) => x.scans)) await db((t) => Core.fs.update(cfg, 'qr_codes', q.id, { scans: 0 }, t));
+    await loadQrs(); renderStats();
+    flash(msg, 'Fatto: scansioni azzerate.', true);
+  } catch (ex) { if (ex.message !== 'auth') { await loadQrs().catch(() => {}); renderStats(); flash(msg, 'Non sono riuscito ad azzerare tutto: ' + ex.message, false); } }
+  finally { btn.disabled = false; }
+});
 
 async function start() {
   try { await freshToken(); } catch { return showLogin(); }

@@ -64,7 +64,7 @@
             <input id="qr-group" type="text" list="group-list" maxlength="40" placeholder="Zona (es. Primo piano)" required>
             <datalist id="group-list"></datalist>
             <label class="sr-only" for="qr-label">Punto</label>
-            <input id="qr-label" type="text" maxlength="60" placeholder="Punto (es. Bagni, Aula 12, Mensa…)" required>
+            <input id="qr-label" type="text" maxlength="60" placeholder="Punto (es. Bagni, Aula 12)" required>
             <button class="btn btn-primary">Genera QR</button>
           </form>
           <div id="qr-err" class="msg err" hidden></div>
@@ -87,6 +87,12 @@
         <div class="two">
           <div class="panel"><h2>Proposte per categoria</h2><div id="st-cats"></div></div>
           <div class="panel"><h2>Proposte per giorno</h2><div id="st-days"></div></div>
+        </div>
+        <div class="panel danger-zone">
+          <h2>Azzera statistiche</h2>
+          <p class="hint">Rimette a zero le scansioni di tutti i QR (utile dopo i test). Le proposte e i QR non vengono toccati. Per sicurezza dovrai scrivere una parola di conferma.</p>
+          <button class="btn btn-danger" id="reset-stats" type="button">Azzera le scansioni</button>
+          <div id="reset-msg" class="msg" role="status" hidden></div>
         </div>
       </section>
 

@@ -23,8 +23,10 @@ code { background: var(--violet-100); padding: 1px 6px; border-radius: 6px; }
 
 .qr-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
 .qr-card { background: #fff; border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
-.qr-card.revoked { opacity: .65; }
-.qr-card img { width: 100%; aspect-ratio: 1; border-radius: 12px; border: 2px solid var(--violet-100); background: #fff; }
+.qr-card.revoked { background: #f3f0fa; }
+.qr-card.revoked .qr-img { opacity: .55; filter: grayscale(1); }
+.qr-card.revoked h3 { color: var(--muted); }
+.qr-card .qr-img { display: block; width: 100%; max-width: 280px; height: auto; aspect-ratio: 1; margin: 0 auto; border-radius: 12px; border: 1px solid var(--violet-100); background: #fff; image-rendering: crisp-edges; }
 .qr-card h3 { font-size: 1.1rem; color: var(--violet-900); overflow-wrap: anywhere; }
 .meta { font-size: .85rem; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; }
 .status-pill { display: inline-block; font-size: .75rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: #dcfce7; color: #14532d; width: fit-content; }
@@ -93,3 +95,36 @@ details.grp summary::after{display:none}
 .push-panel { display: flex; flex-direction: column; gap: 12px; padding: 18px 20px; margin-bottom: 20px; border-left: 6px solid var(--orange-500); }
 .push-panel.on { border-left-color: #16a34a; }
 .push-panel p { margin: 0; font-weight: 500; }
+
+/* ---- rifiniture per telefoni piccoli ---- */
+input[type=checkbox] { accent-color: var(--violet-600); }
+.tabs button { flex: 1 1 auto; text-align: center; }
+@media (max-width: 480px) {
+  .tabs { gap: 2px; }
+  .tabs button { padding: 10px 8px; font-size: .88rem; }
+  .logo { font-size: 1.1rem; }
+  .admin-main { padding-top: 18px; }
+  .panel { padding: 18px; }
+  .kpi { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .kpi-c { padding: 14px 8px; }
+  .kpi-c b { font-size: 1.9rem; }
+  .toolbar .row .btn { flex: 1 1 100%; justify-content: center; }
+  .qr-card .actions .mini { flex: 1 1 auto; justify-content: center; }
+  .chart { gap: 8px; }
+}
+/* righe "per zona": nome sopra, numeri sotto (niente a capo strani) */
+details.grp summary { grid-template-columns: 1fr auto auto auto; }
+@media (max-width: 480px) {
+  details.grp summary { grid-template-columns: auto auto auto 1fr; gap: 6px 14px; }
+  details.grp .g-name { grid-column: 1 / -1; }
+  details.grp .g-n:last-child { text-align: right; }
+}
+.bar-v { white-space: nowrap; }
+.push-panel .btn { align-self: flex-start; }
+.row input[type=text], .row input[type=url], .row select { min-width: 0; max-width: 100%; }
+.row input[type=text], .row input[type=url] { flex: 1 1 180px; }
+
+.danger-zone { border: 2px solid #fecaca; }
+.danger-zone h2 { color: #991b1b; }
+.btn-danger { background: #dc2626; color: #fff; }
+.btn-danger:hover { background: #b91c1c; }
