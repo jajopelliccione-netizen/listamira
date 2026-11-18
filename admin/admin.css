@@ -155,3 +155,5 @@ details.grp summary { grid-template-columns: 1fr auto auto auto; }
 .hist-row .h-z { grid-area: z; font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 .hist-row .h-l { grid-area: l; font-size: 1.1rem; color: var(--violet-900); overflow-wrap: anywhere; }
 .hist-row .h-t { grid-area: t; align-self: center; font-size: .8rem; color: var(--muted); }
+.scan-live { position: absolute; top: 10px; left: 10px; background: rgba(20,5,50,.82); color: #fff; font: 800 .8rem var(--font); padding: 6px 12px; border-radius: 999px; }
+.scan-live.ok { background: #16a34a; }
