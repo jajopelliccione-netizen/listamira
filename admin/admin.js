@@ -165,18 +165,30 @@ async function printQrs(list) {
 $('#print-all').addEventListener('click', (e) => run(e, () => printQrs(qrs)));
 $('#pdf-all').addEventListener('click', (e) => run(e, () => sheetPdf(qrs)));
 
+/* ---- piano scelto dallo studente ---- */
+const FLOORS = ['Officine', 'Piano terra', 'Primo piano', 'Secondo piano', 'Terzo piano', 'Quarto piano'];
+const NOFLOOR = 'Non indicato';
+const floorFrom = (s) => FLOORS.find((f) => f.toLowerCase() === String(s || '').trim().toLowerCase());
+const PREFIX = /^\[([^\]]+)\]\s*/;
+function floorOf(p) { // piano scelto; per le proposte vecchie, la zona del QR da cui arrivano
+  const m = PREFIX.exec(p.text || '');
+  return floorFrom(p.place) || (m && floorFrom(m[1])) || floorFrom((qrs.find((q) => q.id === p.qr) || {}).group) || NOFLOOR;
+}
+const textOf = (p) => { const m = PREFIX.exec(p.text || ''); return m && floorFrom(m[1]) ? p.text.slice(m[0].length) : p.text; };
+
 /* ---- proposte ---- */
 async function loadProps() { proposals = (await db((t) => Core.fs.list(cfg, 'proposals', t))).sort((x, y) => y.createTime.localeCompare(x.createTime)); fillFilters(); renderProps(); if (!$('#tab-stats').hidden) renderStats(); }
 function fillFilters() {
   const cats = [...new Set(proposals.map((p) => p.category))].sort();
-  const fs = $('#f-status'), fc = $('#f-cat'), sv = fs.value, cv = fc.value;
+  const fs = $('#f-status'), fc = $('#f-cat'), ff = $('#f-floor'), sv = fs.value, cv = fc.value, fv = ff.value;
   fs.replaceChildren(el('option', { value: '' }, 'Tutti gli stati'), ...STATUSES.map((s) => el('option', { value: s }, s)));
   fc.replaceChildren(el('option', { value: '' }, 'Tutte le categorie'), ...cats.map((c) => el('option', { value: c }, c)));
-  fs.value = sv; fc.value = cv;
+  ff.replaceChildren(el('option', { value: '' }, 'Tutti i piani'), ...[...FLOORS, NOFLOOR].map((f) => el('option', { value: f }, f)));
+  fs.value = sv; fc.value = cv; ff.value = fv;
 }
 function renderProps() {
-  const fs = $('#f-status').value, fc = $('#f-cat').value;
-  const shown = proposals.filter((p) => (!fs || p.status === fs) && (!fc || p.category === fc));
+  const fs = $('#f-status').value, fc = $('#f-cat').value, ff = $('#f-floor').value;
+  const shown = proposals.filter((p) => (!fs || p.status === fs) && (!fc || p.category === fc) && (!ff || floorOf(p) === ff));
   const nuove = proposals.filter((p) => p.status === 'nuova').length;
   $('#p-total').textContent = `(${shown.length})`;
   const b = $('#new-count'); b.hidden = !nuove; b.textContent = nuove;
@@ -186,16 +198,17 @@ function renderProps() {
     const sel = el('select', { 'aria-label': 'Stato della proposta', onchange: async (e) => { await db((t) => Core.fs.update(cfg, 'proposals', p.id, { status: e.target.value }, t)); loadProps(); } },
       ...STATUSES.map((s) => { const o = el('option', { value: s }, s); if (s === p.status) o.selected = true; return o; }));
     return el('article', { class: 'p-item s-' + p.status },
-      el('div', { class: 'p-top' }, el('span', { class: 'tag' }, p.category), el('span', { class: 'tag place' }, '📍 ' + p.place), el('span', {}, fmt(p.createTime))),
-      el('p', {}, p.text),
+      el('div', { class: 'p-top' }, el('span', { class: 'tag' }, p.category), el('span', { class: 'tag place' }, '📍 ' + floorOf(p)), el('span', {}, fmt(p.createTime))),
+      el('p', {}, textOf(p)),
       el('div', { class: 'p-actions' }, sel, el('button', { class: 'mini danger', onclick: async () => { if (confirm('Eliminare questa proposta?')) { await db((t) => Core.fs.remove(cfg, 'proposals', p.id, t)); loadProps(); } } }, 'Elimina')));
   }));
 }
 $('#f-status').addEventListener('change', renderProps);
 $('#f-cat').addEventListener('change', renderProps);
+$('#f-floor').addEventListener('change', renderProps);
 $('#csv').addEventListener('click', () => {
   const esc = (v) => `"${String(v).replace(/"/g, '""')}"`;
-  const rows = [['data', 'categoria', 'zona', 'luogo', 'stato', 'proposta'].join(',')].concat(proposals.map((p) => [p.createTime, p.category, groupOf(qrs.find((q) => q.id === p.qr)), p.place, p.status, p.text].map(esc).join(',')));
+  const rows = [['data', 'categoria', 'piano', 'stato', 'proposta'].join(',')].concat(proposals.map((p) => [p.createTime, p.category, floorOf(p), p.status, textOf(p)].map(esc).join(',')));
   download('proposte-mira.csv', blobUrl('﻿' + rows.join('\n'), 'text/csv;charset=utf-8'));
 });
 
@@ -213,26 +226,23 @@ function renderStats() {
   const days = +$('#st-range').value;
   const since = days ? Date.now() - days * 86400e3 : 0;
   const props = proposals.filter((p) => new Date(p.createTime).getTime() >= since);
-  const byQr = new Map(qrs.map((q) => [q.id, q]));
   const totScans = qrs.reduce((s, q) => s + (q.scans || 0), 0);
+  // per piano (lo sceglie lo studente)
+  const floors = [...FLOORS, NOFLOOR].map((name) => ({ name, items: props.filter((p) => floorOf(p) === name) })).filter((f) => f.items.length || f.name !== NOFLOOR)
+    .sort((x, y) => y.items.length - x.items.length || FLOORS.indexOf(x.name) - FLOORS.indexOf(y.name));
+  const totP = props.length || 1, mFloor = Math.max(1, ...floors.map((f) => f.items.length));
+  $('#st-groups').replaceChildren(...floors.map((f) => {
+    const cc = new Map(); f.items.forEach((p) => cc.set(p.category, (cc.get(p.category) || 0) + 1));
+    return el('details', { class: 'grp' },
+      el('summary', {}, el('span', { class: 'g-name' }, '📍 ' + f.name), el('span', { class: 'g-n' }, '💡 ' + f.items.length), el('span', { class: 'g-n muted' }, props.length ? Math.round((f.items.length / totP) * 100) + '%' : '–')),
+      el('span', { class: 'bar-t', style: 'display:block;margin:6px 0 12px' }, el('i', { style: 'width:' + Math.max(f.items.length ? 3 : 0, (f.items.length / mFloor) * 100) + '%' })),
+      bars([...cc].sort((x, y) => y[1] - x[1]).map(([label, value]) => ({ label, value })), { max: Math.max(1, ...cc.values()), unit: '' }));
+  }));
+  const topFloor = floors.find((f) => f.items.length && f.name !== NOFLOOR);
   $('#st-kpi').replaceChildren(
-    ...[['QR attivi', qrs.filter((q) => q.active).length + '/' + qrs.length], ['Scansioni (totali)', totScans], ['Proposte' + (days ? ' (periodo)' : ''), props.length],
+    ...[['Proposte' + (days ? ' (periodo)' : ''), props.length], ['Piano più attivo', topFloor ? topFloor.name : '–'], ['Scansioni QR (totali)', totScans],
       ['Idee ogni 100 scansioni', totScans ? Math.round((proposals.length / totScans) * 100) : 0]]
       .map(([l, v]) => el('div', { class: 'kpi-c' }, el('b', {}, String(v)), el('span', {}, l))));
-  // per zona
-  const groups = new Map();
-  const ensure = (g) => { if (!groups.has(g)) groups.set(g, { name: g, scans: 0, props: 0, qrs: [] }); return groups.get(g); };
-  for (const q of qrs) { const o = ensure(groupOf(q)); o.scans += q.scans || 0; o.qrs.push(q); }
-  for (const p of props) ensure(groupOf(byQr.get(p.qr))).props++;
-  const list = [...groups.values()].sort((x, y) => y.props - x.props || y.scans - x.scans);
-  const mProps = Math.max(1, ...list.map((g) => g.props));
-  const per = (q) => props.filter((p) => p.qr === q.id).length;
-  $('#st-groups').replaceChildren(...(list.length ? list.map((g) => el('details', { class: 'grp' },
-    el('summary', {}, el('span', { class: 'g-name' }, '📍 ' + g.name), el('span', { class: 'g-n' }, '👁 ' + g.scans), el('span', { class: 'g-n' }, '💡 ' + g.props),
-      el('span', { class: 'g-n muted' }, g.scans ? Math.round((g.props / g.scans) * 100) + '%' : '–')),
-    bars(g.qrs.slice().sort((x, y) => per(y) - per(x)).map((q) => ({ label: q.label + (q.active ? '' : ' (off)'), value: per(q) })), { max: mProps, unit: ' idee' }),
-    el('div', { class: 'sub-list' }, g.qrs.map((q) => el('span', {}, q.label + ': ' + (q.scans || 0) + ' scansioni')))))
-    : [el('div', { class: 'empty' }, 'Crea dei QR per vedere le statistiche.')]));
   // per categoria
   const cats = new Map(); props.forEach((p) => cats.set(p.category, (cats.get(p.category) || 0) + 1));
   $('#st-cats').replaceChildren(bars([...cats].sort((x, y) => y[1] - x[1]).map(([label, value]) => ({ label, value }))));

@@ -15,7 +15,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="../styles.css?v=20261117a">
-  <link rel="stylesheet" href="admin.css?v=20261118b">
+  <link rel="stylesheet" href="admin.css?v=20261118c">
 </head>
 <body class="admin">
   <section id="login" class="prop-page" hidden>
@@ -59,10 +59,10 @@
         <div class="panel">
           <h2>Crea un nuovo QR</h2>
           <p class="hint" id="qr-base"></p>
-          <p class="hint">Scegli la <b>zona</b> (es. Piano terra, Primo piano, Cortile) e il <b>punto</b> preciso (es. Bagni, Aula 12). Nelle statistiche vedrai i dati per zona e per singolo punto.</p>
+          <p class="hint">Ora il <b>piano lo sceglie lo studente</b> quando apre il modulo (“Dove ti trovi?”), quindi la zona è facoltativa e serve solo come nome interno. Tutti i QR portano allo stesso modulo.</p>
           <form id="qr-form" class="row">
             <label class="sr-only" for="qr-group">Zona</label>
-            <input id="qr-group" type="text" list="group-list" maxlength="40" placeholder="Zona (es. Primo piano)" required>
+            <input id="qr-group" type="text" list="group-list" maxlength="40" placeholder="Zona (facoltativa)">
             <datalist id="group-list"></datalist>
             <label class="sr-only" for="qr-label">Punto</label>
             <input id="qr-label" type="text" maxlength="60" placeholder="Punto (es. Bagni, Aula 12)" required>
@@ -111,7 +111,7 @@
           <div class="row"><label class="sr-only" for="st-range">Periodo</label>
             <select id="st-range"><option value="0">Da sempre</option><option value="7">Ultimi 7 giorni</option><option value="30">Ultimi 30 giorni</option></select></div></div>
         <div id="st-kpi" class="kpi"></div>
-        <div class="panel"><h2>Per zona</h2><p class="hint">Tocca una zona per vedere i singoli punti. La percentuale indica le proposte ogni 100 scansioni.</p><div id="st-groups"></div></div>
+        <div class="panel"><h2>Per piano</h2><p class="hint">Il piano lo sceglie lo studente prima di scrivere (“Dove ti trovi?”). Tocca un piano per vedere di cosa parlano. La percentuale è la quota sul totale delle proposte.</p><div id="st-groups"></div></div>
         <div class="two">
           <div class="panel"><h2>Proposte per categoria</h2><div id="st-cats"></div></div>
           <div class="panel"><h2>Proposte per giorno</h2><div id="st-days"></div></div>
@@ -133,6 +133,8 @@
             <select id="f-status"><option value="">Tutti gli stati</option></select>
             <label class="sr-only" for="f-cat">Categoria</label>
             <select id="f-cat"><option value="">Tutte le categorie</option></select>
+            <label class="sr-only" for="f-floor">Piano</label>
+            <select id="f-floor"><option value="">Tutti i piani</option></select>
             <button class="btn btn-violet" id="csv" type="button">⬇ CSV</button>
           </div>
         </div>
@@ -147,6 +149,6 @@
   <script src="../vendor/jsQR.js?v=20261118b"></script>
   <script src="../core.js?v=20261117a"></script>
   <script src="sheet.js?v=20261117a"></script>
-  <script src="admin.js?v=20261118b"></script>
+  <script src="admin.js?v=20261118c"></script>
 </body>
 </html>
