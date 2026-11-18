@@ -6,7 +6,7 @@ SR = 44100; BEAT = 0.5
 N = len(json.load(open('foto.json'))['photos'])
 import math
 ND = len(json.load(open('dopo.json'))['files'])
-T_BURST = 0.0; T_SPIN = T_BURST + math.ceil(N * 0.25 / 0.5) * 0.5; T_END = T_SPIN + 8.0 + ND * 1.0; DUR = T_END + 7.0   # video 'oggi': parte subito con le foto
+T_BURST = 0.0; T_SPIN = 10.0; T_END = T_SPIN + 8.0 + ND * 1.0; DUR = T_END + 7.0   # video 'oggi': parte subito con le foto
 rng = np.random.default_rng(7)
 L = np.zeros(int(DUR * SR) + SR); Rr = np.zeros_like(L)          # canali
 BASS = np.zeros_like(L); ARP = np.zeros_like(L)                  # sottoposti a sidechain

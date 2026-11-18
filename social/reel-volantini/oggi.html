@@ -14,9 +14,13 @@
 #brand{position:absolute;left:70px;top:262px;z-index:30;display:flex;align-items:center;gap:14px;font:800 26px "DM Sans";letter-spacing:.16em;text-transform:uppercase}#brand img{height:52px}
 .ph{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none;z-index:5}
 .ph img{position:absolute;left:0;top:0;width:1080px;height:1920px;max-width:none}
-#win{position:absolute;left:180px;top:660px;width:720px;height:820px;border-radius:40px;overflow:hidden;z-index:10;background:#111;border:6px solid #fff;box-shadow:0 0 70px rgba(255,60,190,.6),0 30px 70px -20px rgba(0,0,0,.8)}
-#win img{position:absolute;left:0;top:0;width:1080px;height:1920px;max-width:none;display:none}
-.txt{position:absolute;left:0;right:0;top:0;height:640px;z-index:12;display:none}
+.scene{position:absolute;inset:0;z-index:12;display:none}
+.cy{color:#fff;text-shadow:0 0 8px #3cf0ff,0 0 28px #1cc6ff,0 0 70px #1cc6ff}
+.row{position:absolute;left:70px;right:70px;display:flex;align-items:center;gap:34px}
+.row .A{position:static;text-align:left;flex:none;width:250px;font-size:190px;line-height:1}
+.rh{font:800 70px/1.05 "DM Sans"}.rd{font:500 40px/1.25 "DM Sans";opacity:.9;margin-top:8px}
+.qrb{position:absolute;left:50%;top:1130px;width:300px;height:300px;margin-left:-150px;border-radius:64px;background:#fff;display:grid;place-items:center;transform:rotate(7deg);box-shadow:0 0 60px rgba(255,60,190,.55),0 30px 60px -20px rgba(0,0,0,.6)}.qrb svg{width:200px;height:200px}
+.sub{position:absolute;left:70px;right:70px;text-align:center;font:500 46px/1.25 "DM Sans";opacity:.95}
 #talk{position:absolute;inset:0;z-index:12;display:none}
 #dopo{z-index:6}
 #end{position:absolute;inset:0;z-index:20;display:none}
@@ -30,10 +34,16 @@
 <div id="stage">
  <div id="bg"><div id="beam"></div><div class="glow" id="g1" style="width:900px;height:900px;background:#ff3cbe;left:-350px;top:600px;opacity:.5"></div><div class="glow" id="g2" style="width:800px;height:800px;background:#7c3aed;right:-350px;bottom:80px;opacity:.55"></div></div>
  <div id="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
- <div id="t1" class="txt"><div class="pill" style="top:300px">Oggi · 18 novembre</div><div class="A" id="t1a" style="top:395px">Come da annuncio,</div><div class="A pk" id="t1b" style="top:515px">abbiamo appeso i QR</div></div>
- <div id="t2" class="txt"><div class="pill" style="top:300px">In tutta la scuola</div><div class="A" id="t2a" style="top:395px">Inquadri il QR,</div><div class="A or" id="t2b" style="top:515px">scrivi la tua idea.</div></div>
- <div id="t3" class="txt"><div class="pill" style="top:300px">100% anonimo</div><div class="A" id="t3a" style="top:395px">Niente nome,</div><div class="A pk" id="t3b" style="top:515px">solo la tua opinione.</div></div>
- <div id="win"></div>
+ <div id="s1" class="scene"><div class="pill" style="top:330px">Oggi · 18 novembre</div>
+  <div class="A" data-max="180" style="top:450px">Come da annuncio,</div><div class="A pk" data-max="200" style="top:650px">abbiamo appeso</div><div class="A or" data-max="230" style="top:860px">i QR code</div>
+  <div class="sub" style="top:1090px;display:none"></div><div class="qrb"><svg viewBox="0 0 24 24" fill="none" stroke="#12062b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h3M20 17v4"/></svg></div></div>
+ <div id="s2" class="scene"><div class="pill" style="top:330px">Come funziona</div>
+  <div class="row" style="top:520px"><div class="A pk">01</div><div><div class="rh">Inquadra il QR</div><div class="rd">Lo trovi appeso in tutta la scuola.</div></div></div>
+  <div class="row" style="top:820px"><div class="A or">02</div><div><div class="rh">Scrivi la tua idea</div><div class="rd">Aule, servizi, eventi, didattica…</div></div></div>
+  <div class="row" style="top:1120px"><div class="A cy">03</div><div><div class="rh">Invia</div><div class="rd">Ti rispondiamo sui nostri canali.</div></div></div></div>
+ <div id="s3" class="scene"><div class="pill" style="top:330px">100% anonimo</div>
+  <div class="A" data-max="230" style="top:520px">Niente nome,</div><div class="A" data-max="230" style="top:760px">niente email.</div><div class="A pk" data-max="200" style="top:1000px">Solo la tua opinione.</div>
+  <div class="sub" style="top:1290px">Perché teniamo a sentire<br>cosa pensi davvero.</div></div>
  <div id="talk"><div id="k1" style="position:absolute;inset:0;display:none"><div class="A" data-max="230" style="top:480px">Le altre liste</div><div class="A" data-max="230" style="top:710px">non sono state</div><div class="A pk" data-max="230" style="top:940px">gentili con noi.</div></div>
   <div id="k2" style="position:absolute;inset:0;display:none"><div class="A or" data-max="210" style="top:480px">Non rispettando,</div><div class="A" data-max="170" style="top:700px">come avevamo già detto,</div><div class="A pk" data-max="210" style="top:900px">le idee di tutti.</div></div></div>
  <div id="end">
@@ -50,39 +60,31 @@
 const C=window.CFG, P=C.photos, N=P.length, D=(window.DOPO&&window.DOPO.files)||[];
 // 2 giri delle stesse foto: nel secondo giro l'ordine e' ruotato e rovesciato, cosi' la stessa foto non torna mai vicina
 const M=N*2, SEQ=[...Array(N).keys(), ...Array.from({length:N},(_,j)=>(Math.floor(N/2)+(N-1-j))%N)];
-const BURST=Math.ceil(M*0.125/0.5)*0.5, PER=BURST/M, T_TALK=BURST, TALK=8.0, T_DOPO=T_TALK+TALK, DOPO_PER=1.0, T_END=T_DOPO+D.length*DOPO_PER, DUR=T_END+7.0;
+const T_TALK=10.0, TALK=8.0, T_DOPO=T_TALK+TALK, DOPO_PER=1.0, T_END=T_DOPO+D.length*DOPO_PER, DUR=T_END+7.0;
 window.DUR=DUR;
 const $=id=>document.getElementById(id), st=$('stage');
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)), lerp=(a,b,k)=>a+(b-a)*k;
 const eb=k=>{k=clamp(k);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(k-1,3)+c1*Math.pow(k-1,2)};
 const eoe=k=>{k=clamp(k);return k>=1?1:1-Math.pow(2,-10*k)};
 const rnd=i=>{const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)};
-// finestra in sovraimpressione: ogni foto con il volantino centrato e della stessa altezza (taglio netto tra una e l'altra)
-const WW=720, WH=820, TH=700, win=$('win');
-const slides=P.map(p=>{const im=new Image(); im.src=p.file; const [x0,y0,x1,y1]=p.box, cx=(x0+x1)/2, cy=(y0+y1)/2, k=TH/(y1-y0);
-  im.style.transformOrigin=cx+'px '+cy+'px'; im.style.transform=`translate(${WW/2-cx}px,${WH/2-cy}px) scale(${k})`; win.appendChild(im); return im;});
-const dopos=D.map(f=>{const w=document.createElement('div'); w.className='ph'; w.id='dopo'; const im=new Image(); im.src=f; w.appendChild(im); st.insertBefore(w,$('end')); return w;});
+const dopos=D.map(f=>{const w=document.createElement('div'); w.className='ph'; const im=new Image(); im.src=f; w.appendChild(im); st.insertBefore(w,$('end')); return w;});
 // scritte grandi: si adattano alla larghezza
 function fit(){
-  // misura la larghezza vera del testo con uno span nascosto e rimpicciolisce solo se serve
   const shrink=(e,max,box)=>{const m=document.createElement('span'); m.style.cssText='position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;text-transform:uppercase;font-family:Anton,Impact,sans-serif;line-height:1;font-size:'+max+'px';
     m.textContent=e.textContent; document.body.appendChild(m); const w=m.getBoundingClientRect().width; m.remove(); e.style.fontSize=Math.min(max,Math.floor(max*box/w))+'px';};
   document.querySelectorAll('[data-max]').forEach(e=>shrink(e,+e.dataset.max,960));
-  ['t1a','t1b','t2a','t2b','t3a','t3b'].forEach(id=>shrink($(id),120,960));
 }
 const sparks=[]; for(let i=0;i<46;i++){const s=document.createElement('div'); s.className='sp'; $('sparks').appendChild(s); sparks.push(s);}
 const beatPulse=t=>Math.exp(-(t%0.5)*9);
 window.draw=function(t){
-  const inShow=t<T_TALK, inTalk=t>=T_TALK&&t<T_DOPO, inDopo=t>=T_DOPO&&t<T_END, inEnd=t>=T_END;
-  $('bg').style.display=(inShow||inTalk||inEnd)?'block':'none';
+  const inExp=t<T_TALK, inTalk=t>=T_TALK&&t<T_DOPO, inDopo=t>=T_DOPO&&t<T_END, inEnd=t>=T_END;
+  $('bg').style.display=(inExp||inTalk||inEnd)?'block':'none';
   $('beam').style.transform=`rotate(${Math.sin(t*.5)*4}deg)`;
   $('g1').style.transform=`translate(${Math.sin(t*.6)*50}px,${Math.cos(t*.5)*40}px)`;
   $('g2').style.transform=`translate(${Math.cos(t*.55)*50}px,${Math.sin(t*.6)*40}px)`;
-  $('brand').style.display=(inShow||inTalk)?'flex':'none';
-  // 1) foto a slide in finestra + testi (tagli netti)
-  win.style.display=inShow?'block':'none';
-  if(inShow){const i=SEQ[Math.min(M-1,Math.floor(t/PER))]; slides.forEach((im,k)=>im.style.display=k===i?'block':'none');}
-  const ph=inShow?(t<4.5?1:t<9?2:3):0; ['t1','t2','t3'].forEach((id,k)=>$(id).style.display=(ph===k+1)?'block':'none');
+  $('brand').style.display=(inExp||inTalk)?'flex':'none';
+  // 1) spiegazione veloce, tre scene a taglio netto
+  const sc=inExp?(t<3.5?1:t<7?2:3):0; ['s1','s2','s3'].forEach((id,k)=>$(id).style.display=(sc===k+1)?'block':'none');
   // 2) le altre liste
   $('talk').style.display=inTalk?'block':'none';
   if(inTalk){const e=t-T_TALK; $('k1').style.display=e<4?'block':'none'; $('k2').style.display=e>=4?'block':'none';}
@@ -100,5 +102,5 @@ window.draw=function(t){
     sparks.forEach((s,i)=>{const sp=0.35+rnd(i+1)*0.8, x=rnd(i+7)*1080, y=1920-((e*140*sp+rnd(i+13)*2100)%2100), a=(0.25+0.75*rnd(i+3))*clamp(e*2); s.style.left=x+'px'; s.style.top=y+'px'; s.style.opacity=a; s.style.transform=`scale(${0.5+rnd(i+5)*1.2})`;});
   }
 };
-Promise.all([document.fonts.load('100px Anton'),document.fonts.load('800 30px "DM Sans"'),document.fonts.ready,...slides.map(im=>im.decode().catch(()=>{})),...dopos.map(w=>w.firstChild.decode().catch(()=>{}))]).then(()=>{fit();window.fontsOk=true;window.ready=true;window.draw(0)});
+Promise.all([document.fonts.load('100px Anton'),document.fonts.load('800 30px "DM Sans"'),document.fonts.ready,...dopos.map(w=>w.firstChild.decode().catch(()=>{}))]).then(()=>{fit();window.fontsOk=true;window.ready=true;window.draw(0)});
 </script></body></html>
