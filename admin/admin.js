@@ -35,7 +35,8 @@ $('#logout').addEventListener('click', showLogin);
 /* ---- tab ---- */
 document.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click', () => {
   document.querySelectorAll('[data-tab]').forEach((x) => x.setAttribute('aria-selected', x === b));
-  for (const t of ['qr', 'stats', 'props']) $('#tab-' + t).hidden = t !== b.dataset.tab;
+  for (const t of ['qr', 'scan', 'stats', 'props']) $('#tab-' + t).hidden = t !== b.dataset.tab;
+  if (b.dataset.tab !== 'scan') stopScan();
   if (b.dataset.tab === 'stats') renderStats();
 }));
 
@@ -223,6 +224,101 @@ function renderStats() {
   $('#st-days').replaceChildren(bars(rows));
 }
 $('#st-range').addEventListener('change', renderStats);
+
+
+/* ---- trova zona: scansioni un QR e leggi zona, punto e statistiche ---- */
+const scan = { stream: null, raf: 0, last: 0, detector: null, busy: false };
+function parseCode(text) {
+  const t = String(text || '').trim();
+  try { const c = new URL(t).searchParams.get('c'); if (c) return c.trim(); } catch { /* non è un link */ }
+  return /^[0-9a-f]{32}$/i.test(t) ? t.toLowerCase() : null;
+}
+function stopScan() {
+  cancelAnimationFrame(scan.raf);
+  if (scan.stream) scan.stream.getTracks().forEach((t) => t.stop());
+  scan.stream = null; $('#scan-video').srcObject = null;
+  $('#scan-box').hidden = true; $('#scan-start').hidden = false; $('#scan-stop').hidden = true;
+}
+async function startScan() {
+  stopScan(); $('#scan-err').hidden = true; $('#scan-result').replaceChildren();
+  if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) return flash($('#scan-err'), 'Questo browser non permette di usare la fotocamera. Apri l’admin da Safari o Chrome sul telefono, oppure incolla qui sotto il link del QR.', false);
+  try { scan.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 } }, audio: false }); }
+  catch { return flash($('#scan-err'), 'Non riesco ad aprire la fotocamera: consenti l’accesso alla fotocamera per questo sito e riprova.', false); }
+  const v = $('#scan-video'); v.srcObject = scan.stream;
+  $('#scan-box').hidden = false; $('#scan-start').hidden = true; $('#scan-stop').hidden = false;
+  try { await v.play(); } catch { /* parte da sola */ }
+  scan.detector = null;
+  if ('BarcodeDetector' in window) { try { scan.detector = new BarcodeDetector({ formats: ['qr_code'] }); } catch { scan.detector = null; } }
+  const cv = document.createElement('canvas'), cx = cv.getContext('2d', { willReadFrequently: true });
+  const tick = async (ts) => {
+    if (!scan.stream) return;
+    scan.raf = requestAnimationFrame(tick);
+    if (ts - scan.last < 150 || scan.busy || v.readyState < 2 || !v.videoWidth) return;
+    scan.last = ts; scan.busy = true;
+    try {
+      let text = null;
+      if (scan.detector) { try { const r = await scan.detector.detect(v); if (r[0]) text = r[0].rawValue; } catch { scan.detector = null; } }
+      if (!text && !scan.detector) {
+        const k = Math.min(1, 720 / v.videoWidth); cv.width = Math.round(v.videoWidth * k); cv.height = Math.round(v.videoHeight * k);
+        cx.drawImage(v, 0, 0, cv.width, cv.height);
+        const r = jsQR(cx.getImageData(0, 0, cv.width, cv.height).data, cv.width, cv.height, { inversionAttempts: 'dontInvert' });
+        if (r) text = r.data;
+      }
+      if (text) { stopScan(); showScan(text); }
+    } catch { /* frame illeggibile: riprova */ } finally { scan.busy = false; }
+  };
+  scan.raf = requestAnimationFrame(tick);
+}
+$('#scan-start').addEventListener('click', startScan);
+$('#scan-stop').addEventListener('click', stopScan);
+$('#scan-manual').addEventListener('submit', (e) => { e.preventDefault(); stopScan(); showScan($('#scan-text').value); });
+
+async function showScan(text) {
+  const out = $('#scan-result');
+  const again = el('button', { class: 'btn btn-primary', type: 'button', onclick: () => { out.replaceChildren(); startScan(); } }, '📷 Scansiona un altro QR');
+  const code = parseCode(text);
+  if (!code) { out.replaceChildren(el('div', { class: 'panel scan-card bad' }, el('h3', {}, 'Questo non è un QR di Mirai'), el('p', { class: 'hint' }, 'Ho letto: ' + String(text).slice(0, 140)), again)); return; }
+  out.replaceChildren(el('div', { class: 'empty' }, 'Cerco il QR…'));
+  try { await loadProps(); await loadQrs(); } catch (ex) { if (ex.message !== 'auth') out.replaceChildren(el('div', { class: 'msg err' }, 'Non riesco a leggere i dati: ' + ex.message)); return; }
+  const q = qrs.find((x) => x.id === code);
+  if (!q) { out.replaceChildren(el('div', { class: 'panel scan-card bad' }, el('h3', {}, 'QR non riconosciuto'), el('p', { class: 'hint' }, 'È un QR di Mirai ma non è più nel database: è stato eliminato oppure appartiene a un altro progetto.'), again)); return; }
+
+  const mine = proposals.filter((p) => p.qr === q.id); // già ordinate dalla più recente
+  const zone = groupOf(q), inZone = qrs.filter((x) => groupOf(x) === zone);
+  const zScans = inZone.reduce((s, x) => s + (x.scans || 0), 0), zProps = proposals.filter((p) => inZone.some((x) => x.id === p.qr)).length;
+  const totScans = qrs.reduce((s, x) => s + (x.scans || 0), 0);
+  const rankScans = qrs.slice().sort((a, b) => (b.scans || 0) - (a.scans || 0)).findIndex((x) => x.id === q.id) + 1;
+  const rankProps = qrs.slice().sort((a, b) => proposals.filter((p) => p.qr === b.id).length - proposals.filter((p) => p.qr === a.id).length).findIndex((x) => x.id === q.id) + 1;
+  const kpi = (v, l) => el('div', { class: 'kpi-c' }, el('b', {}, String(v)), el('span', {}, l));
+  const days = [];
+  for (let i = 6; i >= 0; i--) { const d = new Date(Date.now() - i * 86400e3); days.push({ key: dayKey(d), label: d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' }), value: 0 }); }
+  mine.forEach((p) => { const r = days.find((x) => x.key === dayKey(p.createTime)); if (r) r.value++; });
+  const reload = async () => { await loadQrs(); showScan(q.id); };
+
+  out.replaceChildren(
+    el('div', { class: 'panel scan-card ' + (q.active ? 'good' : 'off') },
+      el('div', { class: 'scan-zone' }, el('span', {}, '📍 Zona'), el('b', {}, zone)),
+      el('h3', { class: 'scan-label' }, q.label),
+      el('div', { class: 'row-tags' }, el('span', { class: 'status-pill' }, q.active ? 'Attivo' : 'Disattivato'), q.createdAt ? el('span', { class: 'zone-tag' }, 'Creato il ' + fmt(q.createdAt)) : ''),
+      el('div', { class: 'kpi', style: 'margin-top:16px' },
+        kpi(q.scans || 0, 'Scansioni'), kpi(mine.length, 'Proposte'),
+        kpi(q.scans ? Math.round((mine.length / q.scans) * 100) : 0, 'Idee ogni 100 scansioni'),
+        kpi(`${rankScans}°/${qrs.length}`, 'Per scansioni'), kpi(`${rankProps}°/${qrs.length}`, 'Per proposte')),
+      el('p', { class: 'hint' }, mine.length ? 'Ultima proposta: ' + fmt(mine[0].createTime) : 'Nessuna proposta da questo QR, per ora.'),
+      el('div', { class: 'actions' },
+        el('button', { class: 'mini primary', onclick: (e) => run(e, () => sheetPdf([q])) }, '⬇ Rifai il foglio A4 col nome'),
+        el('button', { class: 'mini', onclick: async () => { const v = prompt('In che zona si trova “' + q.label + '”?\nEsempi: Piano terra, Primo piano, Secondo piano, Cortile.', q.group || ''); if (v === null) return; await db((t) => Core.fs.update(cfg, 'qr_codes', q.id, { group: v.trim().slice(0, 40) }, t)); reload(); } }, 'Cambia zona'),
+        el('button', { class: 'mini', onclick: async () => { await db((t) => Core.fs.update(cfg, 'qr_codes', q.id, { active: !q.active }, t)); reload(); } }, q.active ? 'Disattiva' : 'Riattiva'),
+        el('button', { class: 'mini', onclick: () => { out.replaceChildren(); startScan(); } }, '📷 Scansiona un altro'))),
+    el('div', { class: 'panel' }, el('h2', {}, 'La zona “' + zone + '”'),
+      el('div', { class: 'kpi', style: 'margin-top:12px' }, kpi(inZone.length, 'QR in zona'), kpi(zScans, 'Scansioni'), kpi(zProps, 'Proposte'), kpi(totScans ? Math.round((zScans / totScans) * 100) + '%' : '–', 'Delle scansioni totali')),
+      el('div', { class: 'sub-list' }, inZone.map((x) => el('span', {}, (x.id === q.id ? '👉 ' : '') + x.label + ': ' + (x.scans || 0) + ' scansioni, ' + proposals.filter((p) => p.qr === x.id).length + ' proposte')))),
+    el('div', { class: 'two' },
+      el('div', { class: 'panel' }, el('h2', {}, 'Proposte negli ultimi 7 giorni'), bars(days)),
+      el('div', { class: 'panel' }, el('h2', {}, 'Ultime proposte da qui'), mine.length ? el('div', { class: 'p-list' }, mine.slice(0, 5).map((p) =>
+        el('article', { class: 'p-item s-' + p.status }, el('div', { class: 'p-top' }, el('span', { class: 'tag' }, p.category), el('span', {}, fmt(p.createTime)), el('span', {}, p.status)), el('p', {}, p.text.length > 220 ? p.text.slice(0, 220) + '…' : p.text)))) : el('div', { class: 'empty' }, 'Ancora nessuna proposta da questo QR.'))));
+  out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 async function start() {
   const s = saved();

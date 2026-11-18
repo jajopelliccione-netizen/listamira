@@ -83,3 +83,14 @@ details.grp summary::after{display:none}
 .sub-list{display:flex;flex-wrap:wrap;gap:6px 14px;margin:12px 0 8px;color:var(--muted);font-size:.85rem}
 
 .who{display:block;font:500 .72rem var(--font);color:#c4b5fd;letter-spacing:0;margin:2px 0 0 20px}
+
+/* trova zona */
+.scan-box { position: relative; margin-top: 16px; border-radius: var(--radius); overflow: hidden; background: #000; max-width: 520px; aspect-ratio: 1; }
+.scan-box video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.scan-frame { position: absolute; inset: 14%; border: 4px solid var(--orange-500); border-radius: 22px; box-shadow: 0 0 0 999px rgba(0,0,0,.35); pointer-events: none; }
+.scan-card { border-left: 8px solid var(--orange-500); }
+.scan-card.bad { border-left-color: #dc2626; } .scan-card.off { border-left-color: #94a3b8; }
+.scan-zone { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4px; }
+.scan-zone span { font: 700 .85rem var(--font); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.scan-zone b { font: 800 2.2rem/1.1 var(--font-display); color: var(--violet-900); overflow-wrap: anywhere; }
+.scan-label { font-size: 1.3rem; color: var(--violet-700); margin-bottom: 8px; overflow-wrap: anywhere; }

@@ -8,7 +8,7 @@
   <link rel="icon" href="../assets/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="../styles.css?v=1544432143">
-  <link rel="stylesheet" href="admin.css?v=1544432143">
+  <link rel="stylesheet" href="admin.css?v=1792100001">
 </head>
 <body class="admin">
   <section id="login" class="prop-page" hidden>
@@ -31,6 +31,7 @@
         <strong class="logo">Mirai · Admin <small id="who" class="who"></small></strong>
         <nav class="tabs" role="tablist" aria-label="Sezioni">
           <button role="tab" data-tab="qr" aria-selected="true">QR code</button>
+          <button role="tab" data-tab="scan" aria-selected="false">📷 Trova zona</button>
           <button role="tab" data-tab="stats" aria-selected="false">Statistiche</button>
           <button role="tab" data-tab="props" aria-selected="false">Proposte <span class="badge" id="new-count" hidden></span></button>
         </nav>
@@ -61,6 +62,29 @@
           <div class="row"><button class="btn btn-primary" id="pdf-all">⬇ Tutti i fogli A4 (PDF)</button><button class="btn btn-violet" id="print-all">🖨️ Stampa tutti</button></div>
         </div>
         <div id="qr-list" class="qr-grid"></div>
+      </section>
+
+      <!-- Trova zona: scansioni un QR e ti dice di che zona è -->
+      <section id="tab-scan" hidden>
+        <div class="panel">
+          <h2>Di che zona è questo QR?</h2>
+          <p class="hint">Inquadra un QR appeso a scuola con la fotocamera qui sotto: ti dico <b>zona</b> e <b>punto</b> e ti mostro tutte le statistiche. Usando questo scanner la scansione <b>non viene contata</b> (con la fotocamera normale del telefono sì).</p>
+          <div class="row">
+            <button class="btn btn-primary" id="scan-start" type="button">📷 Apri la fotocamera</button>
+            <button class="btn btn-violet" id="scan-stop" type="button" hidden>Chiudi la fotocamera</button>
+          </div>
+          <div id="scan-box" class="scan-box" hidden>
+            <video id="scan-video" playsinline muted></video>
+            <div class="scan-frame" aria-hidden="true"></div>
+          </div>
+          <div id="scan-err" class="msg err" hidden></div>
+          <form id="scan-manual" class="row" style="margin-top:16px">
+            <label class="sr-only" for="scan-text">Link o codice del QR</label>
+            <input id="scan-text" type="text" placeholder="Oppure incolla qui il link o il codice del QR" autocomplete="off">
+            <button class="btn btn-violet">Cerca</button>
+          </form>
+        </div>
+        <div id="scan-result"></div>
       </section>
 
       <!-- Statistiche -->
@@ -96,8 +120,9 @@
   <!-- area stampa: riempita da JS -->
   <div id="print-area" aria-hidden="true"></div>
   <script src="../vendor/qrcode.js?v=1544432143"></script>
+  <script src="../vendor/jsQR.js?v=1544432143"></script>
   <script src="../core.js?v=1544432143"></script>
   <script src="sheet.js?v=1544432143"></script>
-  <script src="admin.js?v=1544432143"></script>
+  <script src="admin.js?v=1792100001"></script>
 </body>
 </html>
