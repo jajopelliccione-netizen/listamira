@@ -1,0 +1,137 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@500;700;800&display=swap">
+<style>
+*{box-sizing:border-box;margin:0}html,body{width:1080px;height:1920px;background:#000;overflow:hidden;font-family:"DM Sans",sans-serif;color:#fff}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#07030f}
+.ph{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none;filter:contrast(1.08) saturate(1.12)}
+#vig{position:absolute;inset:0;z-index:12;pointer-events:none;background:radial-gradient(ellipse at 50% 48%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%)}
+.glow{position:absolute;border-radius:50%;filter:blur(120px)}
+#beam{position:absolute;left:50%;top:-300px;width:2200px;height:2200px;margin-left:-1100px;background:conic-gradient(from 160deg at 50% 20%,transparent 0 8%,rgba(255,60,190,.35) 9% 11%,transparent 12% 20%,rgba(255,150,60,.3) 21% 23%,transparent 24% 76%,rgba(255,150,60,.3) 77% 79%,transparent 80% 88%,rgba(255,60,190,.35) 89% 91%,transparent 92%);filter:blur(40px);opacity:.9}
+#bg{position:absolute;inset:0;z-index:2;display:none}
+#noise{position:absolute;inset:0;pointer-events:none;opacity:.18;mix-blend-mode:overlay;z-index:90;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:80;pointer-events:none}
+.A{font-family:Anton,Impact,sans-serif;text-transform:uppercase;line-height:.95;white-space:nowrap;position:absolute;left:0;right:0;text-align:center}
+.pk{color:#fff;text-shadow:0 0 8px #ff3cbe,0 0 28px #ff3cbe,0 0 70px #ff3cbe}
+.or{color:#fff;text-shadow:0 0 8px #ff8a3c,0 0 28px #ff8a3c,0 0 70px #ff6a1c}
+#brand{position:absolute;left:70px;top:262px;z-index:30;display:none;align-items:center;gap:14px;font:800 26px "DM Sans";letter-spacing:.16em;text-transform:uppercase;text-shadow:0 2px 12px rgba(0,0,0,.7)}#brand img{height:52px;filter:drop-shadow(0 2px 10px rgba(0,0,0,.6))}
+#hooktxt{z-index:30;top:285px;font-size:150px;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.75);display:none}
+#spin{position:absolute;inset:0;z-index:5;display:none;perspective:1700px;perspective-origin:50% 50%}
+#ring{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-style:preserve-3d}
+.card{position:absolute;left:300px;top:630px;width:480px;height:660px;border-radius:20px;overflow:hidden;backface-visibility:hidden;box-shadow:0 0 0 4px rgba(255,255,255,.9),0 0 60px rgba(255,60,190,.55);background:#2a1a5e}
+.card img{position:absolute;max-width:none;display:block}
+#spintop{z-index:30;top:330px;font-size:118px;display:none}
+#spinpill{position:absolute;left:50%;top:1400px;transform:translateX(-50%);z-index:30;white-space:nowrap;background:#ffc42e;color:#12062b;font:800 38px "DM Sans";letter-spacing:.04em;padding:18px 40px;border-radius:99px;display:none;box-shadow:0 0 50px rgba(255,196,46,.45),0 18px 40px -12px rgba(0,0,0,.6)}
+#end{position:absolute;inset:0;z-index:20;display:none}
+#fox{position:absolute;left:430px;top:318px;width:220px;filter:drop-shadow(0 20px 40px rgba(0,0,0,.55))}
+#vota{top:540px;font-size:330px}#mirai{top:820px;font-size:350px}
+#lista{position:absolute;left:50%;top:1175px;white-space:nowrap;background:#ffc42e;color:#12062b;font:400 92px/1 Anton;text-transform:uppercase;letter-spacing:.06em;padding:16px 50px 12px;border-radius:99px;box-shadow:0 0 60px rgba(255,196,46,.5),0 20px 40px -12px rgba(0,0,0,.6)}
+#tape{position:absolute;left:-80px;width:1240px;top:1315px;height:112px;background:#fff;color:#12062b;display:flex;align-items:center;justify-content:center;font:400 74px/1 Anton;text-transform:uppercase;letter-spacing:.05em;box-shadow:0 22px 44px -14px rgba(0,0,0,.7)}
+#tape b{color:#7c3aed;font-weight:400;margin:0 18px}
+#handle{position:absolute;left:0;right:0;top:1465px;text-align:center;font:800 36px "DM Sans";text-shadow:0 2px 14px rgba(0,0,0,.6)}#handle b{color:#ffc42e}
+.sp{position:absolute;width:10px;height:10px;border-radius:50%;background:#ffc42e;box-shadow:0 0 14px #ffc42e}
+</style></head><body>
+<div id="stage">
+ <div id="bg"><div id="beam"></div><div class="glow" id="g1" style="width:900px;height:900px;background:#ff3cbe;left:-350px;top:600px;opacity:.5"></div><div class="glow" id="g2" style="width:800px;height:800px;background:#7c3aed;right:-350px;bottom:80px;opacity:.55"></div></div>
+ <div id="spin"><div id="ring"></div></div>
+ <div id="vig"></div>
+ <div id="brand"><img src="../../assets/fox-96.png" alt="">Mirai</div>
+ <div id="hooktxt" class="A">Li hai visti?</div>
+ <div id="spintop" class="A pk">In tutta la scuola</div>
+ <div id="spinpill">Inquadra il QR e scrivici la tua idea</div>
+ <div id="end">
+  <img id="fox" src="../../assets/fox.png" alt="">
+  <div id="vota" class="A pk">Vota</div><div id="mirai" class="A or">Mirai</div>
+  <div id="lista">Lista 3</div>
+  <div id="tape"><span>Lunedì 23 novembre</span></div>
+  <div id="handle"><b>@lista.mirai</b> · Il futuro inizia da noi.</div>
+  <div id="sparks"></div>
+ </div>
+ <div id="flash"></div><div id="noise"></div>
+</div>
+<script>
+const C=window.CFG, P=C.photos, N=P.length;
+const T_BURST=2.0, PER=0.5, T_SPIN=T_BURST+N*PER, SPIN=6.0, T_END=T_SPIN+SPIN, DUR=T_END+7.0;
+window.DUR=DUR;
+const $=id=>document.getElementById(id), st=$('stage');
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)), lerp=(a,b,k)=>a+(b-a)*k;
+const eo=k=>1-Math.pow(1-clamp(k),3), ei=k=>Math.pow(clamp(k),3), eio=k=>{k=clamp(k);return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2};
+const eoe=k=>{k=clamp(k);return k>=1?1:1-Math.pow(2,-10*k)};
+const eb=k=>{k=clamp(k);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(k-1,3)+c1*Math.pow(k-1,2)};
+const rnd=i=>{const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+// elementi foto
+const hook=new Image(); hook.src='foto/hook.jpg'; hook.className='ph'; hook.style.zIndex=3; st.insertBefore(hook,$('vig'));
+const phs=P.map((p,i)=>{const im=new Image(); im.src=p.file; im.className='ph'; im.style.zIndex=4; st.insertBefore(im,$('vig')); return im;});
+// anello 3D di volantini ritagliati
+const STEP=360/N, R=Math.round((N*480*1.12)/(2*Math.PI));
+P.forEach((p,i)=>{
+  const [x0,y0,x1,y1]=p.box, bw=x1-x0, bh=y1-y0, k=Math.max(480/bw,660/bh), cx=(x0+x1)/2, cy=(y0+y1)/2;
+  const d=document.createElement('div'); d.className='card';
+  const im=new Image(); im.src=p.file; im.style.width=(1080*k)+'px'; im.style.left=(240-cx*k)+'px'; im.style.top=(330-cy*k)+'px'; d.appendChild(im);
+  d.style.transform=`rotateY(${i*STEP}deg) translateZ(${R}px)`; $('ring').appendChild(d);
+});
+// scintille della schermata finale
+const sparks=[]; for(let i=0;i<46;i++){const s=document.createElement('div'); s.className='sp'; $('sparks').appendChild(s); sparks.push(s);}
+function place(el,ox,oy,tx,ty,s,rot){ // il punto (ox,oy) della foto va in (ox+tx,oy+ty); tx/ty limitati perche' la foto copra sempre lo schermo
+  const loX=(1080-ox)*(1-s), hiX=ox*(s-1), loY=(1920-oy)*(1-s), hiY=oy*(s-1);
+  tx=clamp(tx,loX,hiX); ty=clamp(ty,loY,hiY);
+  el.style.transformOrigin=ox+'px '+oy+'px'; el.style.transform=`translate(${tx}px,${ty}px) scale(${s}) rotate(${rot}deg)`;
+}
+const beatPulse=t=>t<T_BURST?0:Math.exp(-((t-T_BURST)%PER)*9);
+function flash(t){ // lampo bianco a ogni stacco
+  let f=0; const cuts=[T_BURST,T_SPIN,T_END]; for(const c of cuts){ if(t>=c) f=Math.max(f,(c===T_END?0.9:0.7)*Math.max(0,1-(t-c)/(c===T_END?0.22:0.12))); }
+  for(let i=0;i<N;i++){const c=T_BURST+i*PER; if(t>=c&&t<c+PER) f=Math.max(f,0.38*Math.max(0,1-(t-c)/0.07));}
+  $('flash').style.opacity=f;
+}
+window.draw=function(t){
+  const inHook=t<T_BURST, inBurst=t>=T_BURST&&t<T_SPIN, inSpin=t>=T_SPIN&&t<T_END, inEnd=t>=T_END;
+  // --- apertura: zoom sul logo ---
+  hook.style.display=inHook?'block':'none';
+  if(inHook){
+    const h=P[C.hook], [lx,ly]=h.logo, u=t/T_BURST, e=ei(u*0.96)+0.0, s=lerp(1.0,3.4,e);
+    place(hook,lx,ly,(540-lx)*e,(930-ly)*e,s,0);
+    const a=eo((t-0.3)/0.3)*(1-eo((t-1.35)/0.2)); const ht=$('hooktxt'); ht.style.display='block'; ht.style.opacity=a; ht.style.transform=`scale(${lerp(.85,1,eo((t-.35)/.4))})`;
+  } else $('hooktxt').style.display='none';
+  // --- raffica di foto ---
+  phs.forEach((im,i)=>{
+    const c=T_BURST+i*PER, lt=t-c, vis=inBurst&&lt>=0&&lt<PER; im.style.display=vis?'block':'none';
+    if(!vis) return;
+    const p=P[i], [x0,y0,x1,y1]=p.box, cx=(x0+x1)/2, cy=(y0+y1)/2, bh=y1-y0;
+    const s0=clamp(1280/bh,1.3,2.0), sn=eb(lt/0.16), sg=i%2?1:-1, k=lt/PER;
+    const s=s0*(1+0.20*(1-sn))*(1+0.07*k), rot=sg*(7*(1-sn)+0.9*k);
+    place(im,cx,cy,540-cx,960-cy,s,rot);
+  });
+  $('vig').style.display=(inHook||inBurst)?'block':'none';
+  const b=$('brand'); b.style.display=(inBurst)?'flex':'none'; b.style.transform=`scale(${1+0.06*beatPulse(t)})`;
+  // --- anello di volantini che gira ---
+  $('bg').style.display=(inSpin||inEnd)?'block':'none'; $('spin').style.display=inSpin?'block':'none';
+  const bp=beatPulse(t);
+  if(inSpin||inEnd){
+    $('beam').style.transform=`rotate(${Math.sin(t*.5)*4}deg)`;
+    $('g1').style.transform=`translate(${Math.sin(t*.6)*50}px,${Math.cos(t*.5)*40}px) scale(${1+0.08*bp})`;
+    $('g2').style.transform=`translate(${Math.cos(t*.55)*50}px,${Math.sin(t*.6)*40}px) scale(${1+0.08*bp})`;
+  }
+  if(inSpin){
+    const u=(t-T_SPIN)/SPIN, total=Math.round(540/STEP)*STEP, a=total*(1-Math.pow(1-clamp(u),2));
+    const enter=eo((t-T_SPIN)/0.35), sc=lerp(.55,1,enter)*(1+0.025*bp);
+    $('ring').style.transform=`translateZ(${-R}px) rotateX(-5deg) rotateY(${-a}deg) scale(${sc})`;
+    $('spin').style.opacity=clamp(enter*2);
+    const tp=$('spintop'), pl=$('spinpill'); tp.style.display='block'; pl.style.display='block';
+    tp.style.opacity=eo((t-T_SPIN-0.2)/0.3)*(1-eo((t-T_END+0.25)/0.2)); tp.style.transform=`scale(${1+0.04*bp})`;
+    pl.style.opacity=eo((t-T_SPIN-0.5)/0.3)*(1-eo((t-T_END+0.25)/0.2)); pl.style.transform=`translateX(-50%) scale(${1+0.04*bp})`;
+  } else { $('spintop').style.display='none'; $('spinpill').style.display='none'; }
+  // --- schermata finale: VOTA MIRAI ---
+  $('end').style.display=inEnd?'block':'none';
+  if(inEnd){
+    const e=t-T_END, slam=(el,e0)=>{const x=clamp((e-e0)/0.3); el.style.opacity=clamp((e-e0)*14);
+      el.style.transform=`translateX(${x<1?Math.sin(x*38)*14*(1-x):0}px) scale(${1+1.1*(1-eoe(x))})`;};
+    slam($('vota'),0.0); slam($('mirai'),0.5);
+    const fx=eb((e-0.0)/0.5); $('fox').style.opacity=clamp(e*8); $('fox').style.transform=`translateY(${Math.sin(e*2.2)*8}px) scale(${fx*(1+0.04*bp)}) rotate(${(1-fx)*-25}deg)`;
+    const li=$('lista'), ll=eb((e-1.0)/0.4); li.style.opacity=clamp((e-1.0)*10); li.style.transform=`translateX(-50%) rotate(-3deg) scale(${ll*(1+0.03*bp)})`;
+    const tp=$('tape'), tt=eo((e-1.5)/0.45); tp.style.transform=`translateX(${(1-tt)*-1300}px) rotate(-4deg)`; tp.style.opacity=clamp((e-1.5)*20);
+    const hd=$('handle'); hd.style.opacity=eo((e-2.1)/0.5); hd.style.transform=`translateY(${(1-eo((e-2.1)/0.5))*24}px)`;
+    sparks.forEach((s,i)=>{const sp=0.35+rnd(i+1)*0.8, x=rnd(i+7)*1080, y=1920-((e*140*sp+rnd(i+13)*2100)%2100), a=(0.25+0.75*rnd(i+3))*clamp(e*2); s.style.left=x+'px'; s.style.top=y+'px'; s.style.opacity=a; s.style.transform=`scale(${0.5+rnd(i+5)*1.2})`;});
+  }
+  flash(t);
+};
+Promise.all([document.fonts.ready,...[hook,...phs].map(im=>im.decode().catch(()=>{}))]).then(()=>{window.fontsOk=true;window.ready=true;window.draw(0)});
+</script></body></html>

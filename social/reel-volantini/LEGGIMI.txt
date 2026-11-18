@@ -1,0 +1,17 @@
+REEL DEI VOLANTINI — Lista 3 · Mirai
+=====================================
+Apertura con zoom sul logo -> raffica di foto a tempo (1 foto ogni mezzo secondo, 120 BPM) ->
+anello 3D di volantini che gira -> "VOTA MIRAI · Lista 3 · Lunedì 23 novembre".
+
+File:
+  reel.mp4        il reel finito (1080x1920, 30 fps, con musica)
+  reel-muto.mp4   stesso video senza audio (per mettere la musica di tendenza in Instagram)
+  musica.wav      la base musicale (generata, nessun diritto d'autore)
+
+Per rifarlo con altre foto (o cambiare data/testi):
+  1) python3 prepara.py foto1.jpg foto2.jpg ...    (nell'ordine in cui devono comparire)
+  2) python3 musica.py                             (si adatta da sola al numero di foto)
+  3) node render.js                                (crea reel-muto.mp4)
+  4) ffmpeg -i reel-muto.mp4 -i musica.wav -c:v copy -c:a aac -b:a 192k -shortest reel.mp4
+
+Testi da cambiare: reel.html (cerca "Lista 3", "Lunedì 23 novembre", "Li hai visti?").
