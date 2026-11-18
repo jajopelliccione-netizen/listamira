@@ -88,10 +88,7 @@ function place(el,ox,oy,tx,ty,s,rot){ // il punto (ox,oy) della foto va in (ox+t
   el.style.transformOrigin=ox+'px '+oy+'px'; el.style.transform=`translate(${tx}px,${ty}px) scale(${s}) rotate(${rot}deg)`;
 }
 const beatPulse=t=>t<T_BURST?0:Math.exp(-((t-T_BURST)%0.5)*9);
-function flash(t){ // lampo bianco a ogni stacco
-  let f=0; const cuts=[T_BURST,T_SPIN,T_END]; for(const c of cuts){ if(t>=c) f=Math.max(f,(c===T_END?0.9:0.7)*Math.max(0,1-(t-c)/(c===T_END?0.22:0.12))); }
-  $('flash').style.opacity=f;
-}
+function flash(t){ $('flash').style.opacity=0; } // niente lampi: taglio netto
 window.draw=function(t){
   const inHook=t<T_BURST, inBurst=t>=T_BURST&&t<T_SPIN, inSpin=t>=T_SPIN&&t<T_END, inEnd=t>=T_END;
   // --- apertura: zoom sul logo ---
@@ -99,7 +96,7 @@ window.draw=function(t){
   if(inHook){
     const h=P[C.hook], [lx,ly]=h.logo, u=t/T_BURST, e=ei(u*0.96)+0.0, s=lerp(1.0,3.4,e);
     place(hook,lx,ly,(540-lx)*e,(930-ly)*e,s,0);
-    const a=eo((t-0.3)/0.3)*(1-eo((t-1.35)/0.2)); const ht=$('hooktxt'); ht.style.display='block'; ht.style.opacity=a; ht.style.transform=`scale(${lerp(.85,1,eo((t-.35)/.4))})`;
+    const ht=$('hooktxt'); ht.style.display='block'; ht.style.opacity=1; ht.style.transform='none';
   } else $('hooktxt').style.display='none';
   // --- raffica di foto ---
   phs.forEach((w,i)=>{
@@ -121,12 +118,12 @@ window.draw=function(t){
   }
   if(inSpin){
     const u=(t-T_SPIN)/SPIN, total=Math.round(540/STEP)*STEP, a=total*(1-Math.pow(1-clamp(u),2));
-    const enter=eo((t-T_SPIN)/0.35), sc=lerp(.55,1,enter)*(1+0.025*bp);
+    const enter=1, sc=1+0.025*bp;
     $('ring').style.transform=`translateZ(${-R}px) rotateX(-5deg) rotateY(${-a}deg) scale(${sc})`;
     $('spin').style.opacity=clamp(enter*2);
     const tp=$('spintop'), pl=$('spinpill'); tp.style.display='block'; pl.style.display='block';
-    tp.style.opacity=eo((t-T_SPIN-0.2)/0.3)*(1-eo((t-T_END+0.25)/0.2)); tp.style.transform=`scale(${1+0.04*bp})`;
-    pl.style.opacity=eo((t-T_SPIN-0.5)/0.3)*(1-eo((t-T_END+0.25)/0.2)); pl.style.transform=`translateX(-50%) scale(${1+0.04*bp})`;
+    tp.style.opacity=1; tp.style.transform=`scale(${1+0.04*bp})`;
+    pl.style.opacity=1; pl.style.transform=`translateX(-50%) scale(${1+0.04*bp})`;
   } else { $('spintop').style.display='none'; $('spinpill').style.display='none'; }
   // --- schermata finale: VOTA MIRAI ---
   $('end').style.display=inEnd?'block':'none';
