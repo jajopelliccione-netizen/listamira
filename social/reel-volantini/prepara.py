@@ -55,6 +55,8 @@ def main(paths):
         print(i, p.split('/')[-1], 'box', out[-1]['box'], 'logo', out[-1]['logo'])
     # foto per l'apertura con lo zoom sul logo: quella con il volantino piu' grande, in alta risoluzione
     best = max(range(len(out)), key=lambda k: (out[k]['box'][3] - out[k]['box'][1]) * (out[k]['box'][2] - out[k]['box'][0]))
+    import os
+    if os.environ.get('HOOK'): best = int(os.environ['HOOK']) - 1   # HOOK=16 -> usa la 16a foto per lo zoom iniziale
     cover(Image.open(paths[best]).convert('RGB'), 1440, 2560).save('foto/hook.jpg', quality=90)
     json.dump({'photos': out, 'hook': best}, open('foto.json', 'w'), indent=1)
     print('apertura con la foto', best + 1)
