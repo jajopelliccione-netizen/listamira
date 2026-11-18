@@ -4,7 +4,8 @@ Legge foto.json per sapere quante foto ci sono (stessi tempi di reel.html). Scri
 import json, wave, numpy as np
 SR = 44100; BEAT = 0.5
 N = len(json.load(open('foto.json'))['photos'])
-T_BURST = 2.0; T_SPIN = T_BURST + N * BEAT; T_END = T_SPIN + 6.0; DUR = T_END + 7.0
+import math
+T_BURST = 2.0; T_SPIN = T_BURST + math.ceil(N * 0.25 / 0.5) * 0.5; T_END = T_SPIN + 6.0; DUR = T_END + 7.0
 rng = np.random.default_rng(7)
 L = np.zeros(int(DUR * SR) + SR); Rr = np.zeros_like(L)          # canali
 BASS = np.zeros_like(L); ARP = np.zeros_like(L)                  # sottoposti a sidechain
