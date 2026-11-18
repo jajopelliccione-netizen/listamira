@@ -8,7 +8,7 @@
   <link rel="icon" href="../assets/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="../styles.css?v=1544432143">
-  <link rel="stylesheet" href="admin.css?v=1792100001">
+  <link rel="stylesheet" href="admin.css?v=1792100003">
 </head>
 <body class="admin">
   <section id="login" class="prop-page" hidden>
@@ -68,14 +68,18 @@
       <section id="tab-scan" hidden>
         <div class="panel">
           <h2>Di che zona è questo QR?</h2>
-          <p class="hint">Inquadra un QR appeso a scuola con la fotocamera qui sotto: ti dico <b>zona</b> e <b>punto</b> e ti mostro tutte le statistiche. Usando questo scanner la scansione <b>non viene contata</b> (con la fotocamera normale del telefono sì).</p>
+          <p class="hint"><b>Scansione continua:</b> apri la fotocamera <b>una volta sola</b> e inquadra un QR dopo l’altro. Per ognuno vedi subito <b>zona</b> e <b>punto</b> sopra la fotocamera (con un suono), senza finestre da chiudere. In basso resta l’elenco di quelli già fatti. La scansione <b>non viene contata</b> (con la fotocamera normale del telefono sì).</p>
           <div class="row">
             <button class="btn btn-primary" id="scan-start" type="button">📷 Apri la fotocamera</button>
             <button class="btn btn-violet" id="scan-stop" type="button" hidden>Chiudi la fotocamera</button>
           </div>
           <div id="scan-box" class="scan-box" hidden>
-            <video id="scan-video" playsinline muted></video>
-            <div class="scan-frame" aria-hidden="true"></div>
+            <div class="scan-cam"><video id="scan-video" playsinline muted></video><div class="scan-frame" aria-hidden="true"></div></div>
+            <div id="scan-pop" class="scan-pop" aria-live="polite"><span class="sp-meta">Inquadra un QR…</span></div>
+          </div>
+          <div id="scan-hist-wrap" hidden>
+            <div class="toolbar" style="margin:18px 0 8px"><h2 style="font-size:1.1rem">Già scansionati <span id="scan-count" class="muted"></span></h2><button class="mini" id="scan-clear" type="button">Svuota elenco</button></div>
+            <div id="scan-hist" class="hist"></div>
           </div>
           <div id="scan-err" class="msg err" hidden></div>
           <form id="scan-manual" class="row" style="margin-top:16px">
@@ -123,6 +127,6 @@
   <script src="../vendor/jsQR.js?v=1544432143"></script>
   <script src="../core.js?v=1544432143"></script>
   <script src="sheet.js?v=1544432143"></script>
-  <script src="admin.js?v=1792100001"></script>
+  <script src="admin.js?v=1792100003"></script>
 </body>
 </html>

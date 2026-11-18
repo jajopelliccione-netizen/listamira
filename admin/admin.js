@@ -226,12 +226,20 @@ function renderStats() {
 $('#st-range').addEventListener('change', renderStats);
 
 
-/* ---- trova zona: scansioni un QR e leggi zona, punto e statistiche ---- */
-const scan = { stream: null, raf: 0, last: 0, detector: null, busy: false };
+/* ---- trova zona: scansione continua di tanti QR, uno dopo l'altro ---- */
+const scan = { stream: null, raf: 0, last: 0, detector: null, busy: false, lastCode: null, lastAt: 0, hist: [], audio: null };
 function parseCode(text) {
   const t = String(text || '').trim();
   try { const c = new URL(t).searchParams.get('c'); if (c) return c.trim(); } catch { /* non è un link */ }
   return /^[0-9a-f]{32}$/i.test(t) ? t.toLowerCase() : null;
+}
+function beep(ok) {
+  try {
+    if (navigator.vibrate) navigator.vibrate(ok ? 70 : [70, 60, 70]);
+    const ctx = scan.audio || (scan.audio = new (window.AudioContext || window.webkitAudioContext)());
+    const o = ctx.createOscillator(), g = ctx.createGain(); o.connect(g); g.connect(ctx.destination);
+    o.frequency.value = ok ? 880 : 240; g.gain.value = 0.08; o.start(); o.stop(ctx.currentTime + (ok ? 0.09 : 0.25));
+  } catch { /* audio non disponibile */ }
 }
 function stopScan() {
   cancelAnimationFrame(scan.raf);
@@ -240,12 +248,17 @@ function stopScan() {
   $('#scan-box').hidden = true; $('#scan-start').hidden = false; $('#scan-stop').hidden = true;
 }
 async function startScan() {
-  stopScan(); $('#scan-err').hidden = true; $('#scan-result').replaceChildren();
+  stopScan(); $('#scan-err').hidden = true;
   if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) return flash($('#scan-err'), 'Questo browser non permette di usare la fotocamera. Apri l’admin da Safari o Chrome sul telefono, oppure incolla qui sotto il link del QR.', false);
+  try { scan.audio = scan.audio || new (window.AudioContext || window.webkitAudioContext)(); if (scan.audio.resume) scan.audio.resume(); } catch { /* ok senza suoni */ }
+  $('#scan-start').disabled = true; $('#scan-start').textContent = 'Carico i dati…';
+  try { await loadProps(); await loadQrs(); } catch (ex) { $('#scan-start').disabled = false; $('#scan-start').textContent = '📷 Apri la fotocamera'; if (ex.message !== 'auth') flash($('#scan-err'), 'Non riesco a leggere i dati: ' + ex.message, false); return; }
+  $('#scan-start').disabled = false; $('#scan-start').textContent = '📷 Apri la fotocamera';
   try { scan.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 } }, audio: false }); }
   catch { return flash($('#scan-err'), 'Non riesco ad aprire la fotocamera: consenti l’accesso alla fotocamera per questo sito e riprova.', false); }
   const v = $('#scan-video'); v.srcObject = scan.stream;
   $('#scan-box').hidden = false; $('#scan-start').hidden = true; $('#scan-stop').hidden = false;
+  scan.lastCode = null; scan.lastAt = 0;
   try { await v.play(); } catch { /* parte da sola */ }
   scan.detector = null;
   if ('BarcodeDetector' in window) { try { scan.detector = new BarcodeDetector({ formats: ['qr_code'] }); } catch { scan.detector = null; } }
@@ -253,29 +266,60 @@ async function startScan() {
   const tick = async (ts) => {
     if (!scan.stream) return;
     scan.raf = requestAnimationFrame(tick);
-    if (ts - scan.last < 150 || scan.busy || v.readyState < 2 || !v.videoWidth) return;
+    if (ts - scan.last < 110 || scan.busy || v.readyState < 2 || !v.videoWidth) return;
     scan.last = ts; scan.busy = true;
     try {
       let text = null;
       if (scan.detector) { try { const r = await scan.detector.detect(v); if (r[0]) text = r[0].rawValue; } catch { scan.detector = null; } }
       if (!text && !scan.detector) {
-        const k = Math.min(1, 720 / v.videoWidth); cv.width = Math.round(v.videoWidth * k); cv.height = Math.round(v.videoHeight * k);
+        const k = Math.min(1, 640 / v.videoWidth); cv.width = Math.round(v.videoWidth * k); cv.height = Math.round(v.videoHeight * k);
         cx.drawImage(v, 0, 0, cv.width, cv.height);
         const r = jsQR(cx.getImageData(0, 0, cv.width, cv.height).data, cv.width, cv.height, { inversionAttempts: 'dontInvert' });
         if (r) text = r.data;
       }
-      if (text) { stopScan(); showScan(text); }
+      if (text) quickScan(text); // la fotocamera resta accesa: si passa subito al QR successivo
     } catch { /* frame illeggibile: riprova */ } finally { scan.busy = false; }
   };
   scan.raf = requestAnimationFrame(tick);
 }
 $('#scan-start').addEventListener('click', startScan);
 $('#scan-stop').addEventListener('click', stopScan);
-$('#scan-manual').addEventListener('submit', (e) => { e.preventDefault(); stopScan(); showScan($('#scan-text').value); });
+$('#scan-manual').addEventListener('submit', (e) => { e.preventDefault(); const t = $('#scan-text').value; $('#scan-text').value = ''; quickScan(t, true); });
 
+/* risposta immediata sopra la fotocamera, senza finestre da chiudere */
+function quickScan(text, force) {
+  const code = parseCode(text), now = Date.now();
+  const key = code || 'x:' + String(text).slice(0, 40);
+  if (!force && scan.lastCode === key && now - scan.lastAt < 2500) { scan.lastAt = now; return; } // stesso QR ancora inquadrato
+  scan.lastCode = key; scan.lastAt = now;
+  const q = code && qrs.find((x) => x.id === code);
+  const pop = $('#scan-pop');
+  const rec = { code, at: now, ok: !!q, zone: q ? groupOf(q) : '', label: q ? q.label : (code ? 'QR non riconosciuto' : 'Non è un QR di Mirai'), active: q ? q.active : false };
+  scan.hist.unshift(rec); scan.hist = scan.hist.slice(0, 40); renderHist();
+  beep(!!q);
+  const mine = q ? proposals.filter((p) => p.qr === q.id).length : 0;
+  pop.className = 'scan-pop ' + (q ? (q.active ? 'good' : 'off') : 'bad');
+  pop.replaceChildren(...(q
+    ? [el('span', { class: 'sp-zone' }, '📍 ' + rec.zone), el('b', { class: 'sp-label' }, q.label),
+       el('span', { class: 'sp-meta' }, `👁 ${q.scans || 0} scansioni · 💡 ${mine} proposte` + (q.active ? '' : ' · DISATTIVATO'))]
+    : [el('b', { class: 'sp-label' }, rec.label), el('span', { class: 'sp-meta' }, code ? 'Eliminato o di un altro database' : String(text).slice(0, 60))]));
+  pop.classList.remove('flash'); void pop.offsetWidth; pop.classList.add('flash');
+  if (force && code) showScan(code); // dal campo manuale mostra subito anche la scheda completa
+}
+const hhmm = (t) => new Date(t).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+function renderHist() {
+  const box = $('#scan-hist');
+  $('#scan-count').textContent = scan.hist.length ? `(${scan.hist.length})` : '';
+  box.replaceChildren(...scan.hist.map((r) => el('button', { type: 'button', class: 'hist-row' + (r.ok ? (r.active ? '' : ' off') : ' bad'), onclick: () => r.code && showScan(r.code) },
+    el('span', { class: 'h-z' }, r.ok ? r.zone : '⚠'), el('b', { class: 'h-l' }, r.label), el('span', { class: 'h-t' }, hhmm(r.at)))));
+  $('#scan-hist-wrap').hidden = !scan.hist.length;
+}
+$('#scan-clear').addEventListener('click', () => { scan.hist = []; renderHist(); $('#scan-pop').className = 'scan-pop'; $('#scan-pop').replaceChildren(el('span', { class: 'sp-meta' }, 'Inquadra un QR…')); });
+
+/* scheda completa con tutte le statistiche (si apre solo se la tocchi) */
 async function showScan(text) {
   const out = $('#scan-result');
-  const again = el('button', { class: 'btn btn-primary', type: 'button', onclick: () => { out.replaceChildren(); startScan(); } }, '📷 Scansiona un altro QR');
+  const again = el('button', { class: 'btn btn-primary', type: 'button', onclick: () => { out.replaceChildren(); $('#tab-scan').scrollIntoView({ behavior: 'smooth' }); if (!scan.stream) startScan(); } }, '📷 Torna alla scansione');
   const code = parseCode(text);
   if (!code) { out.replaceChildren(el('div', { class: 'panel scan-card bad' }, el('h3', {}, 'Questo non è un QR di Mirai'), el('p', { class: 'hint' }, 'Ho letto: ' + String(text).slice(0, 140)), again)); return; }
   out.replaceChildren(el('div', { class: 'empty' }, 'Cerco il QR…'));
@@ -309,7 +353,7 @@ async function showScan(text) {
         el('button', { class: 'mini primary', onclick: (e) => run(e, () => sheetPdf([q])) }, '⬇ Rifai il foglio A4 col nome'),
         el('button', { class: 'mini', onclick: async () => { const v = prompt('In che zona si trova “' + q.label + '”?\nEsempi: Piano terra, Primo piano, Secondo piano, Cortile.', q.group || ''); if (v === null) return; await db((t) => Core.fs.update(cfg, 'qr_codes', q.id, { group: v.trim().slice(0, 40) }, t)); reload(); } }, 'Cambia zona'),
         el('button', { class: 'mini', onclick: async () => { await db((t) => Core.fs.update(cfg, 'qr_codes', q.id, { active: !q.active }, t)); reload(); } }, q.active ? 'Disattiva' : 'Riattiva'),
-        el('button', { class: 'mini', onclick: () => { out.replaceChildren(); startScan(); } }, '📷 Scansiona un altro'))),
+        el('button', { class: 'mini', onclick: () => { out.replaceChildren(); $('#tab-scan').scrollIntoView({ behavior: 'smooth' }); if (!scan.stream) startScan(); } }, '📷 Torna alla scansione'))),
     el('div', { class: 'panel' }, el('h2', {}, 'La zona “' + zone + '”'),
       el('div', { class: 'kpi', style: 'margin-top:12px' }, kpi(inZone.length, 'QR in zona'), kpi(zScans, 'Scansioni'), kpi(zProps, 'Proposte'), kpi(totScans ? Math.round((zScans / totScans) * 100) + '%' : '–', 'Delle scansioni totali')),
       el('div', { class: 'sub-list' }, inZone.map((x) => el('span', {}, (x.id === q.id ? '👉 ' : '') + x.label + ': ' + (x.scans || 0) + ' scansioni, ' + proposals.filter((p) => p.qr === x.id).length + ' proposte')))),
