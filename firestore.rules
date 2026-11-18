@@ -41,7 +41,9 @@ service cloud.firestore {
         && request.resource.data.qr is string
         && exists(/databases/$(database)/documents/qr_codes/$(request.resource.data.qr))
         && get(/databases/$(database)/documents/qr_codes/$(request.resource.data.qr)).data.active == true
-        && request.resource.data.place == get(/databases/$(database)/documents/qr_codes/$(request.resource.data.qr)).data.label;
+        // «place» è il piano scelto dallo studente (nuovo modulo) oppure, per compatibilità, il nome del QR
+        && (request.resource.data.place in ['Officine', 'Piano terra', 'Primo piano', 'Secondo piano', 'Terzo piano', 'Quarto piano']
+            || request.resource.data.place == get(/databases/$(database)/documents/qr_codes/$(request.resource.data.qr)).data.label);
     }
   }
 }

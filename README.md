@@ -23,5 +23,9 @@ Sito di presentazione della lista (ITIS Galileo Galilei, Roma) + area proposte a
 - **App Mirai** (admin installabile sul telefono, con notifiche push a ogni scansione/proposta): vedi `cloudflare/README.md`.
 - Testi del sito: `config/site.json`.
 
+## Piano scelto dallo studente
+Tutti i QR portano allo stesso modulo. Prima di scrivere lo studente risponde a **“Dove ti trovi?”** (Officine, Piano terra, Primo piano, Secondo piano, Terzo piano, Quarto piano; una sola risposta) e le statistiche in **/admin/** sono **per piano**. La zona dei QR non conta più.
+Le regole Firestore (`firestore.rules`) accettano come `place` uno di questi piani **oppure** il nome del QR (formato precedente): vanno ripubblicate in Firebase. Finché non lo sono, il modulo salva lo stesso la proposta scrivendo il piano tra parentesi quadre all’inizio del testo, e l’admin lo legge da lì.
+
 ## Anonimato
 Si salvano solo testo, categoria, QR di provenienza e data/ora d'invio. Nessun IP, dispositivo o nome. (Google tiene i suoi log tecnici standard sull'infrastruttura.)

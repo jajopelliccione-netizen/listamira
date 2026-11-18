@@ -2,6 +2,7 @@
 const view = document.getElementById('view');
 const { el } = Core;
 const CATEGORIES = ['Aule e spazi', 'Didattica', 'Eventi e feste', 'Sport', 'Tecnologia', 'Ambiente', 'Servizi (mensa, bar, bagni)', 'Altro'];
+const FLOORS = ['Officine', 'Piano terra', 'Primo piano', 'Secondo piano', 'Terzo piano', 'Quarto piano'];
 const SESSION_MIN = 20;
 const KEY = 'mira-qr-session';
 const QR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h3M20 17v4"/></svg>';
@@ -26,9 +27,30 @@ const locked = (expired, invalid) => message({
   actions: [backBtn()],
 });
 
+/* passo 1: “Dove ti trovi?” (una sola risposta), poi si apre il modulo */
+function askFloor(sess, cfg) {
+  let pick = sess.floor || null;
+  const btn = el('button', { class: 'btn btn-primary', style: 'width:100%;margin-top:18px', type: 'button' }, 'Continua');
+  btn.disabled = !pick;
+  const opts = FLOORS.map((f) => {
+    const inp = el('input', { type: 'radio', name: 'floor', value: f });
+    inp.checked = f === pick;
+    const lab = el('label', { class: 'floor-opt' + (f === pick ? ' on' : '') }, inp, el('span', {}, f));
+    inp.addEventListener('change', () => { pick = f; btn.disabled = false; opts.forEach((o) => o.classList.toggle('on', o === lab)); });
+    return lab;
+  });
+  btn.addEventListener('click', () => { if (!pick) return; sess.floor = pick; store.set(sess); form(sess, cfg); });
+  view.replaceChildren(
+    el('h1', {}, 'Dove ti trovi?'),
+    el('p', { class: 'sub' }, 'Scegli una sola risposta: poi potrai scrivere la tua proposta.'),
+    el('div', { class: 'floor-list', role: 'radiogroup', 'aria-label': 'Dove ti trovi?' }, ...opts),
+    btn);
+}
+
 function form(sess, cfg) {
+  if (!sess.floor) return askFloor(sess, cfg);
   const select = el('select', { id: 'cat', name: 'category' }, CATEGORIES.map((c) => el('option', {}, c)));
-  const txt = el('textarea', { id: 'txt', name: 'text', maxlength: '1000', placeholder: 'Es. Mettere dei distributori d’acqua al secondo piano…', required: '' });
+  const txt = el('textarea', { id: 'txt', name: 'text', maxlength: '960', placeholder: 'Es. Mettere dei distributori d’acqua al secondo piano…', required: '' });
   const n = el('span', {}, '0');
   const err = el('div', { class: 'msg err', role: 'alert', hidden: '' });
   const timer = el('p', { class: 'timer' });
@@ -36,11 +58,11 @@ function form(sess, cfg) {
   const f = el('form', { novalidate: '' },
     el('label', { for: 'cat' }, 'Di cosa parla?'), select,
     el('label', { for: 'txt' }, 'La tua proposta'), txt,
-    el('div', { class: 'counter' }, n, '/1000'),
-    el('div', { class: 'privacy' }, el('span', { html: LOCK, style: 'display:contents' }), el('span', {}, el('b', {}, 'Anonimo davvero. '), 'Non ti chiediamo nome o email e non salviamo i tuoi dati: solo il testo e il posto del QR.')),
+    el('div', { class: 'counter' }, n, '/960'),
+    el('div', { class: 'privacy' }, el('span', { html: LOCK, style: 'display:contents' }), el('span', {}, el('b', {}, 'Anonimo davvero. '), 'Non ti chiediamo nome o email e non salviamo i tuoi dati: solo il testo e il piano che hai scelto.')),
     btn, err);
   view.replaceChildren(
-    el('span', { class: 'chip' }, '📍 ' + sess.label),
+    el('button', { class: 'chip', type: 'button', onclick: () => { clearInterval(iv); askFloor(sess, cfg); } }, '📍 ' + sess.floor + ' · cambia'),
     el('h1', {}, 'Qual è la tua idea?'),
     el('p', { class: 'sub' }, 'Dicci cosa cambieresti per rendere la scuola migliore.'),
     f, timer);
@@ -59,8 +81,14 @@ function form(sess, cfg) {
     if (txt.value.trim().length < 10) { err.textContent = 'Scrivi almeno 10 caratteri.'; err.hidden = false; txt.focus(); return; }
     btn.disabled = true; btn.textContent = 'Invio…';
     try {
-      await Core.fs.create(cfg, 'proposals', { text: txt.value.trim(), category: select.value, place: sess.label, qr: sess.code, status: 'nuova' });
-      Core.notify(cfg, 'proposal', { code: sess.code, label: sess.label, category: select.value });
+      const body = { text: txt.value.trim(), category: select.value, qr: sess.code, status: 'nuova' };
+      try { await Core.fs.create(cfg, 'proposals', { ...body, place: sess.floor }); }
+      catch (ex) {
+        if (ex.status !== 403) throw ex;
+        // regole Firestore non ancora aggiornate: salva nel formato precedente, con il piano in testa al testo
+        await Core.fs.create(cfg, 'proposals', { ...body, text: `[${sess.floor}] ${body.text}`, place: sess.label });
+      }
+      Core.notify(cfg, 'proposal', { code: sess.code, label: sess.floor, category: select.value });
       clearInterval(iv); done(sess, cfg);
     } catch (ex) {
       btn.disabled = false; btn.textContent = 'Invia la proposta';
