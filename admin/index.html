@@ -2,13 +2,20 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex">
-  <title>Admin — Lista Mirai</title>
+  <title>Mirai</title>
   <link rel="icon" href="../assets/favicon.png" type="image/png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#2b0f57">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Mirai">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=1544432143">
-  <link rel="stylesheet" href="admin.css?v=1792100003">
+  <link rel="stylesheet" href="../styles.css?v=20261117a">
+  <link rel="stylesheet" href="admin.css?v=20261118a">
 </head>
 <body class="admin">
   <section id="login" class="prop-page" hidden>
@@ -21,6 +28,7 @@
       <label for="pw">Password</label>
       <input id="pw" type="password" autocomplete="current-password" required>
       <div id="login-err" class="msg err" role="alert" hidden></div>
+      <label class="check"><input id="remember" type="checkbox" checked> Resta connesso su questo dispositivo</label>
       <button class="btn btn-primary" style="width:100%;margin-top:18px">Entra</button>
     </form>
   </section>
@@ -28,7 +36,7 @@
   <div id="app" hidden>
     <header class="admin-bar">
       <div class="wrap bar-in">
-        <strong class="logo">Mirai · Admin <small id="who" class="who"></small></strong>
+        <strong class="logo">Mirai <small id="who" class="who"></small></strong>
         <nav class="tabs" role="tablist" aria-label="Sezioni">
           <button role="tab" data-tab="qr" aria-selected="true">QR code</button>
           <button role="tab" data-tab="scan" aria-selected="false">📷 Trova zona</button>
@@ -40,6 +48,12 @@
     </header>
 
     <main class="wrap admin-main">
+      <div id="push-panel" class="panel push-panel" hidden>
+        <p id="push-status"></p>
+        <div id="push-actions" class="row"></div>
+        <div id="push-msg" class="msg" role="status" hidden></div>
+      </div>
+
       <!-- QR -->
       <section id="tab-qr">
         <div class="panel">
@@ -51,7 +65,7 @@
             <input id="qr-group" type="text" list="group-list" maxlength="40" placeholder="Zona (es. Primo piano)" required>
             <datalist id="group-list"></datalist>
             <label class="sr-only" for="qr-label">Punto</label>
-            <input id="qr-label" type="text" maxlength="60" placeholder="Punto (es. Bagni, Aula 12, Mensa…)" required>
+            <input id="qr-label" type="text" maxlength="60" placeholder="Punto (es. Bagni, Aula 12)" required>
             <button class="btn btn-primary">Genera QR</button>
           </form>
           <div id="qr-err" class="msg err" hidden></div>
@@ -102,6 +116,12 @@
           <div class="panel"><h2>Proposte per categoria</h2><div id="st-cats"></div></div>
           <div class="panel"><h2>Proposte per giorno</h2><div id="st-days"></div></div>
         </div>
+        <div class="panel danger-zone">
+          <h2>Azzera statistiche</h2>
+          <p class="hint">Rimette a zero le scansioni di tutti i QR (utile dopo i test). Le proposte e i QR non vengono toccati. Per sicurezza dovrai scrivere una parola di conferma.</p>
+          <button class="btn btn-danger" id="reset-stats" type="button">Azzera le scansioni</button>
+          <div id="reset-msg" class="msg" role="status" hidden></div>
+        </div>
       </section>
 
       <!-- Proposte -->
@@ -123,10 +143,10 @@
 
   <!-- area stampa: riempita da JS -->
   <div id="print-area" aria-hidden="true"></div>
-  <script src="../vendor/qrcode.js?v=1544432143"></script>
-  <script src="../vendor/jsQR.js?v=1544432143"></script>
-  <script src="../core.js?v=1544432143"></script>
-  <script src="sheet.js?v=1544432143"></script>
-  <script src="admin.js?v=1792100003"></script>
+  <script src="../vendor/qrcode.js?v=20261117a"></script>
+  <script src="../vendor/jsQR.js?v=20261118a"></script>
+  <script src="../core.js?v=20261117a"></script>
+  <script src="sheet.js?v=20261117a"></script>
+  <script src="admin.js?v=20261118a"></script>
 </body>
 </html>

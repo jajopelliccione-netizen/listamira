@@ -68,5 +68,28 @@ const Core = (() => {
 
   const signIn = (c, email, password) => call(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${c.firebase.apiKey}`, { method: 'POST', body: { email, password, returnSecureToken: true } });
 
-  return { ROOT, config, configured, el, fs, signIn };
+  /* ---- notifiche all'admin: tramite il Worker Cloudflare (push nell'app Mirai); finché non è collegato, ntfy ---- */
+  // kind: 'scan' | 'proposal'; d: { code, label, category }. Mai bloccante, mai col testo della proposta.
+  const notify = (c, kind, d) => {
+    const n = c.notify || {};
+    if (n.workerUrl) {
+      fetch(n.workerUrl.replace(/\/+$/, '') + '/event', { method: 'POST', keepalive: true, body: JSON.stringify({ type: kind, code: d.code, category: d.category }) }).catch(() => {});
+    } else if (n.ntfyTopic) {
+      const title = kind === 'scan' ? '📍 QR scansionato' : '💡 Nuova proposta';
+      const message = kind === 'scan' ? d.label : `${d.category} — ${d.label}`;
+      fetch('https://ntfy.sh/', { method: 'POST', body: JSON.stringify({ topic: n.ntfyTopic, title, message, tags: ['bell'] }) }).catch(() => {});
+    }
+  };
+
+  // rinnova il login admin senza richiedere la password (token di Firebase Auth)
+  async function refreshToken(c, refresh) {
+    const res = await fetch(`https://securetoken.googleapis.com/v1/token?key=${c.firebase.apiKey}`, {
+      method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(refresh),
+    });
+    const data = await res.json().catch(() => null);
+    if (!res.ok || !data) { const e = new Error('refresh'); e.status = 401; throw e; }
+    return data;
+  }
+
+  return { ROOT, config, configured, el, fs, signIn, refreshToken, notify };
 })();

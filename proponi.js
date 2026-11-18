@@ -60,6 +60,7 @@ function form(sess, cfg) {
     btn.disabled = true; btn.textContent = 'Invio…';
     try {
       await Core.fs.create(cfg, 'proposals', { text: txt.value.trim(), category: select.value, place: sess.label, qr: sess.code, status: 'nuova' });
+      Core.notify(cfg, 'proposal', { code: sess.code, label: sess.label, category: select.value });
       clearInterval(iv); done(sess, cfg);
     } catch (ex) {
       btn.disabled = false; btn.textContent = 'Invia la proposta';
@@ -91,6 +92,7 @@ async function init() {
       const qr = await Core.fs.get(cfg, 'qr_codes', code);
       if (!qr || !qr.active) return locked(false, true);
       Core.fs.update(cfg, 'qr_codes', code, { scans: (qr.scans || 0) + 1 }).catch(() => {}); // contatore scansioni (non bloccante)
+      Core.notify(cfg, 'scan', { code, label: qr.label });
       const sess = { code, label: qr.label, exp: Date.now() + SESSION_MIN * 60000 };
       store.set(sess);
       return form(sess, cfg);
