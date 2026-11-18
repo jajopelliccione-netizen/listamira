@@ -18,6 +18,7 @@ Sito di presentazione della lista (ITIS Galileo Galilei, Roma) + area proposte a
 
 ## Uso
 - **/admin/** → email/password dell’admin. Crea i QR (uno per posto), scarica il **foglio A4 grafico (PDF o PNG)** con logo e istruzioni, oppure solo il QR (PNG/SVG), o stampa, disattiva i QR, leggi le proposte, cambia stato, esporta CSV.
+- **/admin/ → “📷 Trova zona”**: apre la fotocamera **una volta sola** e puoi inquadrare tanti QR di fila: per ognuno vede subito zona e punto (con suono e vibrazione), senza finestre da chiudere, e resta l’elenco di quelli già scansionati; toccando una riga si apre la scheda completa con tutte le statistiche. Funziona anche se il nome stampato sotto il QR è stato tolto. Lo scanner non conta la scansione. Funziona da Safari/Chrome sul telefono (sito in HTTPS) e, in alternativa, incollando il link del QR.
 - Il QR apre `proponi.html?c=<codice>`. Il codice è l'ID di un documento Firestore che non si può elencare: senza averlo scansionato non si può inviare nulla, e la regola di sicurezza accetta proposte solo per QR attivi. Sessione di 20 minuti.
 - **App Mirai** (admin installabile sul telefono, con notifiche push a ogni scansione/proposta): vedi `cloudflare/README.md`.
 - Testi del sito: `config/site.json`.
