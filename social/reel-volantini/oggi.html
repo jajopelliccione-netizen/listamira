@@ -48,7 +48,9 @@
 </div>
 <script>
 const C=window.CFG, P=C.photos, N=P.length, D=(window.DOPO&&window.DOPO.files)||[];
-const BURST=Math.ceil(N*0.25/0.5)*0.5, PER=BURST/N, T_TALK=BURST, TALK=8.0, T_DOPO=T_TALK+TALK, DOPO_PER=1.0, T_END=T_DOPO+D.length*DOPO_PER, DUR=T_END+7.0;
+// 2 giri delle stesse foto: nel secondo giro l'ordine e' ruotato e rovesciato, cosi' la stessa foto non torna mai vicina
+const M=N*2, SEQ=[...Array(N).keys(), ...Array.from({length:N},(_,j)=>(Math.floor(N/2)+(N-1-j))%N)];
+const BURST=Math.ceil(M*0.125/0.5)*0.5, PER=BURST/M, T_TALK=BURST, TALK=8.0, T_DOPO=T_TALK+TALK, DOPO_PER=1.0, T_END=T_DOPO+D.length*DOPO_PER, DUR=T_END+7.0;
 window.DUR=DUR;
 const $=id=>document.getElementById(id), st=$('stage');
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)), lerp=(a,b,k)=>a+(b-a)*k;
@@ -79,7 +81,7 @@ window.draw=function(t){
   $('brand').style.display=(inShow||inTalk)?'flex':'none';
   // 1) foto a slide in finestra + testi (tagli netti)
   win.style.display=inShow?'block':'none';
-  if(inShow){const i=Math.min(N-1,Math.floor(t/PER)); slides.forEach((im,k)=>im.style.display=k===i?'block':'none');}
+  if(inShow){const i=SEQ[Math.min(M-1,Math.floor(t/PER))]; slides.forEach((im,k)=>im.style.display=k===i?'block':'none');}
   const ph=inShow?(t<4.5?1:t<9?2:3):0; ['t1','t2','t3'].forEach((id,k)=>$(id).style.display=(ph===k+1)?'block':'none');
   // 2) le altre liste
   $('talk').style.display=inTalk?'block':'none';
