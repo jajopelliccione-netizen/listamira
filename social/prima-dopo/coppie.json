@@ -69,6 +69,20 @@
     0.5,
     0.52
    ]
+  },
+  {
+   "prima": "/root/.claude/uploads/379fe77e-d5c1-5f17-a32f-000b71b6874b/49b1e1b8-image.jpg",
+   "dopo": "/root/.claude/uploads/379fe77e-d5c1-5f17-a32f-000b71b6874b/a49a7eea-image.jpg",
+   "zoom_prima": 1.0,
+   "zoom_dopo": 1.8,
+   "focus_prima": [
+    0.5,
+    0.5
+   ],
+   "focus_dopo": [
+    0.5,
+    0.47
+   ]
   }
  ]
 }
