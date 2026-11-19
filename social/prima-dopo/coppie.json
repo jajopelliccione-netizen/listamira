@@ -1,1 +1,24 @@
-{"coppie":[]}
+{
+ "coppie": [
+  {
+   "prima": "/root/.claude/uploads/379fe77e-d5c1-5f17-a32f-000b71b6874b/e0b373ea-image.jpg",
+   "dopo": "/root/.claude/uploads/379fe77e-d5c1-5f17-a32f-000b71b6874b/dc2c4ef3-image.jpg",
+   "blur_prima": [
+    [
+     1133,
+     1030,
+     1450,
+     1674
+    ]
+   ],
+   "blur_dopo": [
+    [
+     1198,
+     927,
+     1404,
+     1133
+    ]
+   ]
+  }
+ ]
+}

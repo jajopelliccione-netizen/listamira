@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """Post 'Ci chiamano fascisti' + coppie PRIMA/DOPO dei volantini.
-Uso:  python3 build.py          (legge coppie.json: {"coppie":[{"prima":"foto1.jpg","dopo":"foto2.jpg"}, ...]})
+Uso:  python3 build.py          (legge coppie.json: {"coppie":[{"prima":"foto1.jpg","dopo":"foto2.jpg","blur_prima":[[x0,y0,x1,y1]]}, ...]} (blur_* opzionale: sfoca persone sullo sfondo))
 Poi:  node render.js            (crea slide-01.png, slide-02.png, ...)"""
 import json, re
 from PIL import Image
 c = json.load(open('coppie.json'))['coppie']
-def crop(src, dst, w=480, h=960, f=2):
-    im = Image.open(src).convert('RGB'); W, H = im.size; sc = max(w * f / W, h * f / H)
+from PIL import ImageFilter
+def crop(src, dst, w=480, h=960, f=2, blur=()):
+    im = Image.open(src).convert('RGB'); W, H = im.size
+    for (x0, y0, x1, y1) in blur:                      # sfoca le persone sullo sfondo (riquadri in pixel della foto originale)
+        box = (x0, y0, x1, y1); im.paste(im.crop(box).filter(ImageFilter.GaussianBlur(34)), box)
+    sc = max(w * f / W, h * f / H)
     im = im.resize((round(W * sc), round(H * sc)), Image.LANCZOS); L = (im.width - w * f) // 2; T = (im.height - h * f) // 2
     im.crop((L, T, L + w * f, T + h * f)).save(dst, quality=88)
 head = open('../campagna/sito-qr.html', encoding='utf-8').read()
@@ -22,7 +26,7 @@ s2 = sec('s2', 2, total, True, '<div class="ctr" style="top:130px;bottom:130px;g
          + card('Figurato', 'Si usa per atteggiamenti autoritari, prepotenti o repressivi.', '#3cf0ff') + '<div class="sub" style="font-size:36px;max-width:860px;margin-top:6px"><span style="color:#ffc42e">Noi?</span> Chiediamo il voto e le vostre idee, anche anonime.</div></div>')
 slides = [s1, s2]
 for k, p in enumerate(c, 1):
-    crop(p['prima'], f'foto/p{k:02d}-prima.jpg'); crop(p['dopo'], f'foto/p{k:02d}-dopo.jpg')
+    crop(p['prima'], f'foto/p{k:02d}-prima.jpg', blur=p.get('blur_prima', ())); crop(p['dopo'], f'foto/p{k:02d}-dopo.jpg', blur=p.get('blur_dopo', ()))
     panel = lambda x, lab, col, tc, f: (f'<div style="position:absolute;left:{x}px;top:195px;width:480px;height:960px;border-radius:26px;overflow:hidden;border:5px solid #fff;box-shadow:0 0 50px rgba(255,60,190,.45),0 30px 60px -20px rgba(0,0,0,.8)"><img src="{f}" style="width:480px;height:960px;display:block"></div>'
                                        f'<div style="position:absolute;left:{x}px;width:480px;top:140px;text-align:center"><span style="display:inline-block;background:{col};color:{tc};font:800 36px \'DM Sans\';letter-spacing:.12em;padding:10px 34px;border-radius:99px;box-shadow:0 0 30px {col}">{lab}</span></div>')
     slides.append(sec(f'p{k}', 2 + k, total, k % 2 == 0, panel(50, 'PRIMA', '#ffc42e', '#12062b', f'foto/p{k:02d}-prima.jpg') + panel(550, 'DOPO', '#ff3c5f', '#fff', f'foto/p{k:02d}-dopo.jpg')))
