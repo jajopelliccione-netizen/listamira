@@ -4,12 +4,13 @@
 *{box-sizing:border-box;margin:0}body{background:#000}
 .c{position:relative;width:1080px;height:1920px;overflow:hidden;background:#12062b;margin-bottom:20px}
 .bg{position:absolute;inset:0;background:radial-gradient(circle at 25% 28%,#7c3aed 0,transparent 55%),radial-gradient(circle at 85% 90%,rgba(255,176,32,.55),transparent 50%),#12062b}
-.ring{position:absolute;left:150px;top:510px;width:780px;height:780px;border-radius:50%;border:6px solid rgba(255,196,46,.55)}
-.t{position:absolute;left:0;right:0;text-align:center;font-family:Anton,Impact,sans-serif;text-transform:uppercase;color:#ffc42e;line-height:1}
-.k{position:absolute;left:0;right:0;text-align:center;font:800 54px "DM Sans";letter-spacing:.2em;text-transform:uppercase;color:#fff}
+.ring{position:absolute;left:150px;top:570px;width:780px;height:780px;border-radius:50%;border:6px solid rgba(255,196,46,.55)}   /* centro esatto: (540, 960) */
+.blk{position:absolute;left:0;right:0;top:960px;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:26px}
+.t{font-family:Anton,Impact,sans-serif;text-transform:uppercase;color:#ffc42e;line-height:1;white-space:nowrap}
+.k{font:800 52px/1 "DM Sans";letter-spacing:.2em;text-transform:uppercase;color:#fff;padding-left:.2em;white-space:nowrap}
 </style></head><body>
 <div class="c" id="a"><div class="bg"></div><div class="ring"></div>
- <div class="k" style="top:700px">Elezioni</div><div class="t" style="top:760px;font-size:430px">23</div><div class="k" style="top:1190px;color:#ffc42e">Novembre</div></div>
+ <div class="blk"><div class="k">Elezioni</div><div class="t" data-fit="330" style="font-size:330px">23</div><div class="k" style="color:#ffc42e">Novembre</div></div></div>
 <div class="c" id="b"><div class="bg"></div><div class="ring"></div>
- <div class="k" style="top:720px">Vota</div><div class="t" style="top:790px;font-size:330px">Mirai</div><div class="k" style="top:1130px;color:#ffc42e">23 novembre</div></div>
-<script>document.fonts.load('100px Anton').then(()=>document.fonts.ready).then(()=>{document.body.dataset.ready=1})</script></body></html>
+ <div class="blk"><div class="k">Vota</div><div class="t" data-fit="330" style="font-size:330px">Mirai</div><div class="k" style="color:#ffc42e">23 novembre</div></div></div>
+<script>document.fonts.load('100px Anton').then(()=>document.fonts.ready).then(()=>{document.querySelectorAll('[data-fit]').forEach(e=>{const w=e.getBoundingClientRect().width,max=560;if(w>max)e.style.fontSize=Math.floor(e.dataset.fit*max/w)+'px'});document.body.dataset.ready=1})</script></body></html>
